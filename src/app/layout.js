@@ -1,7 +1,37 @@
-import { Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
+import localFont from 'next/font/local'
+
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import Header from '@/app/_components/header';
+import Footer from '@/app/_components/footer';
+import Transition from '@/app/_components/page-transition';
+
+const openSans = Open_Sans({ subsets: ['latin'], variable: '--font-open-sans' });
+
+
+const halyard = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Halyard/Halyard_Display_Light.otf',
+      weight: '300'
+    },
+    {
+      path: '../../public/fonts/Halyard/Halyard_Display_Book.otf',
+      weight: '400'
+    },
+    {
+      path: '../../public/fonts/Halyard/Halyard_Display_Regular.otf',
+      weight: '500'
+    },
+    {
+      path: '../../public/fonts/Halyard/Halyard_Display.otf',
+      weight: '600'
+    }
+  ],
+  variable: '--font-halyard'
+})
+
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +41,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${halyard.variable} ${openSans.variable} font-sans font-normal bg-white h-screen flex flex-col`}>
+        <Header />
+        <Transition>
+          {children}
+        </Transition>
+        <Footer />
+      </body>
     </html>
   );
 }
