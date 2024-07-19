@@ -46,22 +46,28 @@ export default function Home() {
   const [originPosition, setOriginPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
   return (
-    <div className="p-10 mb-10 flex flex-col space-y-10">
+    <div className="p-10 pb-[184px] lg:pb-[80px] flex flex-col space-y-10">
       {/* Header */}
-      <div className="grid-cols-3">
-        <h1 className="text-4xl font-medium">
-          Portfolio.
-        </h1>
-        <h2 className="text-lg">
-          @ Walmart. Razer. IDEO. NewDeal.
-        </h2>
-        <h3 className="text-lg font-light">
-          w/ Google. Meta. Amazon. Verizon. Fitbit. Belkin. Herschel. J&J. Verb Surgical. Ford. Nestle. Lilly. Kohls. Michelin. Marvin. Willow. Ainsworth.
-        </h3>
+      <div className="lg:grid lg:grid-cols-12 lg:gap-4">
+        <div className="lg:col-span-3 pb-5 lg:pb-0">
+          <h1 className="text-4xl font-medium">
+            Portfolio.
+          </h1>
+        </div>
+        <div className="lg:col-span-3">
+          <h2 className="text-lg">
+            @ Walmart. Razer. IDEO. NewDeal.
+          </h2>
+        </div>
+        <div className="lg:col-span-6">
+          <h3 className="text-lg font-light">
+            w/ Google. Meta. Amazon. Verizon. Fitbit. Belkin. Herschel. J&J. Verb Surgical. Ford. Nestle. Lilly. Kohls. Michelin. Marvin. Willow. Ainsworth.
+          </h3>
+        </div>
       </div>
       {/* Project Grid */}
       <div
-        className="grid gap-x-5 gap-y-10 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7"
+        className="grid gap-x-5 gap-y-10 grid-cols-2 md:grid-cols-5 lg:grid-cols-7"
       >
         {projects.map((project) => (
           <ProjectThumbnail

@@ -11,7 +11,7 @@ export default function Sidebar({
     tags
 }) {
     return (
-        <div className="sticky pb-[60px] overflow-y-scroll w-[393px] top-0 border-r-[1px] border-black ">
+        <div className="lg:sticky lg:pb-[60px] lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
             <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
                 <Image ratio={5 / 4} imageUrl={image} />
                 <div className="flex flex-col space-y-2">
@@ -45,7 +45,7 @@ export default function Sidebar({
                 <span className="font-medium">TEAM: </span> Brooke Spencer, Darrell Whitelaw, Ethan Spiva, Ryan Stackhouse, Carlee Pruden, Zach Freeze, Russell Smith, Brandon Ballard, Ben Cole, Sean Mathis, Kent Roberts
                 </p>
             </div>
-            <div className="p-5">
+            <div className="p-5 border-b-[1px] border-black lg:border-0">
                 <p className="text-lg font-medium">
                     product in development.
                 </p>

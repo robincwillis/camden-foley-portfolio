@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 import { usePathname } from "next/navigation";
 
+import Logo from '@/app/_components/logo'
+
 
 const navItems = [
     {
@@ -25,8 +27,8 @@ export default function Header() {
     const pathname = usePathname();
     return (
         <div className="sticky top-0 z-10 h-[60px] bg-white flex flex-row items-center justify-between border-b-[1px] border-black">
-            <div className="w-[60px] h-[60px] bg-blue-600 p-2 flex items-center justify-center">
-                logo
+            <div className="w-[60px] h-[60px] flex items-center justify-center">
+                <Logo />
             </div>
             <nav className="flex h-full justify-center">
                 <ul className="flex flex-row h-full">

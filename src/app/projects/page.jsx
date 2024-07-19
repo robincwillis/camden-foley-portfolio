@@ -29,15 +29,15 @@ const slides = [
 
 export default function FirstProject() {
   return (
-    <div className="flex h-full overflow-y-hidden">
-      {/* <Sidebar 
+    <div className="lg:flex lg:h-full lg:overflow-y-hidden pb-[184px] lg:pb-0">
+      <Sidebar 
         image={project.image}
         title={project.title}
         client={project.client}
         date={project.date}
         tags={project.tags} 
-      /> */}
-      <div className="flex-1 overflow-y-scroll bg-green-200">
+      />
+      <div className="lg:flex-1 lg:overflow-y-scroll">
         {slides.map((slide, index) => (
           <ProjectSlide 
             key={slide.id} 

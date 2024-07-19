@@ -26,10 +26,10 @@ function FrozenRouter(props) {
 
 
 export default function Template({ children }) {
-  console.log('template re render')
+  // console.log('template re render')
   let pathname = usePathname();
 
-  console.log(pathname)
+  // console.log(pathname)
 
   return (
     <>
