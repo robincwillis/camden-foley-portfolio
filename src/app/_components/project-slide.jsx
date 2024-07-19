@@ -78,7 +78,7 @@ export default function ProjectSlide({
 
 
     return (
-        <div className={clsx('py-5 lg:p-5 pb-0', {
+        <div className={clsx('py-5 pb-0 lg:p-5 lg:pb-0', {
             'border-b-[1px] border-black': !isLast
         })}>
             {/* Image Container */}
@@ -110,7 +110,7 @@ export default function ProjectSlide({
             <div
                 className="w-full flex items-center justify-between"
             >
-                <div className="p-5 lg:py-5">
+                <div className="p-5 lg:py-5 lg:px-0">
                     <p className="font-light">
                         <span className="font-medium">4FT CASE:</span> Modular case for aisle construction.
                     </p>
