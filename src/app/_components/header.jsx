@@ -16,11 +16,7 @@ const navItems = [
     {
         href: "/about",
         label: "INFO"
-    },
-    {
-        href: "/projects",
-        label: "PROJ"
-    },
+    }
 ]
 
 export default function Header() {
