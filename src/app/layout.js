@@ -5,6 +5,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import "./globals.css";
 
+import { AppProvider } from '@/app/_context/app-context'
+
 import Header from '@/app/_components/header';
 import Footer from '@/app/_components/footer';
 import Transition from '@/app/_components/page-transition';
@@ -45,11 +47,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`${halyard.variable} ${openSans.variable} font-sans font-normal bg-white h-screen flex flex-col`}>
-        <Header />
-        <Transition>
-          {children}
-        </Transition>
-        <Footer />
+        <AppProvider>
+          <Header />
+          <Transition>
+            {children}
+          </Transition>
+          <Footer />
+        </AppProvider>
       </body>
     </html>
   );
