@@ -18,7 +18,7 @@ export async function GET(request) {
         return new Response("Invalid token", { status: 401 });
     }
 
-    const project = await getProject(slug);
+    const project = await getProject(slug.replace(/^\/+/g, ''));
 
     if (!project) {
         return new Response("Project not found", { status: 404 });
