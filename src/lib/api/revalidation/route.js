@@ -10,6 +10,9 @@ export async function POST(request) {
   }
 
   revalidateTag("projects");
+  revalidateTag("projectSections");
+  revalidateTag("pages");
+  revalidateTag("site");
 
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }

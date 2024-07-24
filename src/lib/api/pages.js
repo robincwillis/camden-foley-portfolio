@@ -69,6 +69,6 @@ export async function getPage(
         }
       }`
 
-    const page = await fetchGraphQL(query, isDraftMode)
+    const page = await fetchGraphQL(query, isDraftMode, ['pages'])
     return extractEntries(page, 'pageCollection')[0]
 }

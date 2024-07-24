@@ -97,7 +97,8 @@ export async function getProject(
           }
         }
       }`,
-    isDraftMode
+    isDraftMode,
+    ['projects']
   );
   return extractEntries(project, 'projectCollection')[0];
 }

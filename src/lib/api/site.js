@@ -33,6 +33,6 @@ export async function getSite(
           }
         }
       }`
-    const site = await fetchGraphQL(query, isDraftMode)
+    const site = await fetchGraphQL(query, isDraftMode, ['site'])
     return extractEntries(site, 'siteCollection')[0]
 }

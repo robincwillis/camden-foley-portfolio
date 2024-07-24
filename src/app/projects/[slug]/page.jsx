@@ -1,4 +1,5 @@
 
+import { draftMode } from 'next/headers'
 
 import { getProject } from '@/lib/api/projects'
 import { getProjectSections } from '@/lib/api/projectSections'
@@ -12,14 +13,18 @@ import Head from '@/app/_components/head'
 export const generateMetadata = async ({
   params
 }) => {
-  const project = await getProject(params.slug)
+  const { isEnabled } = draftMode()
+
+  const project = await getProject(params.slug, isEnabled)
   return { title: project.name }
 }
 
 export default async function Project({
   params
 }) {
-  const project = await getProject(params.slug)
+  const { isEnabled } = draftMode()
+
+  const project = await getProject(params.slug, isEnabled)
 
   const sectionIds = getCollectionIds(project.sectionsCollection)
   const sections = await getProjectSections(sectionIds)

@@ -38,6 +38,6 @@ export async function getProjectSections(
             }
         }
     }`
-    const projectSections = await fetchGraphQL(query, isDraftMode)
+    const projectSections = await fetchGraphQL(query, isDraftMode, ['projectSections'])
     return extractEntries(projectSections, 'projectSectionCollection') 
 } 
