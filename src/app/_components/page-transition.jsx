@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useContext, useState, useRef, useEffect } from "react";
 
@@ -9,8 +9,9 @@ import { usePathname } from "next/navigation";
 
 import AppContext from '@/app/_context/app-context'
 
-import usePageTransitionSupport from "@/app/_hooks/usePageTransitionSupport";
-
+import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support";
+import usePageSwap from '@/app/_hooks/use-page-swap'
+import usePageReveal from '@/app/_hooks/use-page-reveal'
 
 const variants = {
   closed: (position) => {
@@ -43,11 +44,15 @@ function FrozenRouter(props) {
   const context = useContext(LayoutRouterContext ?? {});
   const frozen = useRef(context).current;
 
-  return (
-    <LayoutRouterContext.Provider value={frozen}>
-      {props.children}
-    </LayoutRouterContext.Provider>
-  );
+  console.log('Running Fozen Router');
+
+  return props.children
+
+  // return (
+  //   <LayoutRouterContext.Provider value={frozen}>
+  //     {props.children}
+  //   </LayoutRouterContext.Provider>
+  // );
 }
 
 
@@ -64,11 +69,17 @@ export default function Template({ children }) {
     setIsAnimating,
   } = useContext(AppContext);
 
-  const pageTransitionsSupported = usePageTransitionSupport()
+  // usePageSwap();
+  // usePageReveal();
 
-  if (pageTransitionsSupported) {
+  const viewTransitionsSupported = useViewTransitionSupport()
+
+  if (viewTransitionsSupported) {
+    console.log("viewTransitionsSupported:::")
     return children
   }
+
+  console.log('made it here');
 
   return (
     <>
@@ -80,7 +91,7 @@ export default function Template({ children }) {
             custom={[originPosition, targetPosition]}
             transition={{
               ease: cubicBezier(.35, .17, .3, .86),
-              duration: 0.8,
+              duration: 1.25,
             }}
             style={{
               position: "fixed",
@@ -89,21 +100,20 @@ export default function Template({ children }) {
               width: originPosition.width,
               height: originPosition.height,
               zIndex: 100,
-              visibility: isAnimating ? "visible" : "hidden"
+              opacity: 0.75,
+              //visibility: isAnimating ? "visible" : "hidden"
+              //zIndex: isAnimating ? 100 : -1
             }}
             className="bg-blue-300"
             onAnimationStart={() => {
-              setIsAnimating(true);
+              if (!isAnimating) {
+                setIsAnimating(true);
+              }
             }}
             onAnimationComplete={() => {
-              // setTest(false);
-              // setAnimating(false)
-              // setAnimationEnded(true)
-              // setAnimationStarted(false)
-              // && pathname !== '/'
               setIsAnimating(false);
               if (pathname !== '/projects') {
-                //setTest(true);
+
                 console.log('clear positions');
                 // setOriginPosition(null);
                 // setTargetPosition(null);

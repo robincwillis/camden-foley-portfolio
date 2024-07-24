@@ -1,66 +1,75 @@
+"use client"
+
 import { useContext, useRef } from 'react';
-import Link from 'next/link';
+
+import Link from '@/app/_components/link'
 
 
 import AppContext from '@/app/_context/app-context'
 import Image from '@/app/_components/image';
 
-
+import { dateToYearString } from '@/lib/utils/format';
 
 export default function ProjectThumbnail({
     id,
     image,
-    title,
+    name,
     client,
     date,
+    slug,
     tags
 }) {
 
     const imageRef = useRef(null)
     const { cloneElement, setOriginPosition, setIsAnimating, setCurrentProject } = useContext(AppContext);
 
-    const imageComponent = <Image ref={imageRef} imageUrl={image} />
+    const imageComponent = <Image id={id} ref={imageRef} imageUrl={image.url} width={image.width} height={image.height} alt={image.description} />
     
     const handleClone = (elementToClone, ref) => {
         const rect = ref.current.getBoundingClientRect();
+        setIsAnimating(true);
         setOriginPosition({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
         cloneElement(elementToClone);
-        setIsAnimating(true);
-        setCurrentProject(id);
-        
-        // console.log(ref);
-        // console.log(rect);
     };
 
     return (
         <Link
-            href="/projects"
+            href={`/projects${slug}`}
             className="flex flex-col space-y-1"
         >
             <div
                 onClick={() => {
-                    console.log('got Click');
                     handleClone(imageComponent, imageRef);
                 }}
             >
-
-                {imageComponent}
+                <div
+                    style={{
+                        viewTransitionName: `image-${id}`
+                    }}
+                >
+                    {imageComponent}
+                </div>
                 
                 <p className="font-display text-base">
-                    {title}
+                    {name}
                 </p>
                 <p className="font-display font-semibold text-[10px] tracking-widest">
-                    <span>{client.toUpperCase()}</span>
+                    {client && (
+                        <span>{client.toUpperCase()}</span>
+                    )}
                     <span>|</span>
-                    <span>{date}</span>
+                    <span>{dateToYearString(new Date(date))}</span>
                 </p>
-                <ul>
+                <p className="font-display fon-semibold text-[8px] text-gray-400 tracking-wider">
+                    {tags}
+                </p>
+                {/* <ul>
                     {tags.map((tag) => (
-                        <li key={tag} className="font-display fon-semibold text-[8px] text-gray-400 tracking-wider">
+                        <li key={tag} className=>
                             {tag.toUpperCase()}
                         </li>
                     ))}
-                </ul>
+                </ul> */}
             </div>
         </Link>
     )

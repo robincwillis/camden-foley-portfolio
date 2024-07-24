@@ -1,18 +1,24 @@
 "use client"
-
 import { useRef, useEffect, useContext } from 'react'
-import Image from '@/app/_components/image';
 
 import AppContext from '@/app/_context/app-context'
 
+import Image from '@/app/_components/image'
+import RichText from '@/app/_components/rich-text'
+
 export default function Sidebar({
+    id,
     image,
     title,
     client,
     date,
-    tags
+    tags,
+    role,
+    team,
+    brief,
+    closing
 }) {
-    const imageRef = useRef(null); 
+    const imageRef = useRef(null);
     const { setTargetPosition } = useContext(AppContext);
 
     useEffect(() => {
@@ -22,45 +28,82 @@ export default function Sidebar({
         }
     }, [imageRef.current])
 
+    // TODO wait for animation to finish and render image
+    // Don't render animation if sidebar is scrolled
+    // Or update image position if sidebar is scrolled
+
     return (
-        <div className="lg:sticky lg:pb-[60px] lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
+        <div className="lg:sticky lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
             <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
-                <Image ref={imageRef} ratio={4 / 3} imageUrl={image} />
+                <div
+                    style={{
+                        viewTransitionName: `image-${id}`
+                    }}
+                >
+                    <Image
+                        ref={imageRef}
+                        ratio={4 / 3}
+                        imageUrl={image.url}
+                        width={image.width}
+                        height={image.height}
+                        alt={image.description}
+                    />
+                </div>
                 <div className="flex flex-col space-y-2">
-                <h1 className="font-display text-[32px]">
-                    {title}
-                </h1>
-                <h2 className="font-display text-sm tracking-widest">
-                    <span>{client.toUpperCase()}</span>
-                    <span>{` | `}</span>
-                    <span>{date}</span>
-                </h2>
-                <ul>
+                    <h1 className="font-display text-[32px]">
+                        {title}
+                    </h1>
+                    <h2 className="font-display text-sm tracking-widest">
+                        <span>{client.toUpperCase()}</span>
+                        <span>{` | `}</span>
+                        <span>{date}</span>
+                    </h2>
+                    {/* <ul>
                     {tags.map((tag) => (
                         <li key={tag} className="font-display fon-semibold text-[12px] text-gray-400 tracking-wider">
                             {tag.toUpperCase()}
                         </li>
                     ))}
-                </ul>
+                </ul> */}
+                    <p className="font-display fon-semibold text-[12px] text-gray-400 tracking-wider">
+                        {tags}
+                    </p>
                 </div>
             </div>
             <div className="p-5 border-b-[1px] border-black">
-                <p className="text-sm font-light">
-                    <span className="font-medium">BRIEF: </span> Walmart, the world’s largest retailer, is preparing for the next lifecycle of refrigeration cases with a focus is on developing modular designs, adaptive configurations, simple installation and maintenance procedures, and enhancing both the customer and associate experience.
-                </p>
+                <RichText
+                    document={brief.json}
+                    classNames={{
+                        paragraph: 'text-sm font-light',
+                        bold: 'font-medium'
+                    }}
+                />
+
             </div>
             <div className="p-5 border-b-[1px] border-black">
-                <p className="text-sm font-light">
-                    <span className="font-medium">ROLE: </span> Design Manager & Lead Industrial Designer
-                </p>
-                <p className="text-sm font-light">
-                <span className="font-medium">TEAM: </span> Brooke Spencer, Darrell Whitelaw, Ethan Spiva, Ryan Stackhouse, Carlee Pruden, Zach Freeze, Russell Smith, Brandon Ballard, Ben Cole, Sean Mathis, Kent Roberts
-                </p>
+                <RichText
+                    document={role.json}
+                    classNames={{
+                        paragraph: 'text-sm font-light',
+                        bold: 'font-medium'
+                    }}
+                />
+                <RichText
+                    document={team.json}
+                    classNames={{
+                        paragraph: 'text-sm font-light',
+                        bold: 'font-medium'
+                    }}
+                />
             </div>
             <div className="p-5 border-b-[1px] border-black lg:border-0">
-                <p className="text-lg font-medium">
-                    product in development.
-                </p>
+                <RichText
+                    document={closing.json}
+                    classNames={{
+                        paragraph: 'text-lg',
+                        bold: 'font-medium'
+                    }}
+                />
             </div>
         </div>
     );

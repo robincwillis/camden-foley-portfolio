@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const usePageTransitionSupport = () => {
+const useViewTransitionSupport = () => {
   const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
@@ -12,4 +12,4 @@ const usePageTransitionSupport = () => {
   return isSupported;
 };
 
-export default usePageTransitionSupport;
+export default useViewTransitionSupport;

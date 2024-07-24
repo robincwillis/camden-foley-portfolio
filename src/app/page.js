@@ -1,20 +1,20 @@
-"use client"
+
+
+import { getAllProjects } from '@/lib/api/projects'
+import { getPage } from '@/lib/api/pages'
 
 import ProjectThumbnail from '@/app/_components/project-thumbnail'
+import RichText from '@/app/_components/rich-text'
 
-const imageUrl = 'https://images.unsplash.com/photo-1718027808460-7069cf0ca9ae?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const page = await getPage('')
+const projects = await getAllProjects()
 
-const projects = Array.from({ length: 31 }, (_, i) => ({
-  id: i,
-  image: imageUrl,
-  title: "Future Refidgeration",
-  client: "Walmart",
-  date: "2024",
-  tags: ["project in development"]
-}));
+export const metadata = {
+  title: page.title
+}
 
-
-export default function Home() {
+export default async function Home() {
+  const lockup = page?.sectionsCollection?.items[0]
 
   return (
     <div className="p-10 pb-[184px] lg:pb-[80px] flex flex-col space-y-10">
@@ -22,18 +22,21 @@ export default function Home() {
       <div className="lg:grid lg:grid-cols-12 lg:gap-4">
         <div className="lg:col-span-3 pb-5 lg:pb-0">
           <h1 className="text-4xl font-medium">
-            Portfolio.
+            {lockup?.headline}
           </h1>
         </div>
         <div className="lg:col-span-3">
           <h2 className="text-lg">
-            @ Walmart. Razer. IDEO. NewDeal.
+            {lockup?.subHeadline}
           </h2>
         </div>
         <div className="lg:col-span-6">
-          <h3 className="text-lg font-light">
-            w/ Google. Meta. Amazon. Verizon. Fitbit. Belkin. Herschel. J&J. Verb Surgical. Ford. Nestle. Lilly. Kohls. Michelin. Marvin. Willow. Ainsworth.
-          </h3>
+          <RichText
+            document={lockup.body.json}
+            classNames={{
+              paragraph: "text-lg font-light"
+            }}
+          />
         </div>
       </div>
       {/* Project Grid */}
@@ -43,8 +46,10 @@ export default function Home() {
         {projects.map((project) => (
           <ProjectThumbnail
             key={project.id}
-            image={project.image}
-            title={project.title}
+            id={project.sys.id}
+            slug={project.slug}
+            image={project.heroImage}
+            name={project.name}
             client={project.client}
             date={project.date}
             tags={project.tags}

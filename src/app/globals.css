@@ -25,3 +25,29 @@ body {
     text-wrap: balance;
   }
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1.5s;
+} 
+
+/* #project-2 {
+  view-transition-name: image;
+} */
+
+
+::view-transition-group(project-*) {
+  animation-duration: 1.5s;
+}
+
+
+
+/* ::view-transition-old(root) {
+  animation: 2s transition-out 0s ease;
+}
+
+::view-transition-new(root) {
+  animation: 2s transition-in 0s ease;
+} */
+
+

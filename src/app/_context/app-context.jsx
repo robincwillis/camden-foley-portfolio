@@ -1,12 +1,13 @@
-"use client"
+'use client'
+
 import React, { createContext, useState } from 'react';
 
 const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children, site }) => {
     const [state, setState] = useState({
         user: null,
-        theme: 'light',
+        site: site,
         box: {
             x: 50,
             y: 50,
@@ -44,6 +45,7 @@ export const AppProvider = ({ children }) => {
     return (
         <AppContext.Provider value={{
             state,
+            site,
             clonedElement,
             cloneElement,
             originPosition,
