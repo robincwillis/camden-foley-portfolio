@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-const useViewTransitionSupport = () => {
-  const [isSupported, setIsSupported] = useState(false);
+const usePageTransitionSupport = () => {
+  const [isSupported, setIsSupported] = useState();
 
   useEffect(() => {
     setIsSupported(typeof document.startViewTransition === 'function');
@@ -12,4 +12,4 @@ const useViewTransitionSupport = () => {
   return isSupported;
 };
 
-export default useViewTransitionSupport;
+export default usePageTransitionSupport;

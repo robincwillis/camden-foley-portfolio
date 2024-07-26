@@ -50,6 +50,13 @@ const UnlockModal = ({ onSubmit }) => {
 
     }
 
+    const handleClose = () => {
+        setPassword('')
+        setPasswordIncorrect(false)
+        setPasswordCorrect(false)
+        setModalOpen(false)
+    }
+
     return (
         <AnimatePresence initial={true} mode="popLayout">
             {modalOpen && (
@@ -65,7 +72,7 @@ const UnlockModal = ({ onSubmit }) => {
                 >
                     <div
                         className="z-30 fixed top-0 left-0 right-0 bottom-0 w-[full] h-[full]"
-                        onClick={() => setModalOpen(false)}
+                        onClick={handleClose}
                     />
                     <motion.div
                         className="relative z-40"

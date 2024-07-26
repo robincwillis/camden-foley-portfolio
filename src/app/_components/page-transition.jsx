@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useContext, useState, useRef, useEffect } from "react";
 
@@ -40,19 +40,17 @@ const variants = {
 }
 
 // Prevents instant page opening
-function FrozenRouter(props) {
+const FrozenRouter = (props) => {
   const context = useContext(LayoutRouterContext ?? {});
   const frozen = useRef(context).current;
 
   console.log('Running Fozen Router');
 
-  return props.children
-
-  // return (
-  //   <LayoutRouterContext.Provider value={frozen}>
-  //     {props.children}
-  //   </LayoutRouterContext.Provider>
-  // );
+  return (
+    <LayoutRouterContext.Provider value={frozen}>
+      {props.children}
+    </LayoutRouterContext.Provider>
+  );
 }
 
 
@@ -73,7 +71,9 @@ export default function Template({ children }) {
   // usePageReveal();
 
   const viewTransitionsSupported = useViewTransitionSupport()
-
+  if (typeof viewTransitionsSupported === 'undefined') {
+    return null
+  }
   if (viewTransitionsSupported) {
     console.log("viewTransitionsSupported:::")
     return children

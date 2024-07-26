@@ -1,5 +1,4 @@
 
-
 import NextLink from 'next/link';
 import { Link as NextViewTransitionLink } from 'next-view-transitions'
 import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support"

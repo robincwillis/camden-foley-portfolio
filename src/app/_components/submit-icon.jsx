@@ -36,14 +36,14 @@ const SubmitIcon = ({state}) => {
       // color="white"
     >
       <motion.path
-
+        stroke-linecap="square"
         stroke="currentColor"
         variants={stem1}
         animate={state()}
         transition={{ duration: 0.2 }}
       />
       <motion.path
-
+        stroke-linecap="square"
         stroke="currentColor"
         variants={stem2}
         animate={state()}
