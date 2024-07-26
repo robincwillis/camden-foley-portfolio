@@ -13,12 +13,13 @@ export const AppProvider = ({ children, site }) => {
             y: 50,
             w: 100,
             h: 100,
-        }
+        },
+        modalOpen: false
         // Add other global states here
     });
 
     const [clonedElement, setClonedElement] = useState(null);
-    const [isOpen, setIsOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
     const [isAnimating, setIsAnimating] = useState(false);
     const [originPosition, setOriginPosition] = useState(null) //useState({ x: 0, y: 0, width: 0, height: 0 });
     const [targetPosition, setTargetPosition] = useState(null) //useState({ x: 0, y: 0, width: 0, height: 0 });
@@ -55,7 +56,9 @@ export const AppProvider = ({ children, site }) => {
             isAnimating, 
             setIsAnimating,
             currentProject, 
-            setCurrentProject
+            setCurrentProject,
+            modalOpen,
+            setModalOpen
         }}>
             {children}
         </AppContext.Provider>

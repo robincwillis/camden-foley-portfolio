@@ -1,10 +1,11 @@
 
-import { draftMode } from 'next/headers'
+import { draftMode, cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 import { getProject } from '@/lib/api/projects'
 import { getProjectSections } from '@/lib/api/projectSections'
 import { getCollectionIds } from '@/lib/utils/contentful'
-
+import { isLoggedIn } from '@/lib/utils/cookies'
 
 import Sidebar from '@/app/_components/sidebar'
 import ProjectSlide from '@/app/_components/project-slide'
@@ -23,8 +24,11 @@ export default async function Project({
   params
 }) {
   const { isEnabled } = draftMode()
-
   const project = await getProject(params.slug, isEnabled)
+
+  if (project.locked && !isLoggedIn()) {
+    redirect('/')
+  }
 
   const sectionIds = getCollectionIds(project.sectionsCollection)
   const sections = await getProjectSections(sectionIds)
@@ -37,7 +41,7 @@ export default async function Project({
       <Sidebar
         id={project.id}
         image={project.heroImage}
-        title={project.title}
+        name={project.name}
         client={project.client}
         date={project.date}
         tags={project.tags} 

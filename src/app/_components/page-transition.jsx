@@ -78,9 +78,7 @@ export default function Template({ children }) {
     console.log("viewTransitionsSupported:::")
     return children
   }
-
-  console.log('made it here');
-
+  
   return (
     <>
       <AnimatePresence initial={false} mode="popLayout">

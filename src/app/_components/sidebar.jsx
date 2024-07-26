@@ -9,7 +9,7 @@ import RichText from '@/app/_components/rich-text'
 export default function Sidebar({
     id,
     image,
-    title,
+    name,
     client,
     date,
     tags,
@@ -51,7 +51,7 @@ export default function Sidebar({
                 </div>
                 <div className="flex flex-col space-y-2">
                     <h1 className="font-display text-[32px]">
-                        {title}
+                        {name}
                     </h1>
                     <h2 className="font-display text-sm tracking-widest">
                         <span>{client.toUpperCase()}</span>

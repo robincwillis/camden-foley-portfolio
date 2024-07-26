@@ -15,6 +15,8 @@ import { AppProvider } from '@/app/_context/app-context'
 
 import Header from '@/app/_components/header';
 import Footer from '@/app/_components/footer';
+import UnlockModal from '@/app/_components/unlock-modal'
+
 import Transition from '@/app/_components/page-transition';
 
 const openSans = Open_Sans({ subsets: ['latin'], variable: '--font-open-sans' });
@@ -66,6 +68,7 @@ export default function RootLayout({ children }) {
               {children}
             </Transition>
             <Footer site={site} />
+            <UnlockModal />
           </AppProvider>
         </body>
       </html>

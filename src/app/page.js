@@ -3,6 +3,8 @@
 import { getAllProjects } from '@/lib/api/projects'
 import { getPage } from '@/lib/api/pages'
 
+import { isLoggedIn } from '@/lib/utils/cookies'
+
 import ProjectThumbnail from '@/app/_components/project-thumbnail'
 import RichText from '@/app/_components/rich-text'
 
@@ -14,6 +16,10 @@ export const metadata = {
 }
 
 export default async function Home() {
+
+  //const loggedIn = false;
+ const loggedIn =  isLoggedIn();
+
   const lockup = page?.sectionsCollection?.items[0]
 
   return (
@@ -53,6 +59,7 @@ export default async function Home() {
             client={project.client}
             date={project.date}
             tags={project.tags}
+            locked={!loggedIn && project.locked}
           />
         ))}
       </div>

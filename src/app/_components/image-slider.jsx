@@ -22,7 +22,7 @@ const ImageSlider = ({ images }) => {
         <div>
             <Slider {...settings}>
                 {images.map((image) => (
-                    <div key={image.id} className="px-2.5">
+                    <div key={image.sys.id} className="px-2.5">
                         <div
                             style={{
                                 width: '100%',
@@ -31,8 +31,8 @@ const ImageSlider = ({ images }) => {
                             }}
                         >
                             <Image
-                                src={image.src}
-                                alt={image.alt}
+                                src={image.url}
+                                alt={image.description}
                                 //layout="responsive"
                                 // fill
                                 style={{

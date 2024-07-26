@@ -4,48 +4,9 @@ import clsx from 'clsx';
 import Image from "next/image";
 import { motion } from 'framer-motion';
 
-
-
 import AccordionIcon from '@/app/_components/accordion-icon';
 import ImageSlider from '@/app/_components/image-slider';
 import RichText from '@/app/_components/rich-text'
-
-// const imageOne = "https://images.unsplash.com/photo-1602526216007-4a4a197b44aa?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-// const imageTwo = "https://images.unsplash.com/photo-1719937051176-9b98352a6cf4?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-// const imageThree = "https://images.unsplash.com/photo-1720048170996-40507a45c720?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-
-// const images = [
-//     {
-//         id: 0,
-//         src: imageOne,
-//         width: 2787,
-//         height: 4181,
-//         alt: ""
-//     },
-//     {
-//         id: 1,
-//         src: imageTwo,
-//         width: 968,
-//         height: 644,
-//         alt: ""
-//     },
-//     {
-//         id: 2,
-//         src: imageThree,
-//         width: 553,
-//         height: 779,
-//         alt: ""
-//     },
-//     // {
-//     //     id: 4,
-//     //     src: imageThree,
-//     //     width: 553,
-//     //     height: 779,
-//     //     alt: ""
-//     // },
-
-// ]
-
 
 export default function ProjectSlide({
     isLast,
