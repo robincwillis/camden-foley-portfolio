@@ -34,8 +34,6 @@ export default function ProjectThumbnail({
     const imageRef = useRef(null)
     const { setModalOpen, cloneElement, setOriginPosition, isAnimating, setIsAnimating, currentProject, setCurrentProject } = useContext(AppContext);
 
-
-
     const imageComponent = <Image ref={imageRef} imageUrl={image.url} width={image.width} height={image.height} alt={image.description} imageClassName="group-hover:grayscale transition-[filter] duration-500 ease-in-out" />
 
     useEffect(()=> {
@@ -89,11 +87,16 @@ export default function ProjectThumbnail({
             >
                 <div className="relative">
                     <div
-                        style={viewTransitionsSupported ? {
+                        // style={viewTransitionsSupported && id === '7rTrmV6oWOzOMShCDAXbMb' ? {
+                        //     viewTransitionName: `image-${id}`,
+                        // } : {
+                        //     visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
+                        // }}
+                        style={{
                             viewTransitionName: `image-${id}`,
-                        } : {
                             visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
                         }}
+
                     >
                         {imageComponent}
                     </div>

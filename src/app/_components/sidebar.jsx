@@ -37,11 +37,16 @@ export default function Sidebar({
         <div className="lg:sticky lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
             <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
                 <div
-                    style={viewTransitionsSupported ? {
-                        viewTransitionName: `image-${id}`
-                    }:{
+                    // style={viewTransitionsSupported ? {
+                    //     viewTransitionName: `image-${id}`
+                    // }:{
+                    //     visibility: isAnimating ? 'hidden' : 'visible'
+                    // }}
+                    style={{
+                        viewTransitionName: `image-${id}`,
                         visibility: isAnimating ? 'hidden' : 'visible'
                     }}
+
                 >
                     <Image
                         ref={imageRef}
@@ -61,13 +66,6 @@ export default function Sidebar({
                         <span>{` | `}</span>
                         <span>{date}</span>
                     </h2>
-                    {/* <ul>
-                    {tags.map((tag) => (
-                        <li key={tag} className="font-display fon-semibold text-[12px] text-gray-400 tracking-wider">
-                            {tag.toUpperCase()}
-                        </li>
-                    ))}
-                </ul> */}
                     <p className="font-display fon-semibold text-[12px] text-gray-400 tracking-wider">
                         {tags}
                     </p>

@@ -74,10 +74,9 @@ export default function Template({ children }) {
   }
 
   if (viewTransitionsSupported) {
-    //console.log("viewTransitionsSupported:::")
+    console.log("viewTransitionsSupported:::")
     return children
   }
-
 
   return (
     <>
