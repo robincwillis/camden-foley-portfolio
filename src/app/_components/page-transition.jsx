@@ -65,6 +65,7 @@ export default function Template({ children }) {
     setTargetPosition,
     isAnimating,
     setIsAnimating,
+    clearClonedElement
   } = useContext(AppContext);
 
   const viewTransitionsSupported = useViewTransitionSupport()
@@ -80,46 +81,49 @@ export default function Template({ children }) {
 
   return (
     <>
-      <AnimatePresence initial={false} mode="popLayout">
-        {clonedElement && originPosition && targetPosition && (
-          <motion.div
-            animate={pathname.includes("/projects") ? "open" : "closed"}
-            variants={variants}
-            custom={[originPosition, targetPosition]}
-            transition={{
-              ease: cubicBezier(.35, .17, .3, .86),
-              duration: 1.25,
-            }}
-            style={{
-              position: "fixed",
-              left: originPosition.x,
-              top: originPosition.y,
-              width: originPosition.width,
-              height: originPosition.height,
-              zIndex: 100,
-              opacity: 0.55,
-              visibility: isAnimating ? "visible" : "hidden"
-              //zIndex: isAnimating ? 100 : -1
-            }}
-            //className="bg-blue-300"
-            onAnimationStart={() => {
-              if (!isAnimating) {
-                setIsAnimating(true);
-              }
-            }}
-            onAnimationComplete={() => {
-              setIsAnimating(false);
-              if (pathname === '/info') {
-                console.log('clear positions');
-                setOriginPosition(null);
-                setTargetPosition(null);
-              }
-            }}
-          >
-            {clonedElement}
-          </motion.div>
-        )}
 
+      {clonedElement && originPosition && targetPosition && (
+        <motion.div
+          animate={pathname.includes("/projects") ? "open" : "closed"}
+          variants={variants}
+          custom={[originPosition, targetPosition]}
+          transition={{
+            ease: cubicBezier(0.34, 1.36, 0.64, 1),
+            duration: 0.8,
+          }}
+          style={{
+            position: "fixed",
+            left: originPosition.x,
+            top: originPosition.y,
+            width: originPosition.width,
+            height: originPosition.height,
+            zIndex: 100,
+            opacity: 0.55,
+            visibility: isAnimating ? "visible" : "hidden"
+            //zIndex: isAnimating ? 100 : -1
+          }}
+          //className="bg-blue-300"
+          onAnimationStart={() => {
+            if (!isAnimating) {
+              setIsAnimating(true);
+            }
+          }}
+          onAnimationComplete={() => {
+            setIsAnimating(false);
+            if (pathname === '/info') {
+              console.log('clear positions');
+              setOriginPosition(null);
+              setTargetPosition(null);
+            }
+            if (pathname === '/') {
+              clearClonedElement();
+            }
+          }}
+        >
+          {clonedElement}
+        </motion.div>
+      )}
+      <AnimatePresence initial={false} mode="popLayout">
         <motion.main
           key={pathname}
           initial={{ opacity: 0 }}

@@ -32,15 +32,25 @@ export default function ProjectThumbnail({
 }) {
     const viewTransitionsSupported = useViewTransitionSupport()
     const imageRef = useRef(null)
-    const { setModalOpen, cloneElement, setOriginPosition, setIsAnimating, setCurrentProject } = useContext(AppContext);
+    const { setModalOpen, cloneElement, setOriginPosition, isAnimating, setIsAnimating, currentProject, setCurrentProject } = useContext(AppContext);
+
+
 
     const imageComponent = <Image ref={imageRef} imageUrl={image.url} width={image.width} height={image.height} alt={image.description} imageClassName="group-hover:grayscale transition-[filter] duration-500 ease-in-out" />
+
+    useEffect(()=> {
+        if (currentProject && currentProject === id) {
+            const rect = imageRef.current.getBoundingClientRect();
+            setOriginPosition({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
+        }
+    }, [currentProject]);
 
     const handleClone = (elementToClone, ref) => {
         const rect = ref.current.getBoundingClientRect();
         setIsAnimating(true);
         setOriginPosition({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
         cloneElement(elementToClone);
+        setCurrentProject(id);
     };
 
     const handleLocked = (e) => {
@@ -81,7 +91,9 @@ export default function ProjectThumbnail({
                     <div
                         style={viewTransitionsSupported ? {
                             viewTransitionName: `image-${id}`,
-                        } : {}}
+                        } : {
+                            visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
+                        }}
                     >
                         {imageComponent}
                     </div>

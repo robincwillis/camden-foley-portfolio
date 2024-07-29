@@ -23,7 +23,6 @@ export default function Header({
                     {pages.map((page) => (
                         <li key={page.slug} className="h-full">
                             <Link
-                                scroll={false}
                                 href={page.slug}
                                 className={clsx(
                                     "flex h-full text-xl items-center justify-center hover:font-medium md:flex-none md:justify-start w-[75px]"

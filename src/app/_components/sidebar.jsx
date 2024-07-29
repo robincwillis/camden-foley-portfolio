@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useEffect, useContext } from 'react'
+import { useRef, useEffect, useState, useContext } from 'react'
 
 import AppContext from '@/app/_context/app-context'
 
@@ -20,10 +20,11 @@ export default function Sidebar({
     brief,
     closing
 }) {
-    const imageRef = useRef(null);
     const viewTransitionsSupported = useViewTransitionSupport()
 
-    const { setTargetPosition } = useContext(AppContext);
+    const imageRef = useRef(null);
+
+    const { isAnimating, setTargetPosition } = useContext(AppContext);
 
     useEffect(() => {
         if (imageRef && imageRef.current) {
@@ -32,18 +33,15 @@ export default function Sidebar({
         }
     }, [imageRef.current])
 
-    // TODO wait for animation to finish and render image
-    // Don't render animation if sidebar is scrolled
-    // Or update image position if sidebar is scrolled
-
-
     return (
         <div className="lg:sticky lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
             <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
                 <div
                     style={viewTransitionsSupported ? {
                         viewTransitionName: `image-${id}`
-                    }: {}}
+                    }:{
+                        visibility: isAnimating ? 'hidden' : 'visible'
+                    }}
                 >
                     <Image
                         ref={imageRef}

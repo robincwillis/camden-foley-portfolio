@@ -23,7 +23,7 @@ export const AppProvider = ({ children, site }) => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [originPosition, setOriginPosition] = useState(null) //useState({ x: 0, y: 0, width: 0, height: 0 });
     const [targetPosition, setTargetPosition] = useState(null) //useState({ x: 0, y: 0, width: 0, height: 0 });
-    const [ currentProject, setCurrentProject ] = useState(null)
+    const [currentProject, setCurrentProject] = useState(null)
 
     const cloneElement = (element) => {
         if (!clonedElement) {
@@ -31,17 +31,9 @@ export const AppProvider = ({ children, site }) => {
         }
     };
 
-
-    const updateUser = (user) => {
-        setState((prevState) => ({ ...prevState, user }));
-    };
-
-    const toggleTheme = () => {
-        setState((prevState) => ({
-            ...prevState,
-            theme: prevState.theme === 'light' ? 'dark' : 'light',
-        }));
-    };
+    const clearClonedElement = () => {
+        setClonedElement(null)
+    }
 
     return (
         <AppContext.Provider value={{
@@ -58,7 +50,8 @@ export const AppProvider = ({ children, site }) => {
             currentProject, 
             setCurrentProject,
             modalOpen,
-            setModalOpen
+            setModalOpen,
+            clearClonedElement
         }}>
             {children}
         </AppContext.Provider>
