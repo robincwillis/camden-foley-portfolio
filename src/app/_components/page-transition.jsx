@@ -18,7 +18,7 @@ const variants = {
     const originPosition = position[0]
     return {
       position: "fixed",
-      opacity: 1, 
+      opacity: 1,
       width: originPosition.width,
       height: originPosition.height,
       zIndex: 100,
@@ -44,7 +44,7 @@ const FrozenRouter = (props) => {
   const context = useContext(LayoutRouterContext ?? {});
   const frozen = useRef(context).current;
 
-  console.log('Running Fozen Router');
+  // console.log('Running Fozen Router');
 
   return (
     <LayoutRouterContext.Provider value={frozen}>
@@ -57,34 +57,33 @@ const FrozenRouter = (props) => {
 export default function Template({ children }) {
   let pathname = usePathname();
 
-  const { 
-    clonedElement, 
-    originPosition, 
+  const {
+    clonedElement,
+    originPosition,
     targetPosition,
     setOriginPosition,
-    setTargetPosition, 
+    setTargetPosition,
     isAnimating,
     setIsAnimating,
   } = useContext(AppContext);
-
-  // usePageSwap();
-  // usePageReveal();
 
   const viewTransitionsSupported = useViewTransitionSupport()
   if (typeof viewTransitionsSupported === 'undefined') {
     return null
   }
+
   if (viewTransitionsSupported) {
-    console.log("viewTransitionsSupported:::")
+    //console.log("viewTransitionsSupported:::")
     return children
   }
-  
+
+
   return (
     <>
       <AnimatePresence initial={false} mode="popLayout">
         {clonedElement && originPosition && targetPosition && (
           <motion.div
-            animate={pathname === "/projects" ? "open" : "closed"}
+            animate={pathname.includes("/projects") ? "open" : "closed"}
             variants={variants}
             custom={[originPosition, targetPosition]}
             transition={{
@@ -98,11 +97,11 @@ export default function Template({ children }) {
               width: originPosition.width,
               height: originPosition.height,
               zIndex: 100,
-              opacity: 0.75,
-              //visibility: isAnimating ? "visible" : "hidden"
+              opacity: 0.55,
+              visibility: isAnimating ? "visible" : "hidden"
               //zIndex: isAnimating ? 100 : -1
             }}
-            className="bg-blue-300"
+            //className="bg-blue-300"
             onAnimationStart={() => {
               if (!isAnimating) {
                 setIsAnimating(true);
@@ -110,11 +109,10 @@ export default function Template({ children }) {
             }}
             onAnimationComplete={() => {
               setIsAnimating(false);
-              if (pathname !== '/projects') {
-
+              if (pathname === '/info') {
                 console.log('clear positions');
-                // setOriginPosition(null);
-                // setTargetPosition(null);
+                setOriginPosition(null);
+                setTargetPosition(null);
               }
             }}
           >

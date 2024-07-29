@@ -26,28 +26,38 @@ body {
   }
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 1.5s;
-} 
-
-/* #project-2 {
-  view-transition-name: image;
-} */
 
 
-::view-transition-group(project-*) {
-  animation-duration: 1.5s;
+@keyframes transition-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    rotate: 0;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-5rem);
+  }
 }
 
+@keyframes transition-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
+/* ::view-transition-group(root) {
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+}
 
-/* ::view-transition-old(root) {
-  animation: 2s transition-out 0s ease;
+::view-transition-old(root) {
+  animation: 0.8s transition-out 0s ease-in-out;
 }
 
 ::view-transition-new(root) {
-  animation: 2s transition-in 0s ease;
+  animation: 0.8s transition-in 0s ease-in-out;
 } */
-
-

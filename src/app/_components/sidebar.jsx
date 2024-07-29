@@ -3,6 +3,8 @@ import { useRef, useEffect, useContext } from 'react'
 
 import AppContext from '@/app/_context/app-context'
 
+import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support";
+
 import Image from '@/app/_components/image'
 import RichText from '@/app/_components/rich-text'
 
@@ -19,6 +21,8 @@ export default function Sidebar({
     closing
 }) {
     const imageRef = useRef(null);
+    const viewTransitionsSupported = useViewTransitionSupport()
+
     const { setTargetPosition } = useContext(AppContext);
 
     useEffect(() => {
@@ -32,13 +36,14 @@ export default function Sidebar({
     // Don't render animation if sidebar is scrolled
     // Or update image position if sidebar is scrolled
 
+
     return (
         <div className="lg:sticky lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
             <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
                 <div
-                    style={{
+                    style={viewTransitionsSupported ? {
                         viewTransitionName: `image-${id}`
-                    }}
+                    }: {}}
                 >
                     <Image
                         ref={imageRef}

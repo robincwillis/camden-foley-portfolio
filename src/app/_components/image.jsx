@@ -10,6 +10,7 @@ const ImageComponent = forwardRef(function ImageComponent({
   id,
   width,
   height,
+  imageClassName
 }, ref) {
 
   return (
@@ -36,7 +37,7 @@ const ImageComponent = forwardRef(function ImageComponent({
           left: 0,
           objectFit: 'cover',
         }}
-        className=""
+        className={imageClassName}
         alt={alt || " "}
       />
     </div>

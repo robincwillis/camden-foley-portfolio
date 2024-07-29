@@ -39,7 +39,7 @@ export default async function Project({
         title={project.name}
       />
       <Sidebar
-        id={project.id}
+        id={project.sys.id}
         image={project.heroImage}
         name={project.name}
         client={project.client}

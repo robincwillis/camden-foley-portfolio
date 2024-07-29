@@ -87,8 +87,7 @@ export async function getProject(
   slug,
   isDraftMode = false
 ) {
-  const project = await fetchGraphQL(
-    `query {
+  const query = `query {
         projectCollection(where:{slug: "/${slug}"}, limit: 1, preview: ${
       isDraftMode ? "true" : "false"
     }) {
@@ -96,9 +95,30 @@ export async function getProject(
             ${PROJECT_GRAPHQL_FIELDS}
           }
         }
-      }`,
+      }`
+
+  const project = await fetchGraphQL(
+    query,
     isDraftMode,
     ['projects']
   );
   return extractEntries(project, 'projectCollection')[0];
+}
+
+export async function getCollectionProjects(
+  ids,
+  limit = 10,
+  isDraftMode = false
+) {
+  const query = `query {
+    projectCollection(where:{sys: {id_in: ["${ids.join('","')}"]}}, limit: ${limit}, preview: ${
+      isDraftMode ? "true" : "false"
+    }) {
+            items {
+                ${ALL_PROJECT_GRAPHQL_FIELDS}
+            }
+        }
+    }`
+    const projects = await fetchGraphQL(query, isDraftMode, ['projects'])
+    return extractEntries(projects, 'projectCollection')
 }
