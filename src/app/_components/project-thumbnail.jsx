@@ -62,9 +62,9 @@ export default function ProjectThumbnail({
                 animation-timing-function: cubic-bezier(0.34, 1.36, 0.64, 1);
             }
         `;
-        if (viewTransitionsSupported) {
+        //if (viewTransitionsSupported) {
             setViewTransitionStyles(viewTransitionStyles);
-        }
+        //}
     }, []);
 
     return (

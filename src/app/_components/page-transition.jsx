@@ -110,7 +110,6 @@ export default function Template({ children }) {
           onAnimationComplete={() => {
             setIsAnimating(false);
             if (pathname === '/info') {
-              console.log('clear positions');
               setOriginPosition(null);
               setTargetPosition(null);
             }
