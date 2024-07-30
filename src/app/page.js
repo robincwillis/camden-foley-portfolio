@@ -26,7 +26,7 @@ export default async function Home() {
   return (
     <>
 
-      <div className="p-10 pb-[184px] lg:pb-[80px] flex flex-col space-y-10">
+      <div className="p-10 pb-[184px] lg:pb-10 flex flex-col space-y-10">
         {/* Header */}
         <div className="lg:grid lg:grid-cols-12 lg:gap-4">
           <div className="lg:col-span-3 pb-5 lg:pb-0">

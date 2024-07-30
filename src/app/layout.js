@@ -10,9 +10,6 @@ import { getSite } from '@/lib/api/site'
 import { getAllPages } from '@/lib/api/pages'
 import { AppProvider } from '@/app/_context/app-context'
 
-// import { revalidatePath } from 'next/cache'
-// revalidatePath('/', 'layout')
-
 import Header from '@/app/_components/header';
 import Footer from '@/app/_components/footer';
 import UnlockModal from '@/app/_components/unlock-modal'
