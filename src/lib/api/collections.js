@@ -1,4 +1,4 @@
-import { fetchGraphQL, extractEntries } from '@/lib/utils/contentful'
+import { fetchGraphQL, extractEntries } from "@/lib/utils/contentful";
 
 const COLLECTION_GRAPHQL_FIELDS = `
     sys {
@@ -20,22 +20,18 @@ const COLLECTION_GRAPHQL_FIELDS = `
             }
         }
     }
-`
+`;
 
-export async function getCollection (
-    slug,
-    isDraftMode = false
-) {
-    const query = `query {
+export async function getCollection(slug, isDraftMode = false) {
+  const query = `query {
         collectionCollection(where:{slug: "/${slug}"}, limit: 1, preview: ${
-      isDraftMode ? "true" : "false"
-    }) {
+          isDraftMode ? "true" : "false"
+        }) {
           items {
             ${COLLECTION_GRAPHQL_FIELDS}
           }
         }
-      }`
-    const collection = await fetchGraphQL(query, isDraftMode, ['collections'])
-    return extractEntries(collection, 'collectionCollection')[0]
-
+      }`;
+  const collection = await fetchGraphQL(query, isDraftMode, ["collections"]);
+  return extractEntries(collection, "collectionCollection")[0];
 }

@@ -1,4 +1,4 @@
-import { fetchGraphQL, extractEntries } from '@/lib/utils/contentful'
+import { fetchGraphQL, extractEntries } from "@/lib/utils/contentful";
 
 const ALL_PROJECT_GRAPHQL_FIELDS = `
   sys {
@@ -16,7 +16,7 @@ const ALL_PROJECT_GRAPHQL_FIELDS = `
     height
     description
   }
-`
+`;
 
 const PROJECT_GRAPHQL_FIELDS = `
   sys {
@@ -57,59 +57,43 @@ const PROJECT_GRAPHQL_FIELDS = `
       }
     }
   }
-`
+`;
 
-export async function getAllProjects(
-  limit = 100,
-  isDraftMode = false
-) {
-
-
+export async function getAllProjects(limit = 100, isDraftMode = false) {
   // TODO order: date_DESC
   const query = `query {
         projectCollection(where:{slug_exists: true}, limit: ${limit}, preview: ${
-      isDraftMode ? "true" : "false"
-    }) {
+          isDraftMode ? "true" : "false"
+        }) {
           items {
             ${ALL_PROJECT_GRAPHQL_FIELDS}
           }
         }
-      }`
-  
-  const projects = await fetchGraphQL(
-    query,
-    isDraftMode,
-    ['projects']
-  )
-  return extractEntries(projects, 'projectCollection')
+      }`;
+
+  const projects = await fetchGraphQL(query, isDraftMode, ["projects"]);
+  return extractEntries(projects, "projectCollection");
 }
 
-export async function getProject(
-  slug,
-  isDraftMode = false
-) {
+export async function getProject(slug, isDraftMode = false) {
   const query = `query {
         projectCollection(where:{slug: "/${slug}"}, limit: 1, preview: ${
-      isDraftMode ? "true" : "false"
-    }) {
+          isDraftMode ? "true" : "false"
+        }) {
           items {
             ${PROJECT_GRAPHQL_FIELDS}
           }
         }
-      }`
+      }`;
 
-  const project = await fetchGraphQL(
-    query,
-    isDraftMode,
-    ['projects']
-  );
-  return extractEntries(project, 'projectCollection')[0];
+  const project = await fetchGraphQL(query, isDraftMode, ["projects"]);
+  return extractEntries(project, "projectCollection")[0];
 }
 
 export async function getCollectionProjects(
   ids,
   limit = 10,
-  isDraftMode = false
+  isDraftMode = false,
 ) {
   const query = `query {
     projectCollection(where:{sys: {id_in: ["${ids.join('","')}"]}}, limit: ${limit}, preview: ${
@@ -119,7 +103,7 @@ export async function getCollectionProjects(
                 ${ALL_PROJECT_GRAPHQL_FIELDS}
             }
         }
-    }`
-    const projects = await fetchGraphQL(query, isDraftMode, ['projects'])
-    return extractEntries(projects, 'projectCollection')
+    }`;
+  const projects = await fetchGraphQL(query, isDraftMode, ["projects"]);
+  return extractEntries(projects, "projectCollection");
 }

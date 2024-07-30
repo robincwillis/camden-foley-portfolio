@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
 import { useContext, useState, useRef, useEffect } from "react";
 
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-import { motion, cubicBezier, AnimatePresence } from "framer-motion"
+import { motion, cubicBezier, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-import AppContext from '@/app/_context/app-context'
+import AppContext from "@/app/_context/app-context";
 
 import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support";
-import usePageSwap from '@/app/_hooks/use-page-swap'
-import usePageReveal from '@/app/_hooks/use-page-reveal'
+import usePageSwap from "@/app/_hooks/use-page-swap";
+import usePageReveal from "@/app/_hooks/use-page-reveal";
 
 const variants = {
   closed: (position) => {
-    const originPosition = position[0]
+    const originPosition = position[0];
     return {
       position: "fixed",
       opacity: 1,
       width: originPosition.width,
       height: originPosition.height,
       zIndex: 100,
-    }
+    };
   },
   open: (position) => {
     const originPosition = position[0];
@@ -35,9 +35,9 @@ const variants = {
       width: targetPosition.width,
       height: targetPosition.height,
       zIndex: 100,
-    }
-  }
-}
+    };
+  },
+};
 
 // Prevents instant page opening
 const FrozenRouter = (props) => {
@@ -51,8 +51,7 @@ const FrozenRouter = (props) => {
       {props.children}
     </LayoutRouterContext.Provider>
   );
-}
-
+};
 
 export default function Template({ children }) {
   let pathname = usePathname();
@@ -65,22 +64,21 @@ export default function Template({ children }) {
     setTargetPosition,
     isAnimating,
     setIsAnimating,
-    clearClonedElement
+    clearClonedElement,
   } = useContext(AppContext);
 
-  const viewTransitionsSupported = useViewTransitionSupport()
-  if (typeof viewTransitionsSupported === 'undefined') {
-    return null
+  const viewTransitionsSupported = useViewTransitionSupport();
+  if (typeof viewTransitionsSupported === "undefined") {
+    return null;
   }
 
   if (viewTransitionsSupported) {
-    console.log("viewTransitionsSupported:::")
-    return children
+    console.log("viewTransitionsSupported:::");
+    return children;
   }
 
   return (
     <>
-
       {clonedElement && originPosition && targetPosition && (
         <motion.div
           animate={pathname.includes("/projects") ? "open" : "closed"}
@@ -98,7 +96,7 @@ export default function Template({ children }) {
             height: originPosition.height,
             zIndex: 100,
             opacity: 0.55,
-            visibility: isAnimating ? "visible" : "hidden"
+            visibility: isAnimating ? "visible" : "hidden",
             //zIndex: isAnimating ? 100 : -1
           }}
           //className="bg-blue-300"
@@ -109,11 +107,11 @@ export default function Template({ children }) {
           }}
           onAnimationComplete={() => {
             setIsAnimating(false);
-            if (pathname === '/info') {
+            if (pathname === "/info") {
               setOriginPosition(null);
               setTargetPosition(null);
             }
-            if (pathname === '/') {
+            if (pathname === "/") {
               clearClonedElement();
             }
           }}
@@ -134,5 +132,5 @@ export default function Template({ children }) {
         </motion.main>
       </AnimatePresence>
     </>
-  )
+  );
 }

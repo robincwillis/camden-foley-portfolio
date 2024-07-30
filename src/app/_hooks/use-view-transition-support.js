@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const usePageTransitionSupport = () => {
   const [isSupported, setIsSupported] = useState();
 
   useEffect(() => {
-    setIsSupported(typeof document.startViewTransition === 'function');
+    setIsSupported(typeof document.startViewTransition === "function");
   }, []);
 
   return isSupported;
