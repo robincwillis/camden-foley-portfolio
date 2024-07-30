@@ -66,7 +66,7 @@ export default function Sidebar({
                         <span>{` | `}</span>
                         <span>{date}</span>
                     </h2>
-                    <p className="font-display fon-semibold text-[12px] text-gray-400 tracking-wider">
+                    <p className="font-display fon-semibold text-[12px] text-gray-500 tracking-wider">
                         {tags}
                     </p>
                 </div>

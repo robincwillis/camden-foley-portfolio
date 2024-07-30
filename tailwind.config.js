@@ -10,6 +10,15 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-halyard)'],
         display: ['var(--font-open-sans)']
+      },
+      colors: {
+        gray: {
+          500: "#A0A0A0",
+          400: "#B4B4B4",
+          300: "#DCDCDC",
+          200: "#E6E6E6",
+          100: "#F0F0F0",
+        }
       }
     },
   },

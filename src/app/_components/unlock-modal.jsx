@@ -100,7 +100,7 @@ const UnlockModal = ({ onSubmit }) => {
                                     id="password"
                                     type="password"
                                     placeholder="Enter Password"
-                                    className="bg-gray-200 w-[300px] h-[60px] p-2.5 placeholder:text-gray-400 text-sm outline-none"
+                                    className="bg-gray-100 w-[300px] h-[60px] p-2.5 placeholder:text-gray-500 text-sm outline-none"
                                     value={password}
                                     onChange={(e) => {
                                         setPassword(e.target.value)

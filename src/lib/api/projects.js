@@ -25,6 +25,7 @@ const PROJECT_GRAPHQL_FIELDS = `
   name
   slug
   date
+  description
   client
   locked
   tags

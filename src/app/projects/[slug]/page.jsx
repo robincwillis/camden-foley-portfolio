@@ -17,7 +17,11 @@ export const generateMetadata = async ({
   const { isEnabled } = draftMode()
 
   const project = await getProject(params.slug, isEnabled)
-  return { title: project.name }
+  return { 
+    title: project.name,
+    keywords: project?.tags || "",
+    description: project?.description || "",
+  }
 }
 
 export default async function Project({
