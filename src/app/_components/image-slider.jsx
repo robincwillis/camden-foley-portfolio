@@ -10,8 +10,8 @@ const ImageSlider = ({ images }) => {
     speed: 500,
     //centerPadding: 100,
     slidesToShow: 1, // Show one full slide and the next one peeking
-    centerMode: true,
-    centerPadding: "10%",
+    // centerMode: true,
+    // centerPadding: "10%",
     //slidesToScroll: 1,
     //centerMode: true, // Center the slides
     swipeToSlide: true, // Allow swipe to slide
@@ -21,19 +21,17 @@ const ImageSlider = ({ images }) => {
     <div>
       <Slider {...settings}>
         {images.map((image) => (
-          <div key={image.sys.id} className="px-2.5">
+          <div key={image.sys.id} className="px-5">
             <div
               style={{
                 width: "100%",
                 position: "relative",
-                paddingTop: `${0.75 * 100}%`,
+                paddingTop: "100%",
               }}
             >
               <Image
                 src={image.url}
                 alt={image.description}
-                //layout="responsive"
-                // fill
                 style={{
                   width: "100%",
                   height: "100%",

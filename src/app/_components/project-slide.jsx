@@ -8,7 +8,13 @@ import AccordionIcon from "@/app/_components/accordion-icon";
 import ImageSlider from "@/app/_components/image-slider";
 import RichText from "@/app/_components/rich-text";
 
-export default function ProjectSlide({ isLast, title, description, images }) {
+export default function ProjectSlide({
+  isLast,
+  title,
+  description,
+  wrapDescription,
+  images,
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imagesCalculated, setImagesCalculated] = useState(false);
 
@@ -44,11 +50,7 @@ export default function ProjectSlide({ isLast, title, description, images }) {
   const toggle = () => setIsExpanded(!isExpanded);
 
   return (
-    <div
-      className={clsx("py-5 pb-0 lg:p-5 lg:pb-0", {
-        "border-b-[1px] border-black": !isLast,
-      })}
-    >
+    <div className="py-5 pb-0 lg:p-5 lg:pb-0 border-b-[1px] border-black">
       {/* Image Container */}
       <div className="hidden lg:block">
         <div className="relative flex w-full space-x-2.5">
@@ -74,7 +76,10 @@ export default function ProjectSlide({ isLast, title, description, images }) {
         <ImageSlider images={images} />
       </div>
 
-      <div className="w-full flex items-center justify-between">
+      <button
+        className="w-full flex items-center justify-between"
+        onClick={toggle}
+      >
         <div className="p-5 lg:py-5 lg:px-0">
           <RichText
             document={title.json}
@@ -84,11 +89,8 @@ export default function ProjectSlide({ isLast, title, description, images }) {
             }}
           />
         </div>
-        <button
-          onClick={toggle}
-          className="p-5 lg:mr-[-20px] flex items-center space-x-1"
-        >
-          <div className="relative w-[50px] h-[24px]">
+        <div className="p-5 lg:mr-[-20px] flex items-center space-x-1">
+          <div className="hidden lg:visible relative w-[50px] h-[24px]">
             <motion.div
               initial={true}
               animate={{ opacity: isExpanded ? 1 : 0, top: isExpanded ? 0 : 5 }}
@@ -110,8 +112,8 @@ export default function ProjectSlide({ isLast, title, description, images }) {
             </motion.div>
           </div>
           <AccordionIcon isToggled={isExpanded} />
-        </button>
-      </div>
+        </div>
+      </button>
       <motion.div
         initial={true}
         animate={{
@@ -121,7 +123,11 @@ export default function ProjectSlide({ isLast, title, description, images }) {
         transition={{ duration: 0.5, type: "spring" }}
         className="overflow-y-hidden"
       >
-        <div className="px-5 pb-5 lg:px-0">
+        <div
+          className={clsx("px-5 pb-5 lg:px-0", {
+            "lg:flex lg:space-x-5": wrapDescription,
+          })}
+        >
           <RichText
             document={description.json}
             classNames={{

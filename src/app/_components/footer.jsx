@@ -10,10 +10,10 @@ export default function Footer({ site }) {
   return (
     <div
       className={clsx(
-        "fixed bottom-0 bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
+        "lg:fixed lg:bottom-0 bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
         {
-          "transform translate-y-full": scrollDirection === "down",
-          "transform translate-y-0": scrollDirection === "up",
+          "transform lg:translate-y-full": scrollDirection === "down",
+          "transform lg:translate-y-0": scrollDirection === "up",
         },
       )}
     >
@@ -29,6 +29,7 @@ export default function Footer({ site }) {
             >
               <a
                 href={link.to}
+                target="_blank"
                 className="text-lg underline underline-offset-2"
               >
                 {link.label}

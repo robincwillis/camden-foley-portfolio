@@ -9,6 +9,7 @@ import { isLoggedIn } from "@/lib/utils/cookies";
 import Sidebar from "@/app/_components/sidebar";
 import ProjectSlide from "@/app/_components/project-slide";
 import Head from "@/app/_components/head";
+import RichText from "@/app/_components/rich-text";
 
 export const generateMetadata = async ({ params }) => {
   const { isEnabled } = draftMode();
@@ -31,9 +32,12 @@ export default async function Project({ params }) {
 
   const sectionIds = getCollectionIds(project.sectionsCollection);
   const sections = await getProjectSections(sectionIds);
+  const sortedSections = sections.sort((a, b) => {
+    return sectionIds.indexOf(a.sys.id) - sectionIds.indexOf(b.sys.id);
+  });
 
   return (
-    <div className="lg:flex lg:h-full lg:overflow-y-hidden pb-[184px] lg:pb-[60px]">
+    <div className="lg:flex lg:h-full lg:overflow-y-hidden lg:pb-[60px]">
       <Head title={project.name} />
       <Sidebar
         id={project.sys.id}
@@ -46,17 +50,28 @@ export default async function Project({ params }) {
         role={project.role}
         team={project.team}
         closing={project.closing}
+        highlights={project.highlights}
       />
       <div className="lg:flex-1 lg:overflow-y-scroll">
-        {sections.map((section, index) => (
+        {sortedSections.map((section, index) => (
           <ProjectSlide
             key={section.sys.id}
             title={section.title}
             description={section.description}
             images={section.imagesCollection.items}
-            isLast={index === sections.length - 1}
+            wrapDescription={section.wrapDescription}
           />
         ))}
+
+        <div className="p-5">
+          <RichText
+            document={project.closing.json}
+            classNames={{
+              paragraph: "text-2xl",
+              bold: "font-medium",
+            }}
+          />
+        </div>
       </div>
     </div>
   );

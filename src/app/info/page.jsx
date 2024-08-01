@@ -12,9 +12,9 @@ export const metadata = {
 export default async function InfoPage() {
   const lockup = page?.sectionsCollection?.items[0];
   return (
-    <div className="p-10 flex flex-col lg:items-center lg:justify-center lg:flex-1 lg:h-full pb-[184px] lg:pb-[80px]">
+    <div className="p-5 lg:p-10 flex flex-col lg:items-center lg:justify-center lg:flex-1 lg:h-full">
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-4">
-        <div className="lg:col-span-6 flex flex-col space-y-5 lg:space-y-2.5">
+        <div className="lg:col-span-6 flex flex-col space-y-2.5 lg:space-y-5">
           <h1 className="text-4xl	lg:text-5xl	font-medium">{lockup?.headline}</h1>
           <div>
             <p className="text-lg lg:text-2xl font-medium">
@@ -29,12 +29,14 @@ export default async function InfoPage() {
           </div>
           <ul className="hidden lg:flex text-4xl leading-[3rem] gap-x-2.5 font-medium  flex-row flex-wrap">
             {lockup?.tags?.map((tag) => (
-              <li key={tag}>{tag}</li>
+              <li className="leading-[2.75rem]" key={tag}>
+                {tag}
+              </li>
             ))}
           </ul>
         </div>
 
-        <div className="lg:col-start-8 lg:col-span-5 lg:flex lg:justify-end">
+        <div className="lg:col-start-8 lg:col-span-5 space-y-5 flex flex-col lg:flex-row lg:justify-end">
           {lockup.image && (
             <Image
               imageUrl={lockup.image.url}
@@ -44,6 +46,13 @@ export default async function InfoPage() {
               alt={lockup.image.description}
             />
           )}
+          <ul className="flex text-2xl gap-x-2.5 font-medium  flex-row flex-wrap lg:hidden">
+            {lockup?.tags?.map((tag) => (
+              <li className="leading-[2.75rem]" key={tag}>
+                {tag}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

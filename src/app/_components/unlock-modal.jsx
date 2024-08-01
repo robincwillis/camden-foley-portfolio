@@ -72,7 +72,7 @@ const UnlockModal = ({ onSubmit }) => {
             onClick={handleClose}
           />
           <motion.div
-            className="relative z-40"
+            className="relative grow sm:grow-0 z-40 p-5"
             variants={shakeAnimation}
             initial="initial"
             animate={passwordIncorrect && "animate"}
@@ -92,7 +92,7 @@ const UnlockModal = ({ onSubmit }) => {
                   id="password"
                   type="password"
                   placeholder="Enter Password"
-                  className="bg-gray-100 w-[300px] h-[60px] p-2.5 placeholder:text-gray-500 text-sm outline-none"
+                  className="bg-gray-100 grow sm:w-[300px] h-[60px] p-2.5 placeholder:text-gray-500 text-sm outline-none"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);

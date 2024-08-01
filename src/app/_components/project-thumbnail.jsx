@@ -112,38 +112,42 @@ export default function ProjectThumbnail({
           }
         }}
       >
-        <div className="relative">
-          <div
-            // style={viewTransitionsSupported && id === '7rTrmV6oWOzOMShCDAXbMb' ? {
-            //     viewTransitionName: `image-${id}`,
-            // } : {
-            //     visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
-            // }}
-            style={{
-              viewTransitionName: `image-${id}`,
-              visibility:
-                isAnimating && currentProject && currentProject === id
-                  ? "hidden"
-                  : "visible",
-            }}
-          >
+        <div
+          // style={viewTransitionsSupported && id === '7rTrmV6oWOzOMShCDAXbMb' ? {
+          //     viewTransitionName: `image-${id}`,
+          // } : {
+          //     visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
+          // }}
+          style={{
+            viewTransitionName: `image-${id}`,
+            visibility:
+              isAnimating && currentProject && currentProject === id
+                ? "hidden"
+                : "visible",
+          }}
+        >
+          <div className="relative">
             {imageComponent}
+
+            {locked && (
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                <Lock />
+              </div>
+            )}
           </div>
-          {locked && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-              <Lock />
-            </div>
-          )}
+
+          <p className="font-display text-base mt-1 mb-0.5">{name}</p>
+          <div className="flex flex-col space-y-1">
+            <p className="font-display font-semibold text-[10px] tracking-widest">
+              {client && <span>{client.toUpperCase()}</span>}
+              <span>|</span>
+              <span>{dateToYearString(new Date(date))}</span>
+            </p>
+            <p className="font-display fon-semibold text-[8px] text-gray-500 tracking-wider">
+              {tags}
+            </p>
+          </div>
         </div>
-        <p className="font-display text-base">{name}</p>
-        <p className="font-display font-semibold text-[10px] tracking-widest">
-          {client && <span>{client.toUpperCase()}</span>}
-          <span>|</span>
-          <span>{dateToYearString(new Date(date))}</span>
-        </p>
-        <p className="font-display fon-semibold text-[8px] text-gray-500 tracking-wider">
-          {tags}
-        </p>
         <Link
           href={`/projects${slug}`}
           className={clsx(

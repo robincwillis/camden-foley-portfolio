@@ -60,9 +60,9 @@ const PROJECT_GRAPHQL_FIELDS = `
 `;
 
 export async function getAllProjects(limit = 100, isDraftMode = false) {
-  // TODO order: date_DESC
+  // TODO
   const query = `query {
-        projectCollection(where:{slug_exists: true}, limit: ${limit}, preview: ${
+        projectCollection(where:{slug_exists: true}, order: date_DESC, limit: ${limit}, preview: ${
           isDraftMode ? "true" : "false"
         }) {
           items {

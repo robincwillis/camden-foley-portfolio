@@ -10,6 +10,7 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
     description {
         json
     } 
+    wrapDescription
     imagesCollection {
         items {
             sys {

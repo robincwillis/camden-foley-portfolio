@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'laptop': '1148px'
+      },
       fontFamily: {
         sans: ['var(--font-halyard)'],
         display: ['var(--font-open-sans)']

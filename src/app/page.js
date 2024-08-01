@@ -22,16 +22,16 @@ export default async function Home() {
 
   return (
     <>
-      <div className="p-10 pb-[184px] lg:pb-10 flex flex-col space-y-10">
+      <div className="p-5 lg:p-10 flex flex-col space-y-5 lg:space-y-10">
         {/* Header */}
         <div className="lg:grid lg:grid-cols-12 lg:gap-4">
-          <div className="lg:col-span-3 pb-5 lg:pb-0">
+          <div className="lg:col-span-2 pb-5 lg:pb-0">
             <h1 className="text-4xl font-medium">{lockup?.headline}</h1>
           </div>
           <div className="lg:col-span-3">
-            <h2 className="text-lg">{lockup?.subHeadline}</h2>
+            <h2 className="text-lg font-medium">{lockup?.subHeadline}</h2>
           </div>
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-7">
             <RichText
               document={lockup.body.json}
               classNames={{
@@ -41,7 +41,7 @@ export default async function Home() {
           </div>
         </div>
         {/* Project Grid */}
-        <div className="grid gap-x-5 gap-y-10 grid-cols-2 md:grid-cols-5 lg:grid-cols-7">
+        <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
           {projects.map((project) => (
             <ProjectThumbnail
               key={project.id}

@@ -8,6 +8,8 @@ import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support";
 import Image from "@/app/_components/image";
 import RichText from "@/app/_components/rich-text";
 
+import { dateToYearString } from "@/lib/utils/format";
+
 export default function Sidebar({
   id,
   image,
@@ -18,7 +20,7 @@ export default function Sidebar({
   role,
   team,
   brief,
-  closing,
+  highlights,
 }) {
   const viewTransitionsSupported = useViewTransitionSupport();
 
@@ -60,17 +62,18 @@ export default function Sidebar({
             height={image.height}
             alt={image.description}
           />
-        </div>
-        <div className="flex flex-col space-y-2">
-          <h1 className="font-display text-[32px]">{name}</h1>
-          <h2 className="font-display text-sm tracking-widest">
-            <span>{client.toUpperCase()}</span>
-            <span>{` | `}</span>
-            <span>{date}</span>
-          </h2>
-          <p className="font-display fon-semibold text-[12px] text-gray-500 tracking-wider">
-            {tags}
-          </p>
+
+          <div className="flex flex-col space-y-2">
+            <h1 className="font-display text-[32px]">{name}</h1>
+            <h2 className="font-display text-sm tracking-widest">
+              <span>{client.toUpperCase()}</span>
+              <span>{` | `}</span>
+              <span>{dateToYearString(new Date(date))}</span>
+            </h2>
+            <p className="font-display fon-semibold text-[12px] text-gray-500 tracking-wider">
+              {tags}
+            </p>
+          </div>
         </div>
       </div>
       <div className="p-5 border-b-[1px] border-black">
@@ -100,7 +103,7 @@ export default function Sidebar({
       </div>
       <div className="p-5 border-b-[1px] border-black lg:border-0">
         <RichText
-          document={closing.json}
+          document={highlights.json}
           classNames={{
             paragraph: "text-lg",
             bold: "font-medium",
