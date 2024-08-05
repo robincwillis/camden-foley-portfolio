@@ -57,14 +57,24 @@ const PROJECT_GRAPHQL_FIELDS = `
       }
     }
   }
+  processSlidesCollection(limit: 20) {
+    items {
+      sys {
+        id
+      }
+        url
+        width
+        height
+        description
+    }
+  }
 `;
 
 export async function getAllProjects(limit = 100, isDraftMode = false) {
   // TODO
   const query = `query {
-        projectCollection(where:{slug_exists: true}, order: date_DESC, limit: ${limit}, preview: ${
-          isDraftMode ? "true" : "false"
-        }) {
+        projectCollection(where:{slug_exists: true}, order: date_DESC, limit: ${limit}, preview: ${isDraftMode ? "true" : "false"
+    }) {
           items {
             ${ALL_PROJECT_GRAPHQL_FIELDS}
           }
@@ -77,9 +87,8 @@ export async function getAllProjects(limit = 100, isDraftMode = false) {
 
 export async function getProject(slug, isDraftMode = false) {
   const query = `query {
-        projectCollection(where:{slug: "/${slug}"}, limit: 1, preview: ${
-          isDraftMode ? "true" : "false"
-        }) {
+        projectCollection(where:{slug: "/${slug}"}, limit: 1, preview: ${isDraftMode ? "true" : "false"
+    }) {
           items {
             ${PROJECT_GRAPHQL_FIELDS}
           }
@@ -96,8 +105,7 @@ export async function getCollectionProjects(
   isDraftMode = false,
 ) {
   const query = `query {
-    projectCollection(where:{sys: {id_in: ["${ids.join('","')}"]}}, limit: ${limit}, preview: ${
-      isDraftMode ? "true" : "false"
+    projectCollection(where:{sys: {id_in: ["${ids.join('","')}"]}}, limit: ${limit}, preview: ${isDraftMode ? "true" : "false"
     }) {
             items {
                 ${ALL_PROJECT_GRAPHQL_FIELDS}

@@ -42,11 +42,11 @@ export default async function Collection({ params }) {
         <div className="lg:col-span-3">
           <h2 className="text-lg font-medium">{lockup?.subHeadline}</h2>
         </div>
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-7 lg:text-right">
           <RichText
             document={lockup.body.json}
             classNames={{
-              paragraph: "text-lg font-light",
+              paragraph: "text-lg lg:text-base xl:text-lg font-light",
             }}
           />
         </div>

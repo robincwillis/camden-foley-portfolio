@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 
-const ImageSlider = ({ images }) => {
+const ImageSlider = ({ expanded, images }) => {
+  let sliderRef = useRef(null);
+  const [toggled, setToggled] = useState(expanded);
+
   const settings = {
     className: "center",
     dots: false,
@@ -17,9 +20,31 @@ const ImageSlider = ({ images }) => {
     swipeToSlide: true, // Allow swipe to slide
   };
 
+  useEffect(() => {
+    if (!toggled && expanded !== toggled) {
+      setToggled(true);
+    }
+  }, [expanded, toggled]);
+
+  useEffect(() => {
+    if (!sliderRef || !toggled) {
+      return;
+    }
+    if (expanded) {
+      sliderRef.slickNext();
+    } else {
+      sliderRef.slickPrev();
+    }
+  }, [toggled, expanded, sliderRef]);
+
   return (
     <div>
-      <Slider {...settings}>
+      <Slider
+        ref={(slider) => {
+          sliderRef = slider;
+        }}
+        {...settings}
+      >
         {images.map((image) => (
           <div key={image.sys.id} className="px-5">
             <div

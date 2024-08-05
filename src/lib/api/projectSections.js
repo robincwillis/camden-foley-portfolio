@@ -11,7 +11,19 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
         json
     } 
     wrapDescription
-    imagesCollection {
+    imagesCollection (limit: 10) {
+        items {
+            sys {
+                id
+            }
+            url
+            width
+            height
+            description
+            
+        }
+    }
+    mobileImagesCollection (limit: 10) {
         items {
             sys {
                 id

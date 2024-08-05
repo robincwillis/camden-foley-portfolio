@@ -1,6 +1,7 @@
 import { getPage } from "@/lib/api/pages";
 
-import Image from "@/app/_components/image";
+import Image from "next/image";
+
 import RichText from "@/app/_components/rich-text";
 
 const page = await getPage("info");
@@ -36,14 +37,17 @@ export default async function InfoPage() {
           </ul>
         </div>
 
-        <div className="lg:col-start-8 lg:col-span-5 space-y-5 flex flex-col lg:flex-row lg:justify-end">
+        <div className="lg:col-start-8 lg:col-span-5 space-y-5 flex flex-col lg:flex-row lg:justify-end lg:items-center">
           {lockup.image && (
             <Image
-              imageUrl={lockup.image.url}
-              ratio={1}
+              src={lockup.image.url}
               width={lockup.image.width}
               height={lockup.image.height}
               alt={lockup.image.description}
+              sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{
+                height: 'fit-content'
+              }}
             />
           )}
           <ul className="flex text-2xl gap-x-2.5 font-medium  flex-row flex-wrap lg:hidden">

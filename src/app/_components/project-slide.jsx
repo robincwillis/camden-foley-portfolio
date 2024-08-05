@@ -14,6 +14,7 @@ export default function ProjectSlide({
   description,
   wrapDescription,
   images,
+  mobileImages,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imagesCalculated, setImagesCalculated] = useState(false);
@@ -72,8 +73,26 @@ export default function ProjectSlide({
           })}
         </div>
       </div>
+      {/* Mobile */}
       <div className="block lg:hidden overflow-x-hidden">
-        <ImageSlider images={images} />
+        {mobileImages && mobileImages.length < 3 && (
+          <ImageSlider expanded={isExpanded} images={mobileImages} />
+        )}
+        {mobileImages && mobileImages.length > 3 && (
+          <div 
+            className="px-5 grid grid-cols-2 gap-2.5 grid-rows-2"
+          >
+            {mobileImages.map((image) => (
+              <Image
+                key={image.sys.id}
+                src={image.url}
+                height={image.height}
+                width={image.width * 2}
+                alt={image.description}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <button
@@ -90,7 +109,7 @@ export default function ProjectSlide({
           />
         </div>
         <div className="p-5 lg:mr-[-20px] flex items-center space-x-1">
-          <div className="hidden lg:visible relative w-[50px] h-[24px]">
+          <div className="invisible lg:visible relative w-[50px] h-[24px]">
             <motion.div
               initial={true}
               animate={{ opacity: isExpanded ? 1 : 0, top: isExpanded ? 0 : 5 }}

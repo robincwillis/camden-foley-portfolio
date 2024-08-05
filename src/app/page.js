@@ -22,20 +22,25 @@ export default async function Home() {
 
   return (
     <>
-      <div className="p-5 lg:p-10 flex flex-col space-y-5 lg:space-y-10">
+      <div 
+        className="p-5 lg:p-10 flex flex-col space-y-5 lg:space-y-10"
+        style={{
+          // viewTransitionName: "work-page"
+        }}
+      >
         {/* Header */}
         <div className="lg:grid lg:grid-cols-12 lg:gap-4">
           <div className="lg:col-span-2 pb-5 lg:pb-0">
             <h1 className="text-4xl font-medium">{lockup?.headline}</h1>
           </div>
-          <div className="lg:col-span-3">
+          <div className="mb-1 lg:mb-0 lg:col-span-3">
             <h2 className="text-lg font-medium">{lockup?.subHeadline}</h2>
           </div>
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 lg:text-right">
             <RichText
               document={lockup.body.json}
               classNames={{
-                paragraph: "text-lg font-light",
+                paragraph: "text-lg lg:text-base xl:text-lg font-light",
               }}
             />
           </div>

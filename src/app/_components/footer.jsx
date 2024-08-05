@@ -28,7 +28,7 @@ export default function Footer({ site }) {
               }
             >
               <a
-                href={link.to}
+                href={link.to || link?.asset?.url}
                 target="_blank"
                 className="text-lg underline underline-offset-2"
               >

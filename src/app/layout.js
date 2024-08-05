@@ -13,8 +13,11 @@ import { AppProvider } from "@/app/_context/app-context";
 import Header from "@/app/_components/header";
 import Footer from "@/app/_components/footer";
 import UnlockModal from "@/app/_components/unlock-modal";
-
 import Transition from "@/app/_components/page-transition";
+
+// import { revalidatePath } from 'next/cache'
+// revalidatePath('/', 'layout')
+
 
 const openSans = Open_Sans({
   subsets: ["latin"],

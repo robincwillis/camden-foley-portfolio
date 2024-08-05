@@ -15,6 +15,9 @@ const SITE_GRAPHQL_FIELDS = `
             }
             label
             to
+            asset {
+              url
+            }
         }
     }
 

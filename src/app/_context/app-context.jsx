@@ -52,7 +52,7 @@ export const AppProvider = ({ children, site }) => {
         setCurrentProject,
         modalOpen,
         setModalOpen,
-        clearClonedElement,
+        clearClonedElement
       }}
     >
       {children}
