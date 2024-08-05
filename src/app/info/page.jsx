@@ -46,7 +46,7 @@ export default async function InfoPage() {
               alt={lockup.image.description}
               sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
-                height: 'fit-content'
+                height: "fit-content",
               }}
             />
           )}

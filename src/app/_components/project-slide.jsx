@@ -79,9 +79,7 @@ export default function ProjectSlide({
           <ImageSlider expanded={isExpanded} images={mobileImages} />
         )}
         {mobileImages && mobileImages.length > 3 && (
-          <div 
-            className="px-5 grid grid-cols-2 gap-2.5 grid-rows-2"
-          >
+          <div className="px-5 grid grid-cols-2 gap-2.5 grid-rows-2">
             {mobileImages.map((image) => (
               <Image
                 key={image.sys.id}

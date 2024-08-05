@@ -124,10 +124,8 @@ export default function Sidebar({
           }}
           transition={{ duration: 0.5, type: "spring" }}
           className="overflow-y-hidden flex relative"
-
         >
           <div>
-
             <RichText
               document={role.json}
               classNames={{

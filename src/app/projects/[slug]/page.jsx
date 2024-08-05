@@ -40,7 +40,6 @@ export default async function Project({ params }) {
 
   console.log(project);
 
-
   return (
     <>
       <Head title={project.name} />
@@ -61,7 +60,7 @@ export default async function Project({ params }) {
         <div
           className="lg:flex-1 lg:overflow-y-scroll"
           style={{
-            viewTransitionName: 'project-sections'
+            viewTransitionName: "project-sections",
           }}
         >
           {sortedSections.map((section, index) => (
@@ -70,7 +69,10 @@ export default async function Project({ params }) {
               title={section.title}
               description={section.description}
               images={section.imagesCollection.items}
-              mobileImages={section?.mobileImagesCollection?.items.length > 0 || section.imagesCollection.items}
+              mobileImages={
+                section?.mobileImagesCollection?.items.length > 0 ||
+                section.imagesCollection.items
+              }
               wrapDescription={section.wrapDescription}
             />
           ))}
@@ -83,14 +85,12 @@ export default async function Project({ params }) {
                 bold: "font-medium",
               }}
             />
-            <ProcessSection 
+            <ProcessSection
               processSlides={project.processSlidesCollection.items}
             />
-
           </div>
         </div>
       </div>
-
     </>
   );
 }

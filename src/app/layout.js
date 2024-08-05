@@ -18,7 +18,6 @@ import Transition from "@/app/_components/page-transition";
 // import { revalidatePath } from 'next/cache'
 // revalidatePath('/', 'layout')
 
-
 const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-open-sans",

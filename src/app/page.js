@@ -22,11 +22,13 @@ export default async function Home() {
 
   return (
     <>
-      <div 
+      <div
         className="p-5 lg:p-10 flex flex-col space-y-5 lg:space-y-10"
-        style={{
-          // viewTransitionName: "work-page"
-        }}
+        style={
+          {
+            // viewTransitionName: "work-page"
+          }
+        }
       >
         {/* Header */}
         <div className="lg:grid lg:grid-cols-12 lg:gap-4">
