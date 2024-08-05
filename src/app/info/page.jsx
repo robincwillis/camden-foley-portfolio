@@ -14,7 +14,7 @@ export default async function InfoPage() {
   const lockup = page?.sectionsCollection?.items[0];
   return (
     <div className="p-5 lg:p-10 flex flex-col lg:items-center lg:justify-center lg:flex-1 lg:h-full">
-      <div className="flex flex-col space-y-5 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-4">
+      <div className="flex flex-col space-y-5 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-4 lg:pb-[60px]">
         <div className="lg:col-span-6 flex flex-col space-y-2.5 lg:space-y-5">
           <h1 className="text-4xl	lg:text-5xl	font-medium">{lockup?.headline}</h1>
           <div>
