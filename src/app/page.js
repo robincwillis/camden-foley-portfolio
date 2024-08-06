@@ -38,7 +38,7 @@ export default async function Home() {
           <div className="mb-1 lg:mb-0 lg:col-span-3">
             <h2 className="text-lg font-medium">{lockup?.subHeadline}</h2>
           </div>
-          <div className="lg:col-span-7 bg-red-300 flex lg:justify-end">
+          <div className="lg:col-span-7 flex lg:justify-end">
             <RichText
               document={lockup.body.json}
               classNames={{

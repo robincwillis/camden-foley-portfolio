@@ -1,16 +1,24 @@
 "use client";
-import clsx from "clsx";
+import { useContext } from "react";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
+
+import AppContext from "@/app/_context/app-context";
 
 import Link from "@/app/_components/link";
 import Logo from "@/app/_components/logo";
 
 export default function Header({ pages }) {
   const pathname = usePathname();
+  const { processModalOpen } = useContext(AppContext); 
+
 
   return (
     <div
-      className="sticky top-0 z-10 h-[60px] bg-white flex flex-row items-center justify-between border-b-[1px] border-black"
+      className={clsx("sticky w-full top-0  h-[60px] bg-white flex flex-row items-center justify-between border-b-[1px] border-black",{
+        "z-20": !processModalOpen,
+        "z-10": processModalOpen
+      })}
       style={{
         viewTransitionName: "header",
       }}

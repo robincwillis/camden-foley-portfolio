@@ -126,7 +126,7 @@ export default function Template({ children }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5, ease: [0.27, 0.94, 0.48, 1.0] }}
-          className="h-[calc(100%-60px)]"
+          className="lg:h-[calc(100%-60px)]"
         >
           <FrozenRouter> {children} </FrozenRouter>
         </motion.main>

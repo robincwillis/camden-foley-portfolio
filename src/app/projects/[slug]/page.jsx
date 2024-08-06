@@ -70,8 +70,7 @@ export default async function Project({ params }) {
               description={section.description}
               images={section.imagesCollection.items}
               mobileImages={
-                section?.mobileImagesCollection?.items.length > 0 ||
-                section.imagesCollection.items
+                section?.mobileImagesCollection?.items.length > 0 ? section.mobileImagesCollection.items : section.imagesCollection.items
               }
               wrapDescription={section.wrapDescription}
             />

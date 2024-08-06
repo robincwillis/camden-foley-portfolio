@@ -24,6 +24,7 @@ export const AppProvider = ({ children, site }) => {
   const [originPosition, setOriginPosition] = useState(null); //useState({ x: 0, y: 0, width: 0, height: 0 });
   const [targetPosition, setTargetPosition] = useState(null); //useState({ x: 0, y: 0, width: 0, height: 0 });
   const [currentProject, setCurrentProject] = useState(null);
+  const [processModalOpen, setProcessModalOpen] = useState(false);
 
   const cloneElement = (element) => {
     if (!clonedElement) {
@@ -53,6 +54,8 @@ export const AppProvider = ({ children, site }) => {
         modalOpen,
         setModalOpen,
         clearClonedElement,
+        processModalOpen, 
+        setProcessModalOpen
       }}
     >
       {children}

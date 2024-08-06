@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useContext } from "react";
+
+import AppContext from "@/app/_context/app-context";
 
 import ProcessModal from "@/app/_components/process-modal";
 
 const ProcessSection = ({ processSlides }) => {
-  const [processModalOpen, setProcessModalOpen] = useState(true);
+  const { processModalOpen, setProcessModalOpen } = useContext(AppContext); 
 
   return (
     processSlides &&
