@@ -1,19 +1,21 @@
 "use client";
-import { useState, useEffect } from "react";
 import clsx from "clsx";
 
 import useScrollDirection from "@/app/_hooks/use-scroll-direction";
 
 export default function Footer({ site }) {
   const links = site.footerLinksCollection.items;
-  const scrollDirection = useScrollDirection();
+  const { scrollDirection, scrolledToBottom } = useScrollDirection();
+
   return (
     <div
       className={clsx(
         "lg:fixed lg:bottom-0 bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
         {
-          "transform lg:translate-y-full": scrollDirection === "down",
-          "transform lg:translate-y-0": scrollDirection === "up",
+          "transform lg:translate-y-full":
+            scrollDirection === "down" && !scrolledToBottom,
+          "transform lg:translate-y-0":
+            scrollDirection === "up" || scrolledToBottom,
         },
       )}
     >

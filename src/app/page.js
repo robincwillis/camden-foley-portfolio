@@ -23,7 +23,7 @@ export default async function Home() {
   return (
     <>
       <div
-        className="p-5 lg:p-10 flex flex-col space-y-5 lg:space-y-10"
+        className="p-5 lg:p-10 lg:pb-[80px] flex flex-col space-y-5 lg:space-y-10"
         style={
           {
             // viewTransitionName: "work-page"
