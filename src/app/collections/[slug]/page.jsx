@@ -52,7 +52,7 @@ export default async function Collection({ params }) {
         </div>
       </div>
       {/* Collection Grid */}
-      <div className="grid gap-x-5 gap-y-10 grid-cols-2 md:grid-cols-5 lg:grid-cols-7">
+      <div className="grid gap-x-5 gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
         <div className="col-span-2">
           <Image
             imageUrl={heroImage.url}
@@ -81,7 +81,7 @@ export default async function Collection({ params }) {
 
       <hr className="bg-black border-black" />
       {/* Project Grid */}
-      <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 md:grid-cols-5 lg:grid-cols-7">
+      <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
         {projects.map((project) => (
           <ProjectThumbnail
             key={project.id}

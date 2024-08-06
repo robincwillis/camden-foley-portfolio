@@ -1,4 +1,5 @@
 export function extractEntries(fetchResponse, collectionKey) {
+  console.log(fetchResponse);
   return fetchResponse?.data[collectionKey]?.items;
 }
 

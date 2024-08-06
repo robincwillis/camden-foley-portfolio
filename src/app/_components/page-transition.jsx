@@ -85,7 +85,7 @@ export default function Template({ children }) {
           variants={variants}
           custom={[originPosition, targetPosition]}
           transition={{
-            ease: cubicBezier(0.34, 1.36, 0.64, 1),
+            ease: cubicBezier(0.65, 0, 0.35, 1),
             duration: 0.8,
           }}
           style={{

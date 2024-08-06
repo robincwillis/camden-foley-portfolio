@@ -48,7 +48,7 @@ export default async function Home() {
           </div>
         </div>
         {/* Project Grid */}
-        <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
+        <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
           {projects.map((project) => (
             <ProjectThumbnail
               key={project.id}

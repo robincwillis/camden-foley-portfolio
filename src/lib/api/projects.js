@@ -32,9 +32,6 @@ const PROJECT_GRAPHQL_FIELDS = `
   brief {
     json
   }
-  team {
-    json
-  }
   role {
     json
   }

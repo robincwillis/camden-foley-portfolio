@@ -101,13 +101,13 @@ export default function ProjectSlide({
           <RichText
             document={title.json}
             classNames={{
-              paragraph: "font-light",
+              paragraph: "text-left	font-light",
               bold: "font-medium",
             }}
           />
         </div>
         <div className="p-5 lg:mr-[-20px] flex items-center space-x-1">
-          <div className="invisible lg:visible relative w-[50px] h-[24px]">
+          <div className="hidden lg:block relative w-[50px] h-[24px]">
             <motion.div
               initial={true}
               animate={{ opacity: isExpanded ? 1 : 0, top: isExpanded ? 0 : 5 }}

@@ -45,7 +45,7 @@ export default function Sidebar({
   }, [imageRef.current]);
 
   return (
-    <div className="lg:sticky lg:overflow-y-scroll lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
+    <div className="lg:sticky lg:overflow-y-auto lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
       <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
         <div
           // style={viewTransitionsSupported ? {
@@ -94,7 +94,7 @@ export default function Sidebar({
           <RichText
             document={brief.json}
             classNames={{
-              paragraph: "text-sm font-light",
+              paragraph: "text-left	text-sm font-light",
               bold: "font-medium",
             }}
           />
@@ -120,29 +120,28 @@ export default function Sidebar({
       >
         <motion.div
           animate={{
-            height: expandedSection === "team" ? "fit-content" : 20,
+            height: expandedSection === "role" ? "fit-content" : 20,
           }}
           transition={{ duration: 0.5, type: "spring" }}
           className="overflow-y-hidden flex relative"
         >
-          <div>
-            <RichText
-              document={role.json}
-              classNames={{
-                paragraph: "text-sm font-light",
-                bold: "font-medium",
-              }}
-            />
-            <RichText
+          <RichText
+            document={role.json}
+            classNames={{
+              paragraph: "text-left	text-sm font-light",
+              bold: "font-medium",
+            }}
+          />
+          {/* <RichText
               document={team.json}
               classNames={{
                 paragraph: "text-sm font-light",
                 bold: "font-medium",
               }}
-            />
-          </div>
+            /> */}
+
           <AnimatePresence>
-            {expandedSection !== "team" && (
+            {expandedSection !== "role" && (
               <motion.div
                 key="team"
                 initial={{ opacity: 0 }}
@@ -151,7 +150,7 @@ export default function Sidebar({
                 transition={{ duration: 0.25 }}
                 className="absolute right-0 top-0 h-5 w-2.5 flex items-center justify-center"
               >
-                <AccordionIcon isToggled={expandedSection === "team"} />
+                <AccordionIcon isToggled={expandedSection === "role"} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -172,7 +171,7 @@ export default function Sidebar({
           <RichText
             document={highlights.json}
             classNames={{
-              paragraph: "text-sm font-light",
+              paragraph: "text-left	text-sm font-light",
               bold: "font-medium",
             }}
           />
