@@ -7,7 +7,7 @@ import AppContext from "@/app/_context/app-context";
 import ProcessModal from "@/app/_components/process-modal";
 
 const ProcessSection = ({ processSlides }) => {
-  const { processModalOpen, setProcessModalOpen } = useContext(AppContext); 
+  const { processModalOpen, setProcessModalOpen } = useContext(AppContext);
 
   return (
     processSlides &&

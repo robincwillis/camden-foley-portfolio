@@ -10,15 +10,17 @@ import Logo from "@/app/_components/logo";
 
 export default function Header({ pages }) {
   const pathname = usePathname();
-  const { processModalOpen } = useContext(AppContext); 
-
+  const { processModalOpen } = useContext(AppContext);
 
   return (
     <div
-      className={clsx("sticky w-full top-0  h-[60px] bg-white flex flex-row items-center justify-between border-b-[1px] border-black",{
-        "z-20": !processModalOpen,
-        "z-10": processModalOpen
-      })}
+      className={clsx(
+        "sticky w-full top-0  h-[60px] bg-white flex flex-row items-center justify-between border-b-[1px] border-black",
+        {
+          "z-20": !processModalOpen,
+          "z-10": processModalOpen,
+        },
+      )}
       style={{
         viewTransitionName: "header",
       }}

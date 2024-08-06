@@ -86,7 +86,7 @@ export default function ProjectThumbnail({
     const viewTransitionStyles = `
             ::view-transition-group(image-${id}) {
                 animation-duration: 0.8s;
-                animation-timing-function: cubic-bezier(0.34, 1.36, 0.64, 1);
+                animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
             }
         `;
     //if (viewTransitionsSupported) {

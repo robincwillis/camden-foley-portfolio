@@ -54,8 +54,8 @@ export const AppProvider = ({ children, site }) => {
         modalOpen,
         setModalOpen,
         clearClonedElement,
-        processModalOpen, 
-        setProcessModalOpen
+        processModalOpen,
+        setProcessModalOpen,
       }}
     >
       {children}
