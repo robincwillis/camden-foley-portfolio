@@ -5,6 +5,7 @@ const ALL_PROJECT_GRAPHQL_FIELDS = `
     id
   }
   name
+  mobileName
   slug
   date
   client

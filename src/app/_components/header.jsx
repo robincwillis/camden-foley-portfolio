@@ -28,7 +28,6 @@ export default function Header({ pages }) {
       <Link
         className="w-[60px] h-[60px] flex items-center justify-center"
         href="/"
-        scroll={false}
       >
         <Logo />
       </Link>
@@ -44,7 +43,6 @@ export default function Header({ pages }) {
             >
               <Link
                 href={page.slug}
-                scroll={false}
                 className="flex h-full text-xl items-center justify-center hover:font-medium md:flex-none md:justify-start w-[75px]"
               >
                 {page.title.toUpperCase()}

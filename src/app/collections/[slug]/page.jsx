@@ -71,6 +71,7 @@ export default async function Collection({ params }) {
             slug={project.slug}
             image={project.heroImage}
             name={project.name}
+            mobileName={project.mobileName}
             client={project.client}
             date={project.date}
             tags={project.tags}

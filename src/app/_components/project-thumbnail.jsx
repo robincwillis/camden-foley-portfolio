@@ -24,6 +24,7 @@ export default function ProjectThumbnail({
   id,
   image,
   name,
+  mobileName,
   client,
   date,
   slug,
@@ -135,8 +136,10 @@ export default function ProjectThumbnail({
               </div>
             )}
           </div>
-
-          <p className="font-display text-base mt-[0.35rem] mb-0.5">{name}</p>
+          
+          <p className="hidden sm:block font-display text-base mt-[0.35rem] mb-0.5">{name}</p>
+          {/* Mobile Name */}
+          <p className="block sm:hidden font-display text-base mt-[0.35rem] mb-0.5">{mobileName || name}</p>
           <div className="flex flex-col space-y-1">
             <p className="font-display font-semibold text-[10px] tracking-widest">
               {client && <span>{client.toUpperCase()}</span>}
