@@ -67,14 +67,14 @@ export default function Sidebar({
             alt={image.description}
           />
 
-          <div className="flex flex-col space-y-2 mt-2">
+          <div className="flex flex-col mt-2">
             <h1 className="font-display text-[32px]">{name}</h1>
-            <h2 className="font-display text-sm tracking-widest mt-0">
+            <h2 className="font-display text-sm tracking-widest mt-[3px]">
               <span>{client.toUpperCase()}</span>
-              <span>{` | `}</span>
+              <span className="px-1">|</span>
               <span>{dateToYearString(new Date(date))}</span>
             </h2>
-            <p className="font-display font-semibold text-[12px] leading-none text-gray-500 tracking-wider mt-1.5">
+            <p className="font-display font-semibold text-[12px] leading-none text-gray-500 tracking-wider mt-2.5">
               {tags}
             </p>
           </div>

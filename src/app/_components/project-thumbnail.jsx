@@ -136,11 +136,11 @@ export default function ProjectThumbnail({
             )}
           </div>
 
-          <p className="font-display text-base mt-1 mb-0.5">{name}</p>
+          <p className="font-display text-base mt-[0.35rem] mb-0.5">{name}</p>
           <div className="flex flex-col space-y-1">
             <p className="font-display font-semibold text-[10px] tracking-widest">
               {client && <span>{client.toUpperCase()}</span>}
-              <span>|</span>
+              <span className="px-1">|</span>
               <span>{dateToYearString(new Date(date))}</span>
             </p>
             <p className="font-display fon-semibold text-[8px] text-gray-500 tracking-wider">

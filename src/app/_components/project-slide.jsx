@@ -97,11 +97,11 @@ export default function ProjectSlide({
         className="w-full flex items-center justify-between"
         onClick={toggle}
       >
-        <div className="p-5 lg:py-5 lg:px-0">
+        <div className="p-5 pr-0 lg:py-5 lg:px-0">
           <RichText
             document={title.json}
             classNames={{
-              paragraph: "text-left	font-light",
+              paragraph: "text-left	font-light text-sm sm:text-base",
               bold: "font-medium",
             }}
           />
@@ -142,7 +142,7 @@ export default function ProjectSlide({
       >
         <div
           className={clsx("px-5 pb-5 lg:px-0", {
-            "lg:flex lg:space-x-5": wrapDescription,
+            "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-5": wrapDescription,
           })}
         >
           <RichText

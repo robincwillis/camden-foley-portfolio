@@ -79,6 +79,7 @@ const ProcessModal = ({ modalOpen, setModalOpen, processSlides }) => {
     infinite: true, // false
     adaptiveHeight: true,
     speed: 500,
+    fade: true,
     //centerPadding: 100,
     slidesToShow: 1, // Show one full slide and the next one peeking
     // centerMode: true,
@@ -115,15 +116,15 @@ const ProcessModal = ({ modalOpen, setModalOpen, processSlides }) => {
           />
           <motion.div
             className="bg-white relative z-40"
-            initial={{ y: 100 }}
+            initial={{ y: 200 }}
             animate={{ y: 1 }}
-            exit={{ y: -100 }}
+            exit={{ y: 200 }}
             transition={{
               ease: cubicBezier(0.35, 0.17, 0.3, 0.86),
               duration: 0.8,
             }}
           >
-            <div className="w-[50vw]">
+            <div className="w-[75vw]">
               <Slider {...settings}>
                 {processSlides.map((image) => (
                   <Image

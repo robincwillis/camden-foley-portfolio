@@ -28,9 +28,9 @@ export default async function InfoPage() {
               }}
             />
           </div>
-          <ul className="hidden lg:flex text-4xl leading-[3rem] gap-x-2.5 font-medium  flex-row flex-wrap">
+          <ul className="hidden lg:flex text-3xl laptop:text-4xl gap-2 laptop:gap-x-2.5 font-medium flex-row flex-wrap">
             {lockup?.tags?.map((tag) => (
-              <li className="leading-[2.75rem]" key={tag}>
+              <li className="laptop:leading-[2.75rem]" key={tag}>
                 {tag}
               </li>
             ))}
@@ -50,7 +50,7 @@ export default async function InfoPage() {
               }}
             />
           )}
-          <ul className="flex text-2xl gap-x-2.5 font-medium  flex-row flex-wrap lg:hidden">
+          <ul className="flex text-[21px] sm:text-2xl gap-x-2 sm:gap-x-2.5 font-medium  flex-row flex-wrap lg:hidden">
             {lockup?.tags?.map((tag) => (
               <li className="leading-[2rem]" key={tag}>
                 {tag}
