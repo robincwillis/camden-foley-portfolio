@@ -5,6 +5,7 @@ const useScrollDirection = () => {
   const [scrollDirection, setScrollDirection] = useState(null);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
+  const [scrolledToTop, setScrolledToTop] = useState(true);
 
   useEffect(() => {
     const updateScrollDirection = () => {
@@ -20,6 +21,11 @@ const useScrollDirection = () => {
       } else {
         setScrolledToBottom(false);
       }
+      if (scrollY === 0) {
+        setScrolledToTop(true);
+      } else {
+        setScrolledToTop(false);
+      }
       setLastScrollY(scrollY);
     };
 
@@ -30,7 +36,7 @@ const useScrollDirection = () => {
     };
   }, [lastScrollY, scrollDirection]);
 
-  return { scrollDirection, scrolledToBottom };
+  return { scrollDirection, scrolledToBottom, scrolledToTop };
 };
 
 export default useScrollDirection;

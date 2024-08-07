@@ -18,7 +18,7 @@ function NextArrow(props) {
   return (
     <div
       className={clsx(
-        `border-l transition-all h-full w-[55px] cursor-pointer flex items-center justify-center`,
+        `group border-l transition-all h-full w-[55px] cursor-pointer flex items-center justify-center`,
         {
           "bg-black fill-white border-white": currentSlide === 0,
           "bg-white fill-black border-black": currentSlide !== 0,
@@ -32,7 +32,7 @@ function NextArrow(props) {
       }}
       onClick={onClick}
     >
-      <ArrowRight />
+      <ArrowRight className="transition-transform	scale-75 group-hover:scale-100" />
     </div>
   );
 }
@@ -43,7 +43,7 @@ function PrevArrow(props) {
   return (
     <div
       className={clsx(
-        `border-r transition-all h-full w-[55px] cursor-pointer flex items-center justify-center`,
+        `group border-r transition-all h-full w-[55px] cursor-pointer flex items-center justify-center`,
         {
           "bg-black fill-white border-white": currentSlide === 0,
           "bg-white fill-black border-black": currentSlide !== 0,
@@ -63,7 +63,11 @@ function PrevArrow(props) {
         }
       }}
     >
-      {currentSlide === 0 ? <Close /> : <ArrowLeft />}
+      {currentSlide === 0 ? (
+        <Close className="transition-transform	scale-75 group-hover:scale-100" />
+      ) : (
+        <ArrowLeft className="transition-transform	scale-75 group-hover:scale-100" />
+      )}
     </div>
   );
 }

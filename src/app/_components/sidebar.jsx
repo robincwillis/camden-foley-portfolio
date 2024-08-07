@@ -88,16 +88,42 @@ export default function Sidebar({
           animate={{
             height: expandedSection === "brief" ? "fit-content" : 20,
           }}
-          transition={{ duration: 0.5, type: "spring" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
           className="overflow-y-hidden flex relative"
         >
-          <RichText
-            document={brief.json}
-            classNames={{
-              paragraph: "text-left	text-sm font-light",
-              bold: "font-medium",
-            }}
-          />
+          <div>
+            <motion.div
+              animate={{
+                opacity: expandedSection === "brief" ? 1 : 0,
+                transform:
+                  expandedSection === "brief"
+                    ? "translateY(0)"
+                    : "translateY(-20px)",
+              }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <RichText
+                document={brief.json}
+                classNames={{
+                  paragraph: "text-left	text-sm font-light",
+                  bold: "font-medium",
+                }}
+              />
+            </motion.div>
+            <motion.div
+              animate={{
+                opacity: expandedSection === "brief" ? 0 : 1,
+                transform:
+                  expandedSection === "brief"
+                    ? "translateY(20px)"
+                    : "translateY(0)",
+              }}
+              className="absolute top-0"
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <p className="text-sm font-medium">BRIEF</p>
+            </motion.div>
+          </div>
           <AnimatePresence>
             {expandedSection !== "brief" && (
               <motion.div
@@ -105,7 +131,7 @@ export default function Sidebar({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.4 }}
                 className="absolute right-0 top-0 h-5 w-2.5 flex items-center justify-center"
               >
                 <AccordionIcon isToggled={expandedSection === "brief"} />
@@ -114,32 +140,112 @@ export default function Sidebar({
           </AnimatePresence>
         </motion.div>
       </div>
+
       <div
-        onClick={() => setExpandedSection("team")}
-        className={`p-5 border-b-[1px] border-black ${expandedSection !== "team" && "cursor-pointer"}`}
+        onClick={() => setExpandedSection("highlights")}
+        className={`p-5 border-b-[1px] border-black ${expandedSection !== "highlights" && "cursor-pointer"} `}
+      >
+        <motion.div
+          animate={{
+            //opacity: expandedSection === "highlights" ? 1 : 0,
+            height: expandedSection === "highlights" ? "fit-content" : 20,
+          }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="overflow-y-hidden flex relative"
+        >
+          <div>
+            <motion.div
+              animate={{
+                opacity: expandedSection === "highlights" ? 1 : 0,
+                transform:
+                  expandedSection === "highlights"
+                    ? "translateY(0)"
+                    : "translateY(-20px)",
+              }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <RichText
+                document={highlights.json}
+                classNames={{
+                  paragraph: "text-left	text-sm font-light",
+                  bold: "font-medium",
+                }}
+              />
+            </motion.div>
+            <motion.div
+              animate={{
+                opacity: expandedSection === "highlights" ? 0 : 1,
+                transform:
+                  expandedSection === "highlights"
+                    ? "translateY(20px)"
+                    : "translateY(0)",
+              }}
+              className="absolute top-0"
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <p className="text-sm font-medium">OUTCOME</p>
+            </motion.div>
+          </div>
+          <AnimatePresence>
+            {expandedSection !== "highlights" && (
+              <motion.div
+                key="highlights"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute right-0 top-0 h-5 w-2.5 flex items-center justify-center"
+              >
+                <AccordionIcon isToggled={expandedSection === "highlights"} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+      <div
+        onClick={() => setExpandedSection("role")}
+        className={`p-5 border-b-[1px] border-black lg:border-0 ${expandedSection !== "team" && "cursor-pointer"}`}
       >
         <motion.div
           animate={{
             height: expandedSection === "role" ? "fit-content" : 20,
           }}
-          transition={{ duration: 0.5, type: "spring" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
           className="overflow-y-hidden flex relative"
         >
-          <RichText
-            document={role.json}
-            classNames={{
-              paragraph: "text-left	text-sm font-light",
-              bold: "font-medium",
-            }}
-          />
-          {/* <RichText
-              document={team.json}
-              classNames={{
-                paragraph: "text-sm font-light",
-                bold: "font-medium",
+          <div>
+            <motion.div
+              animate={{
+                opacity: expandedSection === "role" ? 1 : 0,
+                transform:
+                  expandedSection === "role"
+                    ? "translateY(0)"
+                    : "translateY(-20px)",
               }}
-            /> */}
-
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <RichText
+                document={role.json}
+                classNames={{
+                  paragraph: "text-left	text-sm font-light",
+                  bold: "font-medium",
+                }}
+              />
+            </motion.div>
+            <motion.div
+              animate={{
+                opacity: expandedSection === "role" ? 0 : 1,
+                transform:
+                  expandedSection === "role"
+                    ? "translateY(20px)"
+                    : "translateY(0)",
+              }}
+              className="absolute top-0"
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <p className="text-sm font-medium">ROLE & TEAM</p>
+            </motion.div>
+          </div>
           <AnimatePresence>
             {expandedSection !== "role" && (
               <motion.div
@@ -151,41 +257,6 @@ export default function Sidebar({
                 className="absolute right-0 top-0 h-5 w-2.5 flex items-center justify-center"
               >
                 <AccordionIcon isToggled={expandedSection === "role"} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-      <div
-        onClick={() => setExpandedSection("highlights")}
-        className={`p-5 border-b-[1px] border-black lg:border-0 ${expandedSection !== "highlights" && "cursor-pointer"} `}
-      >
-        <motion.div
-          animate={{
-            //opacity: expandedSection === "highlights" ? 1 : 0,
-            height: expandedSection === "highlights" ? "fit-content" : 20,
-          }}
-          transition={{ duration: 0.5, type: "spring" }}
-          className="overflow-y-hidden flex relative"
-        >
-          <RichText
-            document={highlights.json}
-            classNames={{
-              paragraph: "text-left	text-sm font-light",
-              bold: "font-medium",
-            }}
-          />
-          <AnimatePresence>
-            {expandedSection !== "highlights" && (
-              <motion.div
-                key="highlights"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="absolute right-0 top-0 h-5 w-2.5 flex items-center justify-center"
-              >
-                <AccordionIcon isToggled={expandedSection === "highlights"} />
               </motion.div>
             )}
           </AnimatePresence>

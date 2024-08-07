@@ -5,7 +5,8 @@ import useScrollDirection from "@/app/_hooks/use-scroll-direction";
 
 export default function Footer({ site }) {
   const links = site.footerLinksCollection.items;
-  const { scrollDirection, scrolledToBottom } = useScrollDirection();
+  const { scrollDirection, scrolledToBottom, scrolledToTop } =
+    useScrollDirection();
 
   return (
     <div
@@ -13,9 +14,9 @@ export default function Footer({ site }) {
         "lg:fixed lg:bottom-0 bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
         {
           "transform lg:translate-y-full":
-            scrollDirection === "down" && !scrolledToBottom,
+            (scrollDirection === "down" && !scrolledToBottom) || scrolledToTop,
           "transform lg:translate-y-0":
-            scrollDirection === "up" || scrolledToBottom,
+            (scrollDirection === "up" && !scrolledToTop) || scrolledToBottom,
         },
       )}
     >
