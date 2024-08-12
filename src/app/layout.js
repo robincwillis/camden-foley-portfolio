@@ -63,7 +63,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <body
-          className={`${halyard.variable} ${openSans.variable} font-sans font-normal bg-white h-screen flex flex-col`}
+          className={`${halyard.variable} ${openSans.variable} font-sans font-normal bg-white min-h-screen flex flex-col`}
         >
           <AppProvider site={site}>
             <Header pages={pages} />

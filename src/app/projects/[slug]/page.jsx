@@ -43,7 +43,7 @@ export default async function Project({ params }) {
   return (
     <>
       <Head title={project.name} />
-      <div className="relative z-10 lg:flex lg:h-full lg:overflow-y-hidden lg:pb-[60px]">
+      <div className="relative z-10 lg:flex lg:h-[calc(100vh-60px)] lg:overflow-y-hidden">
         <Sidebar
           id={project.sys.id}
           image={project.heroImage}
