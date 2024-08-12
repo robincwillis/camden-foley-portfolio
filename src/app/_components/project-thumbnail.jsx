@@ -146,7 +146,7 @@ export default function ProjectThumbnail({
               <span className="px-1">|</span>
               <span>{dateToYearString(new Date(date))}</span>
             </p>
-            <p className="font-display fon-semibold text-[8px] text-gray-500 tracking-wider">
+            <p className="font-display font-semibold text-[8px] text-gray-500 tracking-wider">
               {tags}
             </p>
           </div>
