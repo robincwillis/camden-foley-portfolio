@@ -14,8 +14,8 @@ export default function Footer({ site, path }) {
     <div
       className={clsx(
         "bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
-        pathname === '/' && {
-          "lg:fixed lg:bottom-0": pathname === '/',
+        pathname === "/" && {
+          "lg:fixed lg:bottom-0": pathname === "/",
           "transform lg:translate-y-full":
             (scrollDirection === "down" && !scrolledToBottom) || scrolledToTop,
           "transform lg:translate-y-0":
