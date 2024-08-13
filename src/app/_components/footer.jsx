@@ -10,6 +10,12 @@ export default function Footer({ site, path }) {
     useScrollDirection();
   const pathname = usePathname();
 
+  console.log(pathname);
+
+  if (pathname && pathname.includes('projects/')) {
+    return null;
+  }
+
   return (
     <div
       className={clsx(
