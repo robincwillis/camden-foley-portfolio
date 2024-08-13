@@ -12,7 +12,7 @@ export default function Footer({ site, path }) {
 
   console.log(pathname);
 
-  if (pathname && pathname.includes('projects/')) {
+  if (pathname && pathname.includes("projects/")) {
     return null;
   }
 
