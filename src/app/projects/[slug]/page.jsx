@@ -37,9 +37,6 @@ export default async function Project({ params }) {
   const sortedSections = sections.sort((a, b) => {
     return sectionIds.indexOf(a.sys.id) - sectionIds.indexOf(b.sys.id);
   });
-
-  console.log(project);
-
   return (
     <>
       <Head title={project.name} />

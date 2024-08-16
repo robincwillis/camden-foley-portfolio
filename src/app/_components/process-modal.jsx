@@ -39,7 +39,7 @@ function NextArrow(props) {
 
 function PrevArrow(props) {
   const { onClick, currentSlide, setModalOpen } = props;
-  console.log(props);
+
   return (
     <div
       className={clsx(
@@ -64,9 +64,9 @@ function PrevArrow(props) {
       }}
     >
       {currentSlide === 0 ? (
-        <Close className="transition-transform	scale-75 group-hover:scale-100" />
+        <Close className="transition-transform scale-75 group-hover:scale-100" />
       ) : (
-        <ArrowLeft className="transition-transform	scale-75 group-hover:scale-100" />
+        <ArrowLeft className="transition-transform scale-75 group-hover:scale-100" />
       )}
     </div>
   );
@@ -76,16 +76,11 @@ const ProcessModal = ({ modalOpen, setModalOpen, processSlides }) => {
   const settings = {
     className: "center",
     dots: false,
-    infinite: true, // false
+    infinite: true,
     adaptiveHeight: true,
     speed: 500,
     fade: true,
-    //centerPadding: 100,
     slidesToShow: 1, // Show one full slide and the next one peeking
-    // centerMode: true,
-    // centerPadding: "10%",
-    //slidesToScroll: 1,
-    //centerMode: true, // Center the slides
     swipeToSlide: true, // Allow swipe to slide
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow setModalOpen={setModalOpen} />,
@@ -94,8 +89,6 @@ const ProcessModal = ({ modalOpen, setModalOpen, processSlides }) => {
   const handleClose = () => {
     setModalOpen(false);
   };
-
-  console.log(processSlides);
 
   return (
     <AnimatePresence initial={true}>
@@ -120,11 +113,11 @@ const ProcessModal = ({ modalOpen, setModalOpen, processSlides }) => {
             animate={{ y: 1 }}
             exit={{ y: 200 }}
             transition={{
-              ease: cubicBezier(0.35, 0.17, 0.3, 0.86),
+              ease: cubicBezier(0.47, 0, 0.23, 1.38),
               duration: 0.8,
             }}
           >
-            <div className="w-[75vw]">
+            <div className="w-[50vw]">
               <Slider {...settings}>
                 {processSlides.map((image) => (
                   <Image

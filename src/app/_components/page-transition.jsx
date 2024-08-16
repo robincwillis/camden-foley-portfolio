@@ -43,9 +43,6 @@ const variants = {
 const FrozenRouter = (props) => {
   const context = useContext(LayoutRouterContext ?? {});
   const frozen = useRef(context).current;
-
-  // console.log('Running Fozen Router');
-
   return (
     <LayoutRouterContext.Provider value={frozen}>
       {props.children}
@@ -73,7 +70,6 @@ export default function Template({ children }) {
   }
 
   if (viewTransitionsSupported) {
-    console.log("viewTransitionsSupported:::");
     return children;
   }
 

@@ -1,5 +1,4 @@
 export function extractEntries(fetchResponse, collectionKey) {
-  console.log(fetchResponse);
   return fetchResponse?.data[collectionKey]?.items;
 }
 
@@ -30,6 +29,6 @@ export async function fetchGraphQL(query, preview = false, tags = []) {
   )
     .then((response) => response.json())
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }

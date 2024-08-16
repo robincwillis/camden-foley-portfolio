@@ -148,7 +148,7 @@ export default function ProjectSlide({
           <RichText
             document={description.json}
             classNames={{
-              paragraph: "font-light",
+              paragraph: "font-light text-sm sm:text-base",
               bold: "font-medium",
             }}
           />
