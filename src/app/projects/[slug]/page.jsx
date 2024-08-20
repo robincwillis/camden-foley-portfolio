@@ -1,5 +1,5 @@
 import { draftMode, cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 
 import { getProject } from "@/lib/api/projects";
 import { getProjectSections } from "@/lib/api/projectSections";
@@ -27,6 +27,10 @@ export default async function Project({ params }) {
   const { isEnabled } = draftMode();
 
   const project = await getProject(params.slug, isEnabled);
+
+  if (!project) {
+    notFound();
+  }
 
   if (project.locked && !isLoggedIn()) {
     redirect("/");

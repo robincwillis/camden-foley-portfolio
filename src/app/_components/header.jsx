@@ -1,9 +1,12 @@
 "use client";
+import { useRouter } from 'next/router';
 import { useContext } from "react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 import AppContext from "@/app/_context/app-context";
+
+import usePreviousRoute from '@/app/_hooks/use-previous-route';
 
 import Link from "@/app/_components/link";
 import Logo from "@/app/_components/logo";
@@ -11,6 +14,15 @@ import Logo from "@/app/_components/logo";
 export default function Header({ pages }) {
   const pathname = usePathname();
   const { processModalOpen } = useContext(AppContext);
+  // const router = useRouter();
+  const { previousRoute } = usePreviousRoute();
+
+  let rootPath = '/'
+  if (previousRoute && previousRoute.includes('/collections') && pathname.includes('/projects')) {
+    rootPath = previousRoute
+  } else if (pathname.includes('/collections')) {
+    rootPath = pathname
+  }
 
   return (
     <div
@@ -27,7 +39,7 @@ export default function Header({ pages }) {
     >
       <Link
         className="w-[60px] h-[60px] flex items-center justify-center"
-        href="/"
+        href={rootPath}
       >
         <Logo />
       </Link>
@@ -42,7 +54,7 @@ export default function Header({ pages }) {
               })}
             >
               <Link
-                href={page.slug}
+                href={page.slug !== '/' ? page.slug : rootPath}
                 className="flex h-full text-xl items-center justify-center hover:font-medium md:flex-none md:justify-start w-[75px]"
               >
                 {page.title.toUpperCase()}

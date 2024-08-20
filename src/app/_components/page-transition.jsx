@@ -10,8 +10,7 @@ import { usePathname } from "next/navigation";
 import AppContext from "@/app/_context/app-context";
 
 import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support";
-import usePageSwap from "@/app/_hooks/use-page-swap";
-import usePageReveal from "@/app/_hooks/use-page-reveal";
+
 
 const variants = {
   closed: (position) => {

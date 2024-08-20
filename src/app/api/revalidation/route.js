@@ -10,6 +10,7 @@ export async function POST(request) {
   }
 
   revalidateTag("projects");
+  revalidateTag("collections");
   revalidateTag("projectSections");
   revalidateTag("pages");
   revalidateTag("site");

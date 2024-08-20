@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 import { getAllProjects, getCollectionProjects } from "@/lib/api/projects";
 import { getPage } from "@/lib/api/pages";
 import { getCollection } from "@/lib/api/collections";
@@ -20,13 +22,20 @@ import Image from "@/app/_components/image";
 
 export default async function Collection({ params }) {
   const collection = await getCollection(params.slug);
+
+  if (!collection) {
+    notFound();
+  }
+
   const page = await getPage("");
   const projectIds = getCollectionIds(collection.projectsCollection);
 
   const collectionProjects = await getCollectionProjects(projectIds);
   const projects = await getAllProjects();
 
-  //const loggedIn = false;
+  // Don't repeat projects that are featured in the collection
+  const filteredProjects = projects.filter((project) => !projectIds.includes(project.sys.id))
+
   const loggedIn = isLoggedIn();
 
   const lockup = page?.sectionsCollection?.items[0];
@@ -52,16 +61,16 @@ export default async function Collection({ params }) {
         </div>
       </div>
       {/* Collection Grid */}
-      <div className="grid gap-x-5 gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
+      <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
         <div className="col-span-2">
           <Image
             imageUrl={heroImage.url}
             width={heroImage.width}
             height={heroImage.height}
             alt={heroImage.description}
-            ratio={0.625}
+            ratio={0.63}
           />
-          <h2 className="font-display text-2xl">{collection.name}</h2>
+          <h2 className="font-display text-2xl mt-1">{collection.name}</h2>
           <p className="font-display text-lg">{collection.description}</p>
         </div>
         {collectionProjects.map((project) => (
@@ -79,11 +88,12 @@ export default async function Collection({ params }) {
           />
         ))}
       </div>
-
-      <hr className="bg-black border-black" />
+      <div>
+        <hr className="my-2.5 lg:my-0 bg-black border-black" />
+      </div>
       {/* Project Grid */}
-      <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
-        {projects.map((project) => (
+      <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
+        {filteredProjects.map((project) => (
           <ProjectThumbnail
             key={project.id}
             id={project.sys.id}

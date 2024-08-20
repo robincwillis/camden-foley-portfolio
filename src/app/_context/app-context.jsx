@@ -8,12 +8,6 @@ export const AppProvider = ({ children, site }) => {
   const [state, setState] = useState({
     user: null,
     site: site,
-    box: {
-      x: 50,
-      y: 50,
-      w: 100,
-      h: 100,
-    },
     modalOpen: false,
     // Add other global states here
   });
