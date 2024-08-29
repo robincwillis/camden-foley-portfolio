@@ -11,7 +11,6 @@ import AppContext from "@/app/_context/app-context";
 
 import useViewTransitionSupport from "@/app/_hooks/use-view-transition-support";
 
-
 const variants = {
   closed: (position) => {
     const originPosition = position[0];

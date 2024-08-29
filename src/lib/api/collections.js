@@ -18,6 +18,7 @@ const COLLECTION_GRAPHQL_FIELDS = `
             sys {
                 id
             }
+            name   
         }
     }
 `;
@@ -33,6 +34,5 @@ export async function getCollection(slug, isDraftMode = false) {
         }
       }`;
   const collection = await fetchGraphQL(query, isDraftMode, ["collections"]);
-  
   return extractEntries(collection, "collectionCollection")[0];
 }
