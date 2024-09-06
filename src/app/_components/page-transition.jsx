@@ -98,14 +98,17 @@ export default function Template({ children }) {
             if (!isAnimating) {
               setIsAnimating(true);
             }
+            console.log('origin', originPosition)
+            console.log('target', targetPosition)
           }}
           onAnimationComplete={() => {
             setIsAnimating(false);
             if (pathname === "/info") {
               setOriginPosition(null);
               setTargetPosition(null);
+              clearClonedElement();
             }
-            if (pathname === "/") {
+            if (pathname === "/" || pathname.includes("/collections")) {
               clearClonedElement();
             }
           }}

@@ -33,7 +33,11 @@ export default function Sidebar({
   const { isAnimating, setTargetPosition } = useContext(AppContext);
 
   useEffect(() => {
+  }, [])
+
+  useEffect(() => {
     if (imageRef && imageRef.current) {
+      console.log('imageRef.current', imageRef.current.getBoundingClientRect())
       const rect = imageRef.current.getBoundingClientRect();
       setTargetPosition({
         x: rect.left,

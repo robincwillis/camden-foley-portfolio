@@ -28,7 +28,7 @@ export default async function InfoPage() {
               }}
             />
           </div>
-          <ul className="hidden lg:flex text-3xl laptop:text-4xl gap-2 laptop:gap-x-2.5 font-medium flex-row flex-wrap">
+          <ul className="hidden lg:flex text-3xl laptop:text-4xl gap-2 laptop:gap-x-2.5 max-w-screen-sm font-medium flex-row flex-wrap">
             {lockup?.tags?.map((tag) => (
               <li className="laptop:leading-[2.75rem]" key={tag}>
                 {tag}
