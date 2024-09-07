@@ -12,6 +12,7 @@ export const metadata = {
 
 export default async function InfoPage() {
   const lockup = page?.sectionsCollection?.items[0];
+
   return (
     <div className="p-5 lg:p-10 flex flex-col lg:items-center lg:justify-center lg:flex-1 lg:h-full">
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-4">
