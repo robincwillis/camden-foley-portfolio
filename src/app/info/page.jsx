@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import RichText from "@/app/_components/rich-text";
 
-const page = await getPage("info");
+const page = await getPage("info", false, ["info"]);
 
 export const metadata = {
   title: page.title,

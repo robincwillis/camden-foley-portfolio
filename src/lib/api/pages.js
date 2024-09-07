@@ -51,7 +51,7 @@ export async function getAllPages(limit = 100, isDraftMode = false) {
   return extractEntries(pages, "pageCollection");
 }
 
-export async function getPage(slug, isDraftMode = false) {
+export async function getPage(slug, isDraftMode = false, tags = []) {
   const query = `query {
         pageCollection(where:{slug: "/${slug}"}, limit: 1, preview: ${
           isDraftMode ? "true" : "false"
@@ -62,6 +62,6 @@ export async function getPage(slug, isDraftMode = false) {
         }
       }`;
 
-  const page = await fetchGraphQL(query, isDraftMode, ["pages"]);
+  const page = await fetchGraphQL(query, isDraftMode, ["pages", ...tags]);
   return extractEntries(page, "pageCollection")[0];
 }
