@@ -1,16 +1,24 @@
 import { getPage } from "@/lib/api/pages";
+import { notFound } from "next/navigation";
 
 import Image from "next/image";
 
 import RichText from "@/app/_components/rich-text";
 
-const page = await getPage("info", false, ["info"]);
-
-export const metadata = {
-  title: page.title,
+export const generateMetadata = async ({ params }) => {
+  const page = await getPage(params.slug);
+  return page ? {
+      title: page.title,
+    } : {};
 };
 
-export default async function InfoPage() {
+export default async function Page({ params }) {
+  const page = await getPage(params.slug);
+
+  if (!page) {
+    notFound();
+  }
+
   const lockup = page?.sectionsCollection?.items[0];
 
   return (

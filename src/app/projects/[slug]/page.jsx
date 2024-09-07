@@ -16,11 +16,11 @@ export const generateMetadata = async ({ params }) => {
   const { isEnabled } = draftMode();
 
   const project = await getProject(params.slug, isEnabled);
-  return {
+  return project ? {
     title: project.name,
     keywords: project?.tags || "",
     description: project?.description || "",
-  };
+  } : {};
 };
 
 export default async function Project({ params }) {
