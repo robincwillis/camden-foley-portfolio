@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag, revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export async function POST(request) {
   const requestHeaders = new Headers(request.headers);
@@ -9,13 +9,11 @@ export async function POST(request) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
+  revalidateTag("pages");
   revalidateTag("projects");
   revalidateTag("collections");
   revalidateTag("projectSections");
-  revalidateTag("pages");
   revalidateTag("site");
-
-  revalidatePath("/info/page", "page");
 
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }
