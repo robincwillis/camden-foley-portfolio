@@ -48,14 +48,14 @@ const PROJECT_GRAPHQL_FIELDS = `
     height
     description
   }
-  sectionsCollection(limit: 10) {
+  sectionsCollection(limit: 25) {
     items {
       sys {
         id
       }
     }
   }
-  processSlidesCollection(limit: 20) {
+  processSlidesCollection(limit: 50) {
     items {
       sys {
         id
