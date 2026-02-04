@@ -37,45 +37,16 @@ body {
 }
 
 ::view-transition-group(root) {
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 ::view-transition-old(root) {
-  animation: 0.5s transition-out 0s ease-in-out;
+  animation: 0.8s transition-out 0s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 ::view-transition-new(root) {
-  animation: 0.7s transition-in 0s ease-in-out;
+  animation: 0.8s transition-in 0s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-::view-transition-group(project-sections) {
-  animation-duration: 0.8s;
-  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-::view-transition-new(project-sections) {
-  opacity: 0;
-  animation: 0.8s transition-in 0.8s ease-in-out;
-}
-::view-transition-old(project-sections) {
-  animation: 0.8s transition-out 0s ease-in-out;
-}
-
-/* Experimental */
-
-::view-transition-group(work-page) {
-  animation-duration: 0.8s;
-  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-::view-transition-new(work-page) {
-  opacity: 0;
-  animation: 0.8s transition-in 0.8s ease-in-out;
-  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-}
-::view-transition-old(work-page) {
-  animation: 0.8s transition-out 0s ease-in-out;
-  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-}
 

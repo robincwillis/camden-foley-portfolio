@@ -59,7 +59,9 @@ export default function Sidebar({
           // }}
           style={{
             viewTransitionName: `image-${id}`,
-            visibility: isAnimating ? "hidden" : "visible",
+            ...(!viewTransitionsSupported && {
+              visibility: isAnimating ? "hidden" : "visible",
+            }),
           }}
         >
           <Image

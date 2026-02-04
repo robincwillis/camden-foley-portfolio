@@ -65,7 +65,6 @@ export default async function Project({ params }) {
         <div
           className="lg:flex-1 lg:overflow-y-scroll"
           style={{
-            viewTransitionName: "project-sections",
           }}
         >
           {sortedSections.map((section, index) => (

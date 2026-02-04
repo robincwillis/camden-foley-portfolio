@@ -66,7 +66,7 @@ export default function ProjectSlide({
                   src={image.url}
                   height={image.height}
                   width={image.width}
-                  alt={image.description}
+                  alt={image.description || ""}
                 />
               </div>
             );
@@ -86,7 +86,7 @@ export default function ProjectSlide({
                 src={image.url}
                 height={image.height}
                 width={image.width * 2}
-                alt={image.description}
+                alt={image.description || ""}
               />
             ))}
           </div>

@@ -56,7 +56,7 @@ const ImageSlider = ({ expanded, images }) => {
             >
               <Image
                 src={image.url}
-                alt={image.description}
+                alt={image.description || ""}
                 style={{
                   width: "100%",
                   height: "100%",

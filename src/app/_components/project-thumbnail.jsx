@@ -123,10 +123,12 @@ export default function ProjectThumbnail({
           // }}
           style={{
             viewTransitionName: `image-${id}`,
-            visibility:
-              isAnimating && currentProject && currentProject === id
-                ? "hidden"
-                : "visible",
+            ...(!viewTransitionsSupported && {
+              visibility:
+                isAnimating && currentProject && currentProject === id
+                  ? "hidden"
+                  : "visible",
+            }),
           }}
         >
           <div className="relative">
