@@ -7,7 +7,7 @@ export default function LinkComponent({ children, ...props }) {
 
   if (viewTransitionsSupported) {
     return (
-      <NextViewTransitionLink {...props}>{children}</NextViewTransitionLink>
+      <NextViewTransitionLink scroll={false} {...props}>{children}</NextViewTransitionLink>
     );
   } else {
     return <NextLink {...props}>{children}</NextLink>;
