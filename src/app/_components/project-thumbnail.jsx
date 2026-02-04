@@ -35,6 +35,7 @@ export default function ProjectThumbnail({
   const imageRef = useRef(null);
   const {
     setModalOpen,
+    setLockedProject,
     cloneElement,
     setOriginPosition,
     isAnimating,
@@ -80,6 +81,7 @@ export default function ProjectThumbnail({
   };
 
   const handleLocked = (e) => {
+    setLockedProject(slug);
     setModalOpen(true);
   };
 

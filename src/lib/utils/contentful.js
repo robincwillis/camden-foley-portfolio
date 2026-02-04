@@ -29,7 +29,13 @@ export async function fetchGraphQL(query, preview = false, tags = []) {
     },
   )
     .then((response) => response.json())
+    .then((json) => {
+      if (json.errors) {
+        console.error('Contentful GraphQL errors:', JSON.stringify(json.errors, null, 2));
+      }
+      return json;
+    })
     .catch((error) => {
-      console.error(error);
+      console.error('Contentful fetch error:', error);
     });
 }

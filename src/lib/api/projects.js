@@ -17,6 +17,11 @@ const ALL_PROJECT_GRAPHQL_FIELDS = `
     height
     description
   }
+  passwordsCollection(limit: 10) {
+    items {
+      value
+    }
+  }
 `;
 
 const PROJECT_GRAPHQL_FIELDS = `
@@ -64,6 +69,11 @@ const PROJECT_GRAPHQL_FIELDS = `
         width
         height
         description
+    }
+  }
+  passwordsCollection(limit: 10) {
+    items {
+      value
     }
   }
 `;

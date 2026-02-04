@@ -142,16 +142,37 @@ export default function ProjectSlide({
       >
         <div
           className={clsx("px-5 pb-5 lg:px-0", {
-            "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-5": wrapDescription,
+            "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-2.5": wrapDescription,
           })}
         >
-          <RichText
-            document={description.json}
-            classNames={{
-              paragraph: "font-light text-sm sm:text-base",
-              bold: "font-medium",
-            }}
-          />
+          {wrapDescription ? (
+            description.json.content.map((node, index) => (
+              <div
+                key={index}
+                style={{
+                  width: scaleFactors.current[index]
+                    ? `${100 * scaleFactors.current[index]}%`
+                    : undefined,
+                }}
+              >
+                <RichText
+                  document={{ ...description.json, content: [node] }}
+                  classNames={{
+                    paragraph: "font-light text-sm sm:text-base",
+                    bold: "font-medium",
+                  }}
+                />
+              </div>
+            ))
+          ) : (
+            <RichText
+              document={description.json}
+              classNames={{
+                paragraph: "font-light text-sm sm:text-base",
+                bold: "font-medium",
+              }}
+            />
+          )}
         </div>
       </motion.div>
       <div></div>

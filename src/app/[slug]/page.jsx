@@ -6,14 +6,16 @@ import Image from "next/image";
 import RichText from "@/app/_components/rich-text";
 
 export const generateMetadata = async ({ params }) => {
-  const page = await getPage(params.slug);
+  const { slug } = await params;
+  const page = await getPage(slug);
   return page ? {
       title: page.title,
     } : {};
 };
 
 export default async function Page({ params }) {
-  const page = await getPage(params.slug);
+  const { slug } = await params;
+  const page = await getPage(slug);
 
   if (!page) {
     notFound();

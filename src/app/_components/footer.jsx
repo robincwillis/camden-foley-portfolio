@@ -10,14 +10,13 @@ export default function Footer({ site, path }) {
     useScrollDirection();
   const pathname = usePathname();
 
-  if (pathname && pathname.includes("/projects")) {
-    return null;
-  }
+  const isProjectPage = pathname && pathname.includes("/projects");
 
   return (
     <div
       className={clsx(
         "bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
+        isProjectPage && "lg:hidden",
         pathname === "/" && {
           "lg:fixed lg:bottom-0": pathname === "/",
           "transform lg:translate-y-full":

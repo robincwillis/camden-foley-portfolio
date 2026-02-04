@@ -14,6 +14,7 @@ export const AppProvider = ({ children, site }) => {
 
   const [clonedElement, setClonedElement] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [lockedProject, setLockedProject] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [originPosition, setOriginPosition] = useState(null); //useState({ x: 0, y: 0, width: 0, height: 0 });
   const [targetPosition, setTargetPosition] = useState(null); //useState({ x: 0, y: 0, width: 0, height: 0 });
@@ -47,6 +48,8 @@ export const AppProvider = ({ children, site }) => {
         setCurrentProject,
         modalOpen,
         setModalOpen,
+        lockedProject,
+        setLockedProject,
         clearClonedElement,
         processModalOpen,
         setProcessModalOpen,

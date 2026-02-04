@@ -17,7 +17,8 @@ const shakeAnimation = {
 };
 
 const UnlockModal = ({ onSubmit }) => {
-  const { modalOpen, setModalOpen } = useContext(AppContext);
+  const { modalOpen, setModalOpen, lockedProject, setLockedProject } =
+    useContext(AppContext);
 
   const [password, setPassword] = useState("");
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
@@ -28,7 +29,7 @@ const UnlockModal = ({ onSubmit }) => {
     e.preventDefault();
     setLoading(true);
     const response = await fetch(`/api/projects`, {
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ password, projectSlug: lockedProject }),
       headers: { "Content-Type": "application/json" },
       method: "post",
     });
@@ -51,6 +52,7 @@ const UnlockModal = ({ onSubmit }) => {
     setPasswordIncorrect(false);
     setPasswordCorrect(false);
     setModalOpen(false);
+    setLockedProject(null);
   };
 
   return (

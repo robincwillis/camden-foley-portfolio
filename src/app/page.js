@@ -1,7 +1,7 @@
 import { getAllProjects } from "@/lib/api/projects";
 import { getPage } from "@/lib/api/pages";
 
-import { isLoggedIn } from "@/lib/utils/cookies";
+import { isLoggedIn, getUnlockedProjects } from "@/lib/utils/cookies";
 
 import ProjectThumbnail from "@/app/_components/project-thumbnail";
 import RichText from "@/app/_components/rich-text";
@@ -16,7 +16,8 @@ export default async function Home() {
   const projects = await getAllProjects();
 
   //const loggedIn = false;
-  const loggedIn = isLoggedIn();
+  const loggedIn = await isLoggedIn();
+  const unlockedProjects = await getUnlockedProjects();
 
   const lockup = page?.sectionsCollection?.items[0];
 
@@ -36,7 +37,7 @@ export default async function Home() {
             <h1 className="text-4xl font-medium">{lockup?.headline}</h1>
           </div>
           <div className="mb-1 lg:mb-0 lg:col-span-3">
-            <h2 className="text-lg font-medium">{lockup?.subHeadline}</h2>
+            <h2 className="text-lg lg:text-base xl:text-lg font-medium">{lockup?.subHeadline}</h2>
           </div>
           <div className="lg:col-span-7 flex lg:justify-end">
             <RichText
@@ -49,20 +50,26 @@ export default async function Home() {
         </div>
         {/* Project Grid */}
         <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
-          {projects.map((project) => (
-            <ProjectThumbnail
-              key={project.id}
-              id={project.sys.id}
-              slug={project.slug}
-              image={project.heroImage}
-              name={project.name}
-              mobileName={project.mobileName}
-              client={project.client}
-              date={project.date}
-              tags={project.tags}
-              locked={!loggedIn && project.locked}
-            />
-          ))}
+          {projects.map((project) => {
+            const hasProjectPasswords =
+              project.passwordsCollection?.items?.length > 0;
+            const isUnlocked =
+              loggedIn || unlockedProjects.includes(project.slug);
+            return (
+              <ProjectThumbnail
+                key={project.sys.id}
+                id={project.sys.id}
+                slug={project.slug}
+                image={project.heroImage}
+                name={project.name}
+                mobileName={project.mobileName}
+                client={project.client}
+                date={project.date}
+                tags={project.tags}
+                locked={hasProjectPasswords && !isUnlocked}
+              />
+            );
+          })}
         </div>
       </div>
     </>

@@ -22,6 +22,6 @@ export async function GET(request) {
     return new Response("Project not found", { status: 404 });
   }
 
-  draftMode().enable();
+  (await draftMode()).enable();
   redirect(`/projects/${project.slug}`);
 }

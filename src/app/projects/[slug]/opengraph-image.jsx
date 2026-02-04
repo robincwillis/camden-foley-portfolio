@@ -14,7 +14,8 @@ export const size = {
 export const contentType = "image/jpg";
 
 export default async function OpenGraphImage({ params }) {
-  const project = await getProject(params.slug);
+  const { slug } = await params;
+  const project = await getProject(slug);
   const { heroImage } = project;
 
   return new ImageResponse(

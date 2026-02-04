@@ -4,7 +4,7 @@ import { getAllProjects, getCollectionProjects } from "@/lib/api/projects";
 import { getPage } from "@/lib/api/pages";
 import { getCollection } from "@/lib/api/collections";
 
-import { isLoggedIn } from "@/lib/utils/cookies";
+import { isLoggedIn, getUnlockedProjects } from "@/lib/utils/cookies";
 import { getCollectionIds } from "@/lib/utils/contentful";
 
 import CollectionThumbnail from "@/app/_components/collection-thumbnail";
@@ -12,7 +12,8 @@ import ProjectThumbnail from "@/app/_components/project-thumbnail";
 import RichText from "@/app/_components/rich-text";
 
 export default async function Collection({ params }) {
-  const collection = await getCollection(params.slug);
+  const { slug } = await params;
+  const collection = await getCollection(slug);
 
   if (!collection) {
     notFound();
@@ -33,7 +34,8 @@ export default async function Collection({ params }) {
     return projectIds.indexOf(a.sys.id) - projectIds.indexOf(b.sys.id);
   });
 
-  const loggedIn = isLoggedIn();
+  const loggedIn = await isLoggedIn();
+  const unlockedProjects = await getUnlockedProjects();
 
   const lockup = page?.sectionsCollection?.items[0];
   const { heroImage } = collection;
@@ -64,39 +66,51 @@ export default async function Collection({ params }) {
           name={collection.name}
           description={collection.description}
         />
-        {sortedCollectionProjects.map((project) => (
-          <ProjectThumbnail
-            key={project.sys.id}
-            id={project.sys.id}
-            slug={project.slug}
-            image={project.heroImage}
-            name={project.name}
-            mobileName={project.mobileName}
-            client={project.client}
-            date={project.date}
-            tags={project.tags}
-            locked={!loggedIn && project.locked}
-          />
-        ))}
+        {sortedCollectionProjects.map((project) => {
+          const hasProjectPasswords =
+            project.passwordsCollection?.items?.length > 0;
+          const isUnlocked =
+            loggedIn || unlockedProjects.includes(project.slug);
+          return (
+            <ProjectThumbnail
+              key={project.sys.id}
+              id={project.sys.id}
+              slug={project.slug}
+              image={project.heroImage}
+              name={project.name}
+              mobileName={project.mobileName}
+              client={project.client}
+              date={project.date}
+              tags={project.tags}
+              locked={hasProjectPasswords && !isUnlocked}
+            />
+          );
+        })}
       </div>
       <div>
         <hr className="my-2.5 lg:my-0 bg-black border-black" />
       </div>
       {/* Project Grid */}
       <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
-        {filteredProjects.map((project) => (
-          <ProjectThumbnail
-            key={project.sys.id}
-            id={project.sys.id}
-            slug={project.slug}
-            image={project.heroImage}
-            name={project.name}
-            client={project.client}
-            date={project.date}
-            tags={project.tags}
-            locked={!loggedIn && project.locked}
-          />
-        ))}
+        {filteredProjects.map((project) => {
+          const hasProjectPasswords =
+            project.passwordsCollection?.items?.length > 0;
+          const isUnlocked =
+            loggedIn || unlockedProjects.includes(project.slug);
+          return (
+            <ProjectThumbnail
+              key={project.sys.id}
+              id={project.sys.id}
+              slug={project.slug}
+              image={project.heroImage}
+              name={project.name}
+              client={project.client}
+              date={project.date}
+              tags={project.tags}
+              locked={hasProjectPasswords && !isUnlocked}
+            />
+          );
+        })}
       </div>
     </div>
   );
