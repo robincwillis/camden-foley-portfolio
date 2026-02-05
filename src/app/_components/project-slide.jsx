@@ -149,6 +149,7 @@ export default function ProjectSlide({
             description.json.content.map((node, index) => (
               <div
                 key={index}
+                className="min-w-full lg:min-w-0"
                 style={{
                   width: scaleFactors.current[index]
                     ? `${100 * scaleFactors.current[index]}%`

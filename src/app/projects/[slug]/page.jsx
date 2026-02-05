@@ -1,10 +1,10 @@
-import { draftMode, cookies } from "next/headers";
+import { draftMode } from "next/headers";
 import { redirect, notFound } from "next/navigation";
 
 import { getProject } from "@/lib/api/projects";
 import { getProjectSections } from "@/lib/api/projectSections";
 import { getCollectionIds } from "@/lib/utils/contentful";
-import { isLoggedIn, isProjectUnlocked } from "@/lib/utils/cookies";
+import { isProjectUnlocked } from "@/lib/utils/cookies";
 
 import Sidebar from "@/app/_components/sidebar";
 import ProjectSlide from "@/app/_components/project-slide";
@@ -34,9 +34,7 @@ export default async function Project({ params }) {
     notFound();
   }
 
-  const hasProjectPasswords =
-    project.passwordsCollection?.items?.length > 0;
-  if (hasProjectPasswords && !(await isProjectUnlocked(project.slug))) {
+  if (project.locked && !(await isProjectUnlocked(project.slug))) {
     redirect("/");
   }
 

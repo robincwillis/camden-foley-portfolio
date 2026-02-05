@@ -5,6 +5,7 @@ import { motion, cubicBezier, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 
 import AppContext from "@/app/_context/app-context";
+import { setSessionActive } from "@/app/_components/session-guard";
 
 import SubmitIcon from "@/app/_components/submit-icon";
 
@@ -40,6 +41,7 @@ const UnlockModal = ({ onSubmit }) => {
     } else {
       setPasswordIncorrect(false);
       setPasswordCorrect(true);
+      setSessionActive();
       setTimeout(() => {
         setModalOpen(false);
         window.location.reload();

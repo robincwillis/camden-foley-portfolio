@@ -9,7 +9,7 @@ import { getCollectionIds } from "@/lib/utils/contentful";
 
 import CollectionThumbnail from "@/app/_components/collection-thumbnail";
 import ProjectThumbnail from "@/app/_components/project-thumbnail";
-import RichText from "@/app/_components/rich-text";
+import PageLockup from "@/app/_components/page-lockup";
 
 export default async function Collection({ params }) {
   const { slug } = await params;
@@ -25,10 +25,10 @@ export default async function Collection({ params }) {
   const collectionProjects = await getCollectionProjects(projectIds);
   const projects = await getAllProjects();
 
-  // Don't repeat projects that are featured in the collection
-  const filteredProjects = projects.filter(
-    (project) => !projectIds.includes(project.sys.id),
-  );
+  // Old Version: Don't repeat projects that are featured in the collection
+  // const filteredProjects = projects.filter(
+  //   (project) => !projectIds.includes(project.sys.id),
+  // );
 
   const sortedCollectionProjects = collectionProjects.sort((a, b) => {
     return projectIds.indexOf(a.sys.id) - projectIds.indexOf(b.sys.id);
@@ -42,33 +42,19 @@ export default async function Collection({ params }) {
 
   return (
     <div className="p-5 lg:p-10 lg:pb-[80px] flex flex-col space-y-5 lg:space-y-10">
-      {/* Header */}
-      <div className="lg:grid lg:grid-cols-12 lg:gap-4">
-          <div className="lg:col-span-2 pb-5 lg:pb-0">
-            <h1 className="text-4xl font-medium">{lockup?.headline}</h1>
-          </div>
-          <div className="mb-1 lg:mb-0 lg:col-span-3">
-            <h2 className="text-lg font-medium">{lockup?.subHeadline}</h2>
-          </div>
-          <div className="lg:col-span-7 flex lg:justify-end">
-            <RichText
-              document={lockup.body.json}
-              classNames={{
-                paragraph: "text-lg lg:text-base xl:text-lg font-light",
-              }}
-            />
-          </div>
+      <div className="lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center">
+        <div className="lg:col-span-5 pb-5 lg:pb-0">
+          <h2 className="text-4xl font-medium">{collection.name}</h2>
         </div>
+        <div className="hidden md:block lg:col-span-7 lg:text-right">
+          <p className="text-lg lg:text-base xl:text-lg font-medium">{collection.description}</p>
+        </div>
+      </div>
+
       {/* Collection Grid */}
       <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
-        <CollectionThumbnail
-          image={heroImage}
-          name={collection.name}
-          description={collection.description}
-        />
+        <CollectionThumbnail image={heroImage} description={collection.description} />
         {sortedCollectionProjects.map((project) => {
-          const hasProjectPasswords =
-            project.passwordsCollection?.items?.length > 0;
           const isUnlocked =
             loggedIn || unlockedProjects.includes(project.slug);
           return (
@@ -82,7 +68,7 @@ export default async function Collection({ params }) {
               client={project.client}
               date={project.date}
               tags={project.tags}
-              locked={hasProjectPasswords && !isUnlocked}
+              locked={project.locked && !isUnlocked}
             />
           );
         })}
@@ -90,11 +76,10 @@ export default async function Collection({ params }) {
       <div>
         <hr className="my-2.5 lg:my-0 bg-black border-black" />
       </div>
+      <PageLockup lockup={lockup} />
       {/* Project Grid */}
       <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
-        {filteredProjects.map((project) => {
-          const hasProjectPasswords =
-            project.passwordsCollection?.items?.length > 0;
+        {projects.map((project) => {
           const isUnlocked =
             loggedIn || unlockedProjects.includes(project.slug);
           return (
@@ -107,7 +92,7 @@ export default async function Collection({ params }) {
               client={project.client}
               date={project.date}
               tags={project.tags}
-              locked={hasProjectPasswords && !isUnlocked}
+              locked={project.locked && !isUnlocked}
             />
           );
         })}

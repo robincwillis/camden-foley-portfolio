@@ -1,22 +1,30 @@
-"use client";
+import Image from "next/image";
 
-import Image from "@/app/_components/image";
-
-import useWidth from "@/app/_hooks/use-width";
-
-export default function CollectionThumbnail({ image, name, description }) {
-  const width = useWidth();
+export default function CollectionThumbnail({ image, description }) {
   return (
-    <div className="col-span-2 md:col-span-3">
-      <Image
-        imageUrl={image.url}
-        width={image.width}
-        height={image.height}
-        alt={image.description}
-        ratio={width > 767 ? 0.415 : 0.635}
-      />
-      <h2 className="font-display text-2xl mt-1">{name}</h2>
-      <p className="font-display text-lg">{description}</p>
+    <div className="col-span-2 sm:col-span-3 md:row-span-1 md:h-full">
+      {/* Mobile: natural height image */}
+      <div className="md:hidden">
+        <Image
+          src={image.url}
+          width={image.width}
+          height={image.height}
+          alt={image.description || ""}
+          className="w-full h-auto"
+        />
+        {description && (
+          <p className="text-sm font-medium mt-2">{description}</p>
+        )}
+      </div>
+      {/* Desktop: fill height image */}
+      <div className="hidden md:block relative w-full h-full min-h-[200px]">
+        <Image
+          src={image.url}
+          fill
+          alt={image.description || ""}
+          className="object-cover"
+        />
+      </div>
     </div>
   );
 }

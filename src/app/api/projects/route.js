@@ -1,7 +1,10 @@
 import { cookies } from "next/headers";
-import { getProject } from "@/lib/api/projects";
+import { getProject, getAllProjects } from "@/lib/api/projects";
 
 const debug = false;
+
+// Session duration: 8 hours in seconds
+const SESSION_MAX_AGE = 8 * 60 * 60;
 
 export async function POST(request, params) {
   const data = await request.json();
@@ -9,7 +12,7 @@ export async function POST(request, params) {
   const projectSlug = data.projectSlug;
 
   const cookiesStore = await cookies();
-  const options = debug ? { maxAge: 0 } : {};
+  const options = debug ? { maxAge: 0 } : { maxAge: SESSION_MAX_AGE };
 
   // Global site password check
   if (process.env.SITE_PASSWORD === password) {
@@ -44,9 +47,17 @@ export async function POST(request, params) {
         unlockedProjects = [];
       }
 
-      // Add this project if not already unlocked
-      if (!unlockedProjects.includes(project.slug)) {
-        unlockedProjects.push(project.slug);
+      // Find all projects that share this password and unlock them all
+      const allProjects = await getAllProjects();
+      const projectsWithPassword = allProjects.filter((p) => {
+        const passwords = p.passwordsCollection?.items || [];
+        return passwords.some((pw) => pw.value === password);
+      });
+
+      for (const p of projectsWithPassword) {
+        if (!unlockedProjects.includes(p.slug)) {
+          unlockedProjects.push(p.slug);
+        }
       }
 
       const cookie = cookiesStore.set(

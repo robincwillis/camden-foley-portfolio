@@ -15,6 +15,7 @@ import Footer from "@/app/_components/footer";
 import UnlockModal from "@/app/_components/unlock-modal";
 import Transition from "@/app/_components/page-transition";
 import ScrollRestoration from "@/app/_components/scroll-restoration";
+import SessionGuard from "@/app/_components/session-guard";
 
 // import { revalidatePath } from 'next/cache'
 // revalidatePath('/', 'layout')
@@ -67,6 +68,7 @@ export default function RootLayout({ children }) {
           className={`${halyard.variable} ${openSans.variable} font-sans font-normal bg-white min-h-screen flex flex-col`}
         >
           <AppProvider site={site}>
+            <SessionGuard />
             <ScrollRestoration />
             <Header pages={pages} />
             <Transition>{children}</Transition>
