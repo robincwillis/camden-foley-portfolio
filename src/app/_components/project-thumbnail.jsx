@@ -30,6 +30,7 @@ export default function ProjectThumbnail({
   slug,
   tags,
   locked,
+  enableViewTransition = true,
 }) {
   const viewTransitionsSupported = useViewTransitionSupport();
   const imageRef = useRef(null);
@@ -122,7 +123,9 @@ export default function ProjectThumbnail({
           //     visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
           // }}
           style={{
-            viewTransitionName: `image-${id}`,
+            ...(enableViewTransition && {
+              viewTransitionName: `image-${id}`,
+            }),
             ...(!viewTransitionsSupported && {
               visibility:
                 isAnimating && currentProject && currentProject === id

@@ -13,7 +13,7 @@ export default function CollectionThumbnail({ image, description }) {
           className="w-full h-auto"
         />
         {description && (
-          <p className="text-sm font-medium mt-2">{description}</p>
+          <p className="text-lg font-medium mt-2">{description}</p>
         )}
       </div>
       {/* Desktop: fill height image */}

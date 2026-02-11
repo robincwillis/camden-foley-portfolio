@@ -43,7 +43,7 @@ export default async function Collection({ params }) {
   return (
     <div className="p-5 lg:p-10 lg:pb-[80px] flex flex-col space-y-5 lg:space-y-10">
       <div className="lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center">
-        <div className="lg:col-span-5 pb-5 lg:pb-0">
+        <div className="lg:col-span-5">
           <h2 className="text-4xl font-medium">{collection.name}</h2>
         </div>
         <div className="hidden md:block lg:col-span-7 lg:text-right">
@@ -82,6 +82,7 @@ export default async function Collection({ params }) {
         {projects.map((project) => {
           const isUnlocked =
             loggedIn || unlockedProjects.includes(project.slug);
+          const isInCollection = projectIds.includes(project.sys.id);
           return (
             <ProjectThumbnail
               key={project.sys.id}
@@ -93,6 +94,7 @@ export default async function Collection({ params }) {
               date={project.date}
               tags={project.tags}
               locked={project.locked && !isUnlocked}
+              enableViewTransition={!isInCollection}
             />
           );
         })}
