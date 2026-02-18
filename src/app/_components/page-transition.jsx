@@ -64,7 +64,7 @@ export default function Template({ children }) {
 
   const viewTransitionsSupported = useViewTransitionSupport();
   if (typeof viewTransitionsSupported === "undefined") {
-    return null;
+    return children;
   }
 
   if (viewTransitionsSupported) {

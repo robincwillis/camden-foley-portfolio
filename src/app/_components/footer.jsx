@@ -14,6 +14,7 @@ export default function Footer({ site, path }) {
 
   return (
     <div
+      style={{ viewTransitionName: "footer" }}
       className={clsx(
         "bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
         isProjectPage && "lg:hidden",
