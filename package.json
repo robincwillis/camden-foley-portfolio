@@ -2,31 +2,41 @@
   "name": "camden-foley-portfolio",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@contentful/rich-text-react-renderer": "^16.1.6",
+    "@contentful/rich-text-react-renderer": "^16.2.2",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.29.2",
-    "next": "^16.1.6",
+    "framer-motion": "^12.43.0",
+    "next": "^16.3.1",
     "next-view-transitions": "^0.3.5",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "eslint": "^9",
-    "eslint-config-next": "^16.1.6",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "postcss": "^8",
-    "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.1"
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-prettier": "^5.5.6",
+    "postcss": "^8.5.26",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^3.4.19"
+  },
+  "overrides": {
+    "eslint": {
+      "minimatch": {
+        "brace-expansion": "^1.1.18"
+      }
+    }
   }
 }

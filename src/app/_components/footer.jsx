@@ -6,24 +6,26 @@ import { usePathname } from "next/navigation";
 
 export default function Footer({ site, path }) {
   const links = site.footerLinksCollection.items;
-  const { scrollDirection, scrolledToBottom, scrolledToTop } =
-    useScrollDirection();
   const pathname = usePathname();
 
   const isProjectPage = pathname && pathname.includes("/projects");
+  const shouldFloat = pathname === "/" || isProjectPage;
+
+  const { scrollDirection, scrolledToBottom, scrolledToTop } =
+    useScrollDirection(isProjectPage ? "#project-content-scroll" : undefined);
+
+  const isVisible =
+    scrolledToBottom || (scrollDirection === "up" && !scrolledToTop);
 
   return (
     <div
       style={{ viewTransitionName: "footer" }}
       className={clsx(
-        "bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
-        isProjectPage && "lg:hidden",
-        pathname === "/" && {
-          "lg:fixed lg:bottom-0": pathname === "/",
-          "transform lg:translate-y-full":
-            (scrollDirection === "down" && !scrolledToBottom) || scrolledToTop,
-          "transform lg:translate-y-0":
-            (scrollDirection === "up" && !scrolledToTop) || scrolledToBottom,
+        "bg-white z-20 lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
+        shouldFloat && {
+          "lg:fixed lg:bottom-0": true,
+          "transform lg:translate-y-full": !isVisible,
+          "transform lg:translate-y-0": isVisible,
         },
       )}
     >
@@ -40,7 +42,7 @@ export default function Footer({ site, path }) {
               <a
                 href={link.to || link?.asset?.url}
                 target="_blank"
-                className="text-lg underline underline-offset-2"
+                className="inline-flex items-center justify-center px-3 pt-[5px] pb-[9px] rounded-full border border-black text-lg transition-colors duration-200 hover:bg-black hover:text-white"
               >
                 {link.label}
               </a>

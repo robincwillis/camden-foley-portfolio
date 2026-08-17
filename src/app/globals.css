@@ -56,4 +56,11 @@ body {
   animation-duration: 0s;
 }
 
+/* react-slick clones each slide's child and injects an inline
+   display: inline-block style onto it; without a vertical-align override
+   it aligns to the text baseline, adding a few pixels of phantom
+   whitespace below the slider. */
+.slick-slide > div > div {
+  vertical-align: top;
+}
 

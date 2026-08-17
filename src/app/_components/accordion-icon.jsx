@@ -3,28 +3,19 @@
 import { motion } from "framer-motion";
 
 const AccordionIcon = ({ isToggled }) => {
-  const stem = {
-    minus: { pathLength: 0, pathOffset: 0.5 },
-    plus: { pathLength: 1, pathOffset: 0 },
-  };
-
   return (
-    <motion.svg viewBox="0 0 10 10" width="10" height="10">
-      <motion.line
-        x1="5"
-        y1="0"
-        x2="5"
-        y2="10"
+    <motion.svg
+      viewBox="0 0 15 8"
+      width="12"
+      height="6.4"
+      animate={{ rotate: isToggled ? 0 : 180 }}
+      transition={{ duration: 0.5 }}
+    >
+      <path
+        d="M0.325 6.659L7.325 0.659L14.325 6.659"
         stroke="currentColor"
-        variants={stem}
-        animate={isToggled ? "minus" : "plus"}
-        transition={{ duration: 0.5 }}
-
-        // transition={{
-        //     type: "spring", duration: 1.5
-        // }}
+        fill="none"
       />
-      <motion.line y1="5" x1="0" y2="5" x2="10" stroke="currentColor" />
     </motion.svg>
   );
 };

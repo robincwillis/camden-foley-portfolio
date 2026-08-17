@@ -1,15 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const subscribe = (callback) => {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+
+const getSnapshot = () => window.innerWidth;
+
+const getServerSnapshot = () => 0;
 
 const useWidth = () => {
-  const [width, setWidth] = useState(0);
-  const handleResize = () => setWidth(window.innerWidth);
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  return width;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };
 
 export default useWidth;

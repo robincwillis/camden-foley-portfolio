@@ -30,14 +30,18 @@ export default function Sidebar({
 
   const imageRef = useRef(null);
 
-  const { isAnimating, setTargetPosition } = useContext(AppContext);
+  const { isAnimating, setTargetPosition, currentProject } =
+    useContext(AppContext);
+
+  const viewTransitionName =
+    currentProject && currentProject.startsWith(`image-${id}-`)
+      ? currentProject
+      : `image-${id}`;
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
-  }, [])
-
-  useEffect(() => {
-    if (imageRef && imageRef.current) {
-      console.log('imageRef.current', imageRef.current.getBoundingClientRect())
+    if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect();
       setTargetPosition({
         x: rect.left,
@@ -46,10 +50,10 @@ export default function Sidebar({
         height: rect.height,
       });
     }
-  }, [imageRef.current]);
+  }, []);
 
   return (
-    <div className="lg:sticky lg:overflow-y-auto lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
+    <div className="lg:sticky lg:overflow-y-auto lg:w-[393px] lg:top-0 lg:pb-[80px] lg:border-r-[1px] lg:border-black">
       <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
         <div
           // style={viewTransitionsSupported ? {
@@ -58,7 +62,7 @@ export default function Sidebar({
           //     visibility: isAnimating ? 'hidden' : 'visible'
           // }}
           style={{
-            viewTransitionName: `image-${id}`,
+            viewTransitionName,
             ...(!viewTransitionsSupported && {
               visibility: isAnimating ? "hidden" : "visible",
             }),

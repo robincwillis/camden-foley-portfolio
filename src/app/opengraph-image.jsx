@@ -18,16 +18,14 @@ export default async function OpenGraphImage({ params }) {
   const lockup = page?.sectionsCollection?.items[0];
 
   return new ImageResponse(
-    (
-      <img
-        src={lockup.image.url}
-        width={size.width}
-        height={size.height}
-        style={{
-          objectFit: "cover",
-        }}
-      />
-    ),
+    <img
+      src={lockup.image.url}
+      width={size.width}
+      height={size.height}
+      style={{
+        objectFit: "cover",
+      }}
+    />,
     {
       ...size,
     },

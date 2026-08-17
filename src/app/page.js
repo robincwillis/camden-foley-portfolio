@@ -22,9 +22,7 @@ export default async function Home() {
 
   return (
     <>
-      <div
-        className="p-5 lg:p-10 lg:pb-[80px] flex flex-col space-y-5 lg:space-y-10"
-      >
+      <div className="p-5 lg:p-10 lg:pb-[80px] flex flex-col space-y-5 lg:space-y-10">
         <PageLockup lockup={lockup} />
         {/* Project Grid */}
         <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">

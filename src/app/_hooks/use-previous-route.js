@@ -1,24 +1,30 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 const usePreviousRoute = () => {
   const pathname = usePathname();
 
-  const routeRef = useRef(null);
-  const projectRef = useRef(null);
+  const [tracked, setTracked] = useState({
+    pathname: null,
+    previousRoute: null,
+    previousProject: null,
+  });
 
-  useEffect(() => {
-    if (pathname && pathname.includes("/projects")) {
-      projectRef.current = pathname;
-    } else {
-      routeRef.current = pathname;
-    }
-  }, [pathname]);
+  if (pathname !== tracked.pathname) {
+    const outgoing = tracked.pathname;
+    const outgoingIsProject = outgoing && outgoing.includes("/projects");
+
+    setTracked({
+      pathname,
+      previousRoute: outgoingIsProject ? tracked.previousRoute : outgoing,
+      previousProject: outgoingIsProject ? outgoing : tracked.previousProject,
+    });
+  }
 
   return {
-    previousRoute: routeRef.current,
-    previousProject: projectRef.current,
+    previousRoute: tracked.previousRoute,
+    previousProject: tracked.previousProject,
   };
 };
 

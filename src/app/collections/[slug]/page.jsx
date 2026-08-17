@@ -47,13 +47,18 @@ export default async function Collection({ params }) {
           <h2 className="text-4xl font-medium">{collection.name}</h2>
         </div>
         <div className="hidden md:block lg:col-span-7 lg:text-right">
-          <p className="text-lg lg:text-base xl:text-lg font-medium">{collection.description}</p>
+          <p className="text-lg lg:text-base xl:text-lg font-medium">
+            {collection.description}
+          </p>
         </div>
       </div>
 
       {/* Collection Grid */}
       <div className="grid gap-x-5 gap-y-5 lg:gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 laptop:grid-cols-6 xl:grid-cols-7">
-        <CollectionThumbnail image={heroImage} description={collection.description} />
+        <CollectionThumbnail
+          image={heroImage}
+          description={collection.description}
+        />
         {sortedCollectionProjects.map((project) => {
           const isUnlocked =
             loggedIn || unlockedProjects.includes(project.slug);
@@ -74,7 +79,7 @@ export default async function Collection({ params }) {
         })}
       </div>
       <div>
-        <hr className="my-2.5 lg:my-0 bg-black border-black" />
+        <hr className="mt-3.5 mb-2.5 lg:mt-1.5 lg:mb-0 bg-black border-black" />
       </div>
       <PageLockup lockup={lockup} />
       {/* Project Grid */}
@@ -82,7 +87,6 @@ export default async function Collection({ params }) {
         {projects.map((project) => {
           const isUnlocked =
             loggedIn || unlockedProjects.includes(project.slug);
-          const isInCollection = projectIds.includes(project.sys.id);
           return (
             <ProjectThumbnail
               key={project.sys.id}
@@ -94,7 +98,6 @@ export default async function Collection({ params }) {
               date={project.date}
               tags={project.tags}
               locked={project.locked && !isUnlocked}
-              enableViewTransition={!isInCollection}
             />
           );
         })}

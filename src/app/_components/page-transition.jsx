@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState, useRef, useEffect } from "react";
+import { useContext, useState } from "react";
 
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
@@ -40,7 +40,7 @@ const variants = {
 // Prevents instant page opening
 const FrozenRouter = (props) => {
   const context = useContext(LayoutRouterContext ?? {});
-  const frozen = useRef(context).current;
+  const [frozen] = useState(context);
   return (
     <LayoutRouterContext.Provider value={frozen}>
       {props.children}
@@ -98,8 +98,8 @@ export default function Template({ children }) {
             if (!isAnimating) {
               setIsAnimating(true);
             }
-            console.log('origin', originPosition)
-            console.log('target', targetPosition)
+            console.log("origin", originPosition);
+            console.log("target", targetPosition);
           }}
           onAnimationComplete={() => {
             setIsAnimating(false);

@@ -17,11 +17,13 @@ export const generateMetadata = async ({ params }) => {
   const { isEnabled } = await draftMode();
 
   const project = await getProject(slug, isEnabled);
-  return project ? {
-    title: project.name,
-    keywords: project?.tags || "",
-    description: project?.description || "",
-  } : {};
+  return project
+    ? {
+        title: project.name,
+        keywords: project?.tags || "",
+        description: project?.description || "",
+      }
+    : {};
 };
 
 export default async function Project({ params }) {
@@ -61,9 +63,9 @@ export default async function Project({ params }) {
           highlights={project.highlights}
         />
         <div
-          className="lg:flex-1 lg:overflow-y-scroll"
-          style={{
-          }}
+          id="project-content-scroll"
+          className="lg:flex-1 lg:overflow-y-scroll lg:pb-[80px]"
+          style={{}}
         >
           {sortedSections.map((section, index) => (
             <ProjectSlide

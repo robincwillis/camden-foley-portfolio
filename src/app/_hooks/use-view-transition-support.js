@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const subscribe = () => () => {};
+
+const getSnapshot = () => typeof document.startViewTransition === "function";
+
+const getServerSnapshot = () => undefined;
 
 const usePageTransitionSupport = () => {
-  const [isSupported, setIsSupported] = useState();
-
-  useEffect(() => {
-    setIsSupported(typeof document.startViewTransition === "function");
-  }, []);
-
-  return isSupported;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };
 
 export default usePageTransitionSupport;

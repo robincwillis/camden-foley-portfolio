@@ -2,8 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 
-const ImageSlider = ({ expanded, images }) => {
-  let sliderRef = useRef(null);
+const ImageSlider = ({ expanded, images, onSlideChange }) => {
+  const sliderRef = useRef(null);
   const [toggled, setToggled] = useState(expanded);
 
   const settings = {
@@ -18,33 +18,25 @@ const ImageSlider = ({ expanded, images }) => {
     //slidesToScroll: 1,
     //centerMode: true, // Center the slides
     swipeToSlide: true, // Allow swipe to slide
+    afterChange: (currentSlide) => {
+      onSlideChange?.(currentSlide === 1);
+    },
   };
 
-  useEffect(() => {
-    if (!toggled && expanded !== toggled) {
-      setToggled(true);
-    }
-  }, [expanded, toggled]);
+  if (expanded && !toggled) {
+    setToggled(true);
+  }
 
   useEffect(() => {
-    if (!sliderRef || !toggled) {
+    if (!sliderRef.current || !toggled) {
       return;
     }
-    if (expanded) {
-      sliderRef.slickNext();
-    } else {
-      sliderRef.slickPrev();
-    }
-  }, [toggled, expanded, sliderRef]);
+    sliderRef.current.slickGoTo(expanded ? 1 : 0);
+  }, [toggled, expanded]);
 
   return (
     <div>
-      <Slider
-        ref={(slider) => {
-          sliderRef = slider;
-        }}
-        {...settings}
-      >
+      <Slider ref={sliderRef} {...settings}>
         {images.map((image) => (
           <div key={image.sys.id} className="px-5">
             <div
