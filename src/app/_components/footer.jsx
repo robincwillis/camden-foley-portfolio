@@ -1,12 +1,15 @@
 "use client";
+import { useContext } from "react";
 import clsx from "clsx";
 
+import AppContext from "@/app/_context/app-context";
 import useScrollDirection from "@/app/_hooks/use-scroll-direction";
 import { usePathname } from "next/navigation";
 
 export default function Footer({ site, path }) {
   const links = site.footerLinksCollection.items;
   const pathname = usePathname();
+  const { processModalOpen } = useContext(AppContext);
 
   const isProjectPage = pathname && pathname.includes("/projects");
   const shouldFloat = pathname === "/" || isProjectPage;
@@ -21,7 +24,11 @@ export default function Footer({ site, path }) {
     <div
       style={{ viewTransitionName: "footer" }}
       className={clsx(
-        "bg-white z-20 lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
+        "bg-white lg:flex lg:flex-row items-center justify-between border-t-[1px] border-black lg:h-[60px] w-full transition-transform duration-500 ease-in-out",
+        {
+          "z-20": !processModalOpen,
+          "z-0": processModalOpen,
+        },
         shouldFloat && {
           "lg:fixed lg:bottom-0": true,
           "transform lg:translate-y-full": !isVisible,
@@ -42,7 +49,7 @@ export default function Footer({ site, path }) {
               <a
                 href={link.to || link?.asset?.url}
                 target="_blank"
-                className="inline-flex items-center justify-center px-3 pt-[5px] pb-[9px] rounded-full border border-black text-lg transition-colors duration-200 hover:bg-black hover:text-white"
+                className="inline-flex items-center justify-center px-3 pt-[5px] pb-[9px] rounded-full border border-black text-lg leading-[14px] transition-colors duration-200 hover:bg-black hover:text-white"
               >
                 {link.label}
               </a>

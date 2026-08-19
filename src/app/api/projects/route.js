@@ -33,6 +33,7 @@ export async function POST(request, params) {
   if (projectSlug) {
     const project = await getProject(projectSlug.replace(/^\//, ""));
     const projectPasswords = project?.passwordsCollection?.items || [];
+    // Draft/unpublished Password entries resolve to null items here, not omitted entries
     const passwordValues = projectPasswords.filter(Boolean).map((p) => p.value);
 
     if (passwordValues.includes(password)) {

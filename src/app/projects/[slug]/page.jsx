@@ -64,7 +64,7 @@ export default async function Project({ params }) {
         />
         <div
           id="project-content-scroll"
-          className="lg:flex-1 lg:overflow-y-scroll lg:pb-[80px]"
+          className="lg:flex-1 lg:overflow-y-scroll lg:pb-[60px]"
           style={{}}
         >
           {sortedSections.map((section, index) => (

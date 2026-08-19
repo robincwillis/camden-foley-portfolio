@@ -31,10 +31,17 @@ export async function fetchGraphQL(query, preview = false, tags = []) {
     .then((response) => response.json())
     .then((json) => {
       if (json.errors) {
-        console.error(
-          "Contentful GraphQL errors:",
-          JSON.stringify(json.errors, null, 2),
+        // Unpublished/draft linked entries (e.g. a Password mid-edit) surface as
+        // UNRESOLVABLE_LINK here — expected as part of the editorial workflow, not a bug.
+        const unexpected = json.errors.filter(
+          (error) => error.extensions?.contentful?.code !== "UNRESOLVABLE_LINK",
         );
+        if (unexpected.length) {
+          console.error(
+            "Contentful GraphQL errors:",
+            JSON.stringify(unexpected, null, 2),
+          );
+        }
       }
       return json;
     })

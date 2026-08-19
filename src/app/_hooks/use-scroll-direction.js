@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const useScrollDirection = (targetSelector) => {
+  const pathname = usePathname();
   const [scrollDirection, setScrollDirection] = useState(null);
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
   const [scrolledToTop, setScrolledToTop] = useState(true);
@@ -25,9 +27,15 @@ const useScrollDirection = (targetSelector) => {
         ? target.clientHeight
         : window.innerHeight;
 
-      setScrollDirection(scrollY > lastScrollY ? "down" : "up");
-      setScrolledToBottom(scrollY + clientHeight >= scrollHeight);
-      setScrolledToTop(scrollY <= 0);
+      const direction = scrollY > lastScrollY ? "down" : "up";
+      // Safari reports fractional scrollY/scrollHeight, so at true max scroll
+      // the sum can land a fraction of a pixel short of scrollHeight.
+      const atBottom = scrollY + clientHeight >= scrollHeight - 1;
+      const atTop = scrollY <= 0;
+
+      setScrollDirection(direction);
+      setScrolledToBottom(atBottom);
+      setScrolledToTop(atTop);
       lastScrollY = scrollY;
     };
 
@@ -37,7 +45,7 @@ const useScrollDirection = (targetSelector) => {
     return () => {
       target.removeEventListener("scroll", updateScrollDirection);
     };
-  }, [targetSelector]);
+  }, [targetSelector, pathname]);
 
   return { scrollDirection, scrolledToBottom, scrolledToTop };
 };

@@ -27,8 +27,22 @@ export default function Sidebar({
 }) {
   const viewTransitionsSupported = useViewTransitionSupport();
   const [expandedSection, setExpandedSection] = useState("brief");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const transitionTimeoutRef = useRef(null);
 
   const imageRef = useRef(null);
+
+  // Windows browsers flash a scrollbar on the sidebar while an accordion
+  // section's height animates past the viewport bound; hide overflow for
+  // the duration of the animation to suppress that flash.
+  const handleExpand = (section) => {
+    setExpandedSection(section);
+    setIsTransitioning(true);
+    clearTimeout(transitionTimeoutRef.current);
+    transitionTimeoutRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 400);
+  };
 
   const { isAnimating, setTargetPosition, currentProject } =
     useContext(AppContext);
@@ -38,7 +52,9 @@ export default function Sidebar({
       ? currentProject
       : `image-${id}`;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    return () => clearTimeout(transitionTimeoutRef.current);
+  }, []);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -53,7 +69,12 @@ export default function Sidebar({
   }, []);
 
   return (
-    <div className="lg:sticky lg:overflow-y-auto lg:w-[393px] lg:top-0 lg:pb-[80px] lg:border-r-[1px] lg:border-black">
+    <div
+      className={clsx(
+        "lg:sticky lg:w-[393px] lg:top-0 lg:pb-[60px] lg:border-r-[1px] lg:border-black",
+        isTransitioning ? "lg:overflow-y-hidden" : "lg:overflow-y-auto",
+      )}
+    >
       <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
         <div
           // style={viewTransitionsSupported ? {
@@ -91,7 +112,7 @@ export default function Sidebar({
         </div>
       </div>
       <div
-        onClick={() => setExpandedSection("brief")}
+        onClick={() => handleExpand("brief")}
         className={`p-5 border-b-[1px] border-black ${expandedSection !== "brief" && "cursor-pointer"}`}
       >
         <motion.div
@@ -152,7 +173,7 @@ export default function Sidebar({
       </div>
 
       <div
-        onClick={() => setExpandedSection("highlights")}
+        onClick={() => handleExpand("highlights")}
         className={`p-5 border-b-[1px] border-black ${expandedSection !== "highlights" && "cursor-pointer"} `}
       >
         <motion.div
@@ -213,7 +234,7 @@ export default function Sidebar({
         </motion.div>
       </div>
       <div
-        onClick={() => setExpandedSection("role")}
+        onClick={() => handleExpand("role")}
         className={`p-5 border-b-[1px] border-black lg:border-0 ${expandedSection !== "team" && "cursor-pointer"}`}
       >
         <motion.div

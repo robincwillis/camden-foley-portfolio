@@ -8,11 +8,7 @@ import RichText from "@/app/_components/rich-text";
 export const generateMetadata = async ({ params }) => {
   const { slug } = await params;
   const page = await getPage(slug);
-  return page
-    ? {
-        title: page.title,
-      }
-    : {};
+  return page ? { title: page.title } : {};
 };
 
 export default async function Page({ params }) {
@@ -37,12 +33,10 @@ export default async function Page({ params }) {
               {lockup?.subHeadline}
             </p>
           </div>
-          <div className="lg:mt-10">
+          <div className="mt-2 lg:mt-4">
             <RichText
               document={lockup?.body?.json}
-              classNames={{
-                paragraph: "text-lg lg:text-2xl font-light",
-              }}
+              classNames={{ paragraph: "text-lg lg:text-2xl font-light" }}
             />
           </div>
           <ul className="hidden lg:flex lg:mt-5 text-3xl laptop:text-4xl gap-2 laptop:gap-x-2.5 max-w-screen-sm font-medium flex-row flex-wrap">
@@ -62,9 +56,7 @@ export default async function Page({ params }) {
               height={lockup.image.height}
               alt={lockup.image.description}
               sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              style={{
-                height: "fit-content",
-              }}
+              style={{ height: "fit-content" }}
             />
           )}
           <ul className="flex text-[21px] sm:text-2xl gap-x-2 sm:gap-x-2.5 font-medium  flex-row flex-wrap lg:hidden">
