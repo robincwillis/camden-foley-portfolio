@@ -67,20 +67,49 @@ export default async function Project({ params }) {
           className="lg:flex-1 lg:overflow-y-scroll lg:pb-[60px]"
           style={{}}
         >
-          {sortedSections.map((section, index) => (
-            <ProjectSlide
-              key={section.sys.id}
-              title={section.title}
-              description={section.description}
-              images={section.imagesCollection.items}
-              mobileImages={
-                section?.mobileImagesCollection?.items.length > 0
-                  ? section.mobileImagesCollection.items
-                  : section.imagesCollection.items
-              }
-              wrapDescription={section.wrapDescription}
-            />
-          ))}
+          {sortedSections.map((section, index) => {
+            const projectImages =
+              section.projectSectionImagesCollection?.items ?? [];
+            const usesImageCaptions = projectImages.length > 0;
+
+            const images = usesImageCaptions
+              ? projectImages.map((item) => ({
+                  sys: item.sys,
+                  url: item.desktopImage.url,
+                  width: item.desktopImage.width,
+                  height: item.desktopImage.height,
+                  description: item.desktopImage.description || item.name,
+                  caption: item.description?.json ?? null,
+                }))
+              : section.imagesCollection.items;
+
+            const mobileImages = usesImageCaptions
+              ? projectImages.map((item) => {
+                  const mobileAsset = item.mobileImage || item.desktopImage;
+                  return {
+                    sys: item.sys,
+                    url: mobileAsset.url,
+                    width: mobileAsset.width,
+                    height: mobileAsset.height,
+                    description: mobileAsset.description || item.name,
+                    caption: item.description?.json ?? null,
+                  };
+                })
+              : section?.mobileImagesCollection?.items.length > 0
+                ? section.mobileImagesCollection.items
+                : section.imagesCollection.items;
+
+            return (
+              <ProjectSlide
+                key={section.sys.id}
+                title={section.title}
+                description={section.description}
+                images={images}
+                mobileImages={mobileImages}
+                wrapDescription={section.wrapDescription}
+              />
+            );
+          })}
 
           <div className="p-5 flex items-center justify-between">
             <RichText

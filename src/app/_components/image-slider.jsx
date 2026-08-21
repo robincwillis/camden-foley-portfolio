@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 
-const ImageSlider = ({ expanded, images, onSlideChange }) => {
+const ImageSlider = ({ expanded, images, onSlideChange, onIndexChange }) => {
   const sliderRef = useRef(null);
   const [toggled, setToggled] = useState(expanded);
 
@@ -19,6 +19,7 @@ const ImageSlider = ({ expanded, images, onSlideChange }) => {
     //centerMode: true, // Center the slides
     swipeToSlide: true, // Allow swipe to slide
     afterChange: (currentSlide) => {
+      onIndexChange?.(currentSlide);
       onSlideChange?.(currentSlide === 1);
     },
   };

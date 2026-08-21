@@ -20,6 +20,8 @@ export default function ProjectSlide({
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  const hasImageCaptions = images.some((image) => image.caption);
+
   const scaleFactors = useMemo(() => {
     const imageHeights = images.map(({ height }) => height);
     const aspectRatios = images.map((image) => image.width / image.height);
@@ -76,6 +78,7 @@ export default function ProjectSlide({
             expanded={isExpanded}
             images={mobileImages}
             onSlideChange={setIsExpanded}
+            onIndexChange={setActiveImageIndex}
           />
         )}
         {mobileImages && mobileImages.length > 3 && (
@@ -115,41 +118,81 @@ export default function ProjectSlide({
         transition={{ duration: 0.5, type: "spring" }}
         className="overflow-y-hidden"
       >
-        <div
-          className={clsx("px-5 pb-5 lg:px-0", {
-            "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-2.5": wrapDescription,
-          })}
-        >
-          {wrapDescription ? (
-            description.json.content.map((node, index) => (
-              <div
-                key={index}
-                className="min-w-full lg:min-w-0"
-                style={{
-                  width: scaleFactors[index]
-                    ? `${100 * scaleFactors[index]}%`
-                    : undefined,
-                }}
-              >
-                <RichText
-                  document={{ ...description.json, content: [node] }}
-                  classNames={{
-                    paragraph: "font-light text-sm",
-                    bold: "font-medium",
+        {hasImageCaptions ? (
+          <>
+            {/* Desktop: each image's own caption, aligned under its column */}
+            <div className="hidden lg:flex px-5 pb-5 lg:px-0 lg:space-x-2.5">
+              {images.map((image, index) => (
+                <div
+                  key={image.sys.id}
+                  className="min-w-full lg:min-w-0"
+                  style={{
+                    width: scaleFactors[index]
+                      ? `${100 * scaleFactors[index]}%`
+                      : undefined,
                   }}
-                />
-              </div>
-            ))
-          ) : (
-            <RichText
-              document={description.json}
-              classNames={{
-                paragraph: "font-light text-sm",
-                bold: "font-medium",
-              }}
-            />
-          )}
-        </div>
+                >
+                  <RichText
+                    document={image.caption || description.json}
+                    classNames={{
+                      paragraph: "font-light text-sm",
+                      bold: "font-medium",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+            {/* Mobile: only the focused image's caption */}
+            <div className="block lg:hidden px-5 pb-5">
+              <RichText
+                document={
+                  mobileImages[activeImageIndex]?.caption || description.json
+                }
+                classNames={{
+                  paragraph: "font-light text-sm",
+                  bold: "font-medium",
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <div
+            className={clsx("px-5 pb-5 lg:px-0", {
+              "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-2.5":
+                wrapDescription,
+            })}
+          >
+            {wrapDescription ? (
+              description.json.content.map((node, index) => (
+                <div
+                  key={index}
+                  className="min-w-full lg:min-w-0"
+                  style={{
+                    width: scaleFactors[index]
+                      ? `${100 * scaleFactors[index]}%`
+                      : undefined,
+                  }}
+                >
+                  <RichText
+                    document={{ ...description.json, content: [node] }}
+                    classNames={{
+                      paragraph: "font-light text-sm",
+                      bold: "font-medium",
+                    }}
+                  />
+                </div>
+              ))
+            ) : (
+              <RichText
+                document={description.json}
+                classNames={{
+                  paragraph: "font-light text-sm",
+                  bold: "font-medium",
+                }}
+              />
+            )}
+          </div>
+        )}
       </motion.div>
       <div></div>
     </div>
