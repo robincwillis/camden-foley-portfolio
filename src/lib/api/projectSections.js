@@ -11,6 +11,7 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
         json
     } 
     wrapDescription
+    reverseMobileImages
     imagesCollection (limit: 10) {
         items {
             sys {

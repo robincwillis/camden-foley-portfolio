@@ -83,7 +83,7 @@ export default async function Project({ params }) {
                 }))
               : section.imagesCollection.items;
 
-            const mobileImages = usesImageCaptions
+            const orderedMobileImages = usesImageCaptions
               ? projectImages.map((item) => {
                   const mobileAsset = item.mobileImage || item.desktopImage;
                   return {
@@ -98,6 +98,10 @@ export default async function Project({ params }) {
               : section?.mobileImagesCollection?.items.length > 0
                 ? section.mobileImagesCollection.items
                 : section.imagesCollection.items;
+
+            const mobileImages = section.reverseMobileImages
+              ? [...orderedMobileImages].reverse()
+              : orderedMobileImages;
 
             return (
               <ProjectSlide
