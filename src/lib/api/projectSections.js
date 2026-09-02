@@ -12,6 +12,7 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
     } 
     wrapDescription
     reverseMobileImages
+    reverseDesktopImages
     imagesCollection (limit: 10) {
         items {
             sys {

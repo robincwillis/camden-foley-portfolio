@@ -3,7 +3,9 @@ export function extractEntries(fetchResponse, collectionKey) {
 }
 
 export function getCollectionIds(collection) {
-  return collection?.items?.map(({ sys }) => sys.id);
+  // Unpublished/deleted linked entries surface as null items (UNRESOLVABLE_LINK) —
+  // skip them so a mid-edit project doesn't break the whole collection page.
+  return collection?.items?.filter(Boolean).map(({ sys }) => sys.id);
 }
 
 export async function fetchGraphQL(query, preview = false, tags = []) {

@@ -19,6 +19,9 @@ export default function ProjectSlide({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  // -1 / 1 while swiping the mobile grid carousel, 0 for taps/toggles so the
+  // caption only slides horizontally when the image itself is swiping.
+  const [slideDirection, setSlideDirection] = useState(0);
 
   const hasImageCaptions = images.some((image) => image.caption);
 
@@ -37,6 +40,7 @@ export default function ProjectSlide({
 
   const toggle = () => {
     const next = !isExpanded;
+    setSlideDirection(0);
     setIsExpanded(next);
     if (next) {
       setActiveImageIndex(0);
@@ -44,8 +48,19 @@ export default function ProjectSlide({
   };
 
   const handleImageSelect = (index) => {
+    setSlideDirection(0);
     setActiveImageIndex(index);
     setIsExpanded(true);
+  };
+
+  const handleGridSlideChange = (index, direction) => {
+    setSlideDirection(direction ?? 0);
+    setActiveImageIndex(index);
+  };
+
+  const handleGridCollapse = () => {
+    setSlideDirection(0);
+    setIsExpanded(false);
   };
 
   return (
@@ -87,7 +102,8 @@ export default function ProjectSlide({
             expanded={isExpanded}
             activeIndex={activeImageIndex}
             onImageSelect={handleImageSelect}
-            onSlideChange={setActiveImageIndex}
+            onSlideChange={handleGridSlideChange}
+            onCollapse={handleGridCollapse}
           />
         )}
       </div>
@@ -142,17 +158,28 @@ export default function ProjectSlide({
                 </div>
               ))}
             </div>
-            {/* Mobile: only the focused image's caption */}
-            <div className="block lg:hidden px-5 pb-5">
-              <RichText
-                document={
-                  mobileImages[activeImageIndex]?.caption || description.json
-                }
-                classNames={{
-                  paragraph: "font-light text-sm",
-                  bold: "font-medium",
+            {/* Mobile: only the focused image's caption, sliding in with the image */}
+            <div className="block lg:hidden overflow-x-hidden">
+              <motion.div
+                key={activeImageIndex}
+                initial={{
+                  x: slideDirection * 24,
+                  opacity: slideDirection ? 0 : 1,
                 }}
-              />
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="px-5 pb-5"
+              >
+                <RichText
+                  document={
+                    mobileImages[activeImageIndex]?.caption || description.json
+                  }
+                  classNames={{
+                    paragraph: "font-light text-sm",
+                    bold: "font-medium",
+                  }}
+                />
+              </motion.div>
             </div>
           </>
         ) : (

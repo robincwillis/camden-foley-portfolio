@@ -18,9 +18,11 @@ const ImageSlider = ({ expanded, images, onSlideChange, onIndexChange }) => {
     //slidesToScroll: 1,
     //centerMode: true, // Center the slides
     swipeToSlide: true, // Allow swipe to slide
-    afterChange: (currentSlide) => {
-      onIndexChange?.(currentSlide);
-      onSlideChange?.(currentSlide === 1);
+    // Fire on transition start (not afterChange) so the caption expand/collapse
+    // animates in step with the swipe instead of lagging until the slide settles.
+    beforeChange: (currentSlide, nextSlide) => {
+      onIndexChange?.(nextSlide);
+      onSlideChange?.(nextSlide === 1);
     },
   };
 

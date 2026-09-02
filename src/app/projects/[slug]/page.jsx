@@ -72,7 +72,7 @@ export default async function Project({ params }) {
               section.projectSectionImagesCollection?.items ?? [];
             const usesImageCaptions = projectImages.length > 0;
 
-            const images = usesImageCaptions
+            const orderedImages = usesImageCaptions
               ? projectImages.map((item) => ({
                   sys: item.sys,
                   url: item.desktopImage.url,
@@ -82,6 +82,10 @@ export default async function Project({ params }) {
                   caption: item.description?.json ?? null,
                 }))
               : section.imagesCollection.items;
+
+            const images = section.reverseDesktopImages
+              ? [...orderedImages].reverse()
+              : orderedImages;
 
             const orderedMobileImages = usesImageCaptions
               ? projectImages.map((item) => {

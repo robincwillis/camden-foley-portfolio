@@ -22,14 +22,19 @@ function getCellRect(containerRect, index) {
   };
 }
 
+const TAP_MOVE_THRESHOLD = 10; // px of travel below which a pointer gesture is a tap
+const TAP_TIME_THRESHOLD = 300; // ms
+
 const ExpandableImageGrid = ({
   images,
   expanded,
   activeIndex,
   onImageSelect,
   onSlideChange,
+  onCollapse,
 }) => {
   const containerRef = useRef(null);
+  const pointerStartRef = useRef(null);
   const wasExpandedRef = useRef(expanded);
   const [transition, setTransition] = useState(null);
   const [showSlider, setShowSlider] = useState(expanded);
@@ -66,6 +71,36 @@ const ExpandableImageGrid = ({
     setShowSlider(expanded);
   };
 
+  // Separate a tap (collapse) from a swipe (navigate): react-slick handles the
+  // drag-to-navigate, and we only treat a near-stationary, quick press as a tap.
+  const handleSlidePointerDown = (event) => {
+    const point = event.touches?.[0] ?? event;
+    pointerStartRef.current = {
+      x: point.clientX,
+      y: point.clientY,
+      time: Date.now(),
+    };
+  };
+
+  const handleSlidePointerUp = (event) => {
+    const start = pointerStartRef.current;
+    pointerStartRef.current = null;
+    if (!start) {
+      return;
+    }
+    const point = event.changedTouches?.[0] ?? event;
+    const movedX = Math.abs(point.clientX - start.x);
+    const movedY = Math.abs(point.clientY - start.y);
+    const elapsed = Date.now() - start.time;
+    if (
+      movedX < TAP_MOVE_THRESHOLD &&
+      movedY < TAP_MOVE_THRESHOLD &&
+      elapsed < TAP_TIME_THRESHOLD
+    ) {
+      onCollapse?.();
+    }
+  };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -73,8 +108,14 @@ const ExpandableImageGrid = ({
     slidesToShow: 1,
     swipeToSlide: true,
     initialSlide: activeIndex,
-    afterChange: (currentSlide) => {
-      onSlideChange?.(currentSlide);
+    // Fire on transition start (not afterChange) so the caption swaps/slides in
+    // step with the image movement instead of lagging until the slide settles.
+    beforeChange: (currentSlide, nextSlide) => {
+      const count = images.length;
+      const forward = (nextSlide - currentSlide + count) % count;
+      const backward = (currentSlide - nextSlide + count) % count;
+      const direction = forward <= backward ? 1 : -1;
+      onSlideChange?.(nextSlide, direction);
     },
   };
 
@@ -116,7 +157,14 @@ const ExpandableImageGrid = ({
           ) : (
             <Slider {...settings} className="-mx-5">
               {images.map((image, index) => (
-                <div key={image.sys.id} className="px-5">
+                <div
+                  key={image.sys.id}
+                  className="px-5"
+                  onMouseDown={handleSlidePointerDown}
+                  onMouseUp={handleSlidePointerUp}
+                  onTouchStart={handleSlidePointerDown}
+                  onTouchEnd={handleSlidePointerUp}
+                >
                   <div
                     style={{
                       width: "100%",
