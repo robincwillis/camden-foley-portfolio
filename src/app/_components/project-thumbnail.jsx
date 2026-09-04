@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useContext, useRef, useId } from "react";
+import { useEffect, useContext, useRef } from "react";
 import clsx from "clsx";
 
 import Link from "@/app/_components/link";
@@ -30,11 +30,15 @@ export default function ProjectThumbnail({
   slug,
   tags,
   locked,
+  placement = "default",
 }) {
   const viewTransitionsSupported = useViewTransitionSupport();
   const imageRef = useRef(null);
-  const instanceId = useId().replace(/[^a-zA-Z0-9]/g, "");
-  const viewTransitionName = `image-${id}-${instanceId}`;
+  // Deterministic per-placement name so the same project rendered in more than
+  // one grid (e.g. the collection grid and the "all projects" grid below it)
+  // gets distinct, collision-free names that stay stable across navigation —
+  // which is what lets the reverse transition (project -> grid) pair up again.
+  const viewTransitionName = `image-${id}-${placement}`;
   const {
     setModalOpen,
     setLockedProject,

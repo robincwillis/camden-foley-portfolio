@@ -74,6 +74,7 @@ export default async function Collection({ params }) {
               date={project.date}
               tags={project.tags}
               locked={project.locked && !isUnlocked}
+              placement="collection"
             />
           );
         })}
@@ -98,6 +99,7 @@ export default async function Collection({ params }) {
               date={project.date}
               tags={project.tags}
               locked={project.locked && !isUnlocked}
+              placement="all"
             />
           );
         })}

@@ -41,6 +41,7 @@ export default async function Home() {
                 date={project.date}
                 tags={project.tags}
                 locked={project.locked && !isUnlocked}
+                placement="home"
               />
             );
           })}

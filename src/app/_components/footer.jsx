@@ -38,7 +38,7 @@ export default function Footer({ site, path }) {
     >
       {/* Links */}
       <div className="p-5 lg:py-0 lg:px-5 border-b-[1px] border-black lg:border-0">
-        <ul className="flex flex-row flex-wrap lg:flex-nowrap h-full gap-x-5 gap-y-2.5">
+        <ul className="flex flex-row flex-wrap lg:flex-nowrap h-full gap-x-3 gap-y-2.5 lg:gap-x-5">
           {links.map((link, index) => (
             <li
               key={index}
