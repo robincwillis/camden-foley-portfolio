@@ -15,7 +15,7 @@ const ProcessSection = ({ processSlides }) => {
       <>
         <div className="hidden lg:block text-right">
           <button
-            className="transition-colors py-2.5 px-5 border-[1px] border-black text-sm uppercase hover:text-white hover:bg-black"
+            className="transition-colors duration-200 py-2.5 px-5 border-[1px] border-black rounded-full text-sm uppercase hover:text-white hover:bg-black"
             onClick={() => setProcessModalOpen(true)}
           >
             Process

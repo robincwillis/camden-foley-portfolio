@@ -3,11 +3,13 @@ export function extractEntries(fetchResponse, collectionKey) {
 }
 
 export function getCollectionIds(collection) {
-  return collection?.items?.map(({ sys }) => sys.id);
+  // Unpublished/deleted linked entries surface as null items (UNRESOLVABLE_LINK) —
+  // skip them so a mid-edit project doesn't break the whole collection page.
+  return collection?.items?.filter(Boolean).map(({ sys }) => sys.id);
 }
 
 export async function fetchGraphQL(query, preview = false, tags = []) {
-  console.log('fetch tags', tags);
+  console.log("fetch tags", tags);
   return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
@@ -31,11 +33,21 @@ export async function fetchGraphQL(query, preview = false, tags = []) {
     .then((response) => response.json())
     .then((json) => {
       if (json.errors) {
-        console.error('Contentful GraphQL errors:', JSON.stringify(json.errors, null, 2));
+        // Unpublished/draft linked entries (e.g. a Password mid-edit) surface as
+        // UNRESOLVABLE_LINK here — expected as part of the editorial workflow, not a bug.
+        const unexpected = json.errors.filter(
+          (error) => error.extensions?.contentful?.code !== "UNRESOLVABLE_LINK",
+        );
+        if (unexpected.length) {
+          console.error(
+            "Contentful GraphQL errors:",
+            JSON.stringify(unexpected, null, 2),
+          );
+        }
       }
       return json;
     })
     .catch((error) => {
-      console.error('Contentful fetch error:', error);
+      console.error("Contentful fetch error:", error);
     });
 }

@@ -19,16 +19,14 @@ export default async function OpenGraphImage({ params }) {
   const { heroImage } = project;
 
   return new ImageResponse(
-    (
-      <img
-        src={heroImage.url}
-        width={size.width}
-        height={size.height}
-        style={{
-          objectFit: "contain",
-        }}
-      />
-    ),
+    <img
+      src={heroImage.url}
+      width={size.width}
+      height={size.height}
+      style={{
+        objectFit: "contain",
+      }}
+    />,
     {
       ...size,
     },

@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'laptop': '1148px'
+        laptop: "1148px",
       },
       fontFamily: {
-        sans: ['var(--font-halyard)'],
-        display: ['var(--font-open-sans)']
+        sans: ["var(--font-halyard)"],
+        display: ["var(--font-open-sans)"],
       },
       colors: {
         gray: {
@@ -21,11 +21,9 @@ module.exports = {
           300: "#DCDCDC",
           200: "#E6E6E6",
           100: "#F0F0F0",
-        }
-      }
+        },
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };

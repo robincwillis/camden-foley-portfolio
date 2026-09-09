@@ -2,7 +2,16 @@ import { forwardRef } from "react";
 import Image from "next/image";
 
 const ImageComponent = forwardRef(function ImageComponent(
-  { imageUrl, ratio = 4 / 3, className, alt, id, width, height, imageClassName },
+  {
+    imageUrl,
+    ratio = 4 / 3,
+    className,
+    alt,
+    id,
+    width,
+    height,
+    imageClassName,
+  },
   ref,
 ) {
   return (
@@ -35,6 +44,5 @@ const ImageComponent = forwardRef(function ImageComponent(
     </div>
   );
 });
-
 
 export default ImageComponent;

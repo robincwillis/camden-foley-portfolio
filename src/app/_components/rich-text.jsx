@@ -32,7 +32,9 @@ const getOptions = (classNames) => ({
   },
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node, children) => (
-      <p className={classNames.paragraph} style={{ textWrap: "pretty" }}>{children}</p>
+      <p className={classNames.paragraph} style={{ textWrap: "pretty" }}>
+        {children}
+      </p>
     ),
     [BLOCKS.HEADING_1]: (node, children) => (
       <h1 className={classNames.heading1}>{children}</h1>

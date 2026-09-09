@@ -33,7 +33,8 @@ export async function POST(request, params) {
   if (projectSlug) {
     const project = await getProject(projectSlug.replace(/^\//, ""));
     const projectPasswords = project?.passwordsCollection?.items || [];
-    const passwordValues = projectPasswords.map((p) => p.value);
+    // Draft/unpublished Password entries resolve to null items here, not omitted entries
+    const passwordValues = projectPasswords.filter(Boolean).map((p) => p.value);
 
     if (passwordValues.includes(password)) {
       // Get existing unlocked projects
@@ -51,7 +52,7 @@ export async function POST(request, params) {
       const allProjects = await getAllProjects();
       const projectsWithPassword = allProjects.filter((p) => {
         const passwords = p.passwordsCollection?.items || [];
-        return passwords.some((pw) => pw.value === password);
+        return passwords.filter(Boolean).some((pw) => pw.value === password);
       });
 
       for (const p of projectsWithPassword) {

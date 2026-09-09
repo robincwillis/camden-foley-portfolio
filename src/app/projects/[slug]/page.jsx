@@ -17,11 +17,13 @@ export const generateMetadata = async ({ params }) => {
   const { isEnabled } = await draftMode();
 
   const project = await getProject(slug, isEnabled);
-  return project ? {
-    title: project.name,
-    keywords: project?.tags || "",
-    description: project?.description || "",
-  } : {};
+  return project
+    ? {
+        title: project.name,
+        keywords: project?.tags || "",
+        description: project?.description || "",
+      }
+    : {};
 };
 
 export default async function Project({ params }) {
@@ -61,24 +63,61 @@ export default async function Project({ params }) {
           highlights={project.highlights}
         />
         <div
-          className="lg:flex-1 lg:overflow-y-scroll"
-          style={{
-          }}
+          id="project-content-scroll"
+          className="lg:flex-1 lg:overflow-y-scroll lg:pb-[60px]"
+          style={{}}
         >
-          {sortedSections.map((section, index) => (
-            <ProjectSlide
-              key={section.sys.id}
-              title={section.title}
-              description={section.description}
-              images={section.imagesCollection.items}
-              mobileImages={
-                section?.mobileImagesCollection?.items.length > 0
-                  ? section.mobileImagesCollection.items
-                  : section.imagesCollection.items
-              }
-              wrapDescription={section.wrapDescription}
-            />
-          ))}
+          {sortedSections.map((section, index) => {
+            const projectImages =
+              section.projectSectionImagesCollection?.items ?? [];
+            const usesImageCaptions = projectImages.length > 0;
+
+            const orderedImages = usesImageCaptions
+              ? projectImages.map((item) => ({
+                  sys: item.sys,
+                  url: item.desktopImage.url,
+                  width: item.desktopImage.width,
+                  height: item.desktopImage.height,
+                  description: item.desktopImage.description || item.name,
+                  caption: item.description?.json ?? null,
+                }))
+              : section.imagesCollection.items;
+
+            const images = section.reverseDesktopImages
+              ? [...orderedImages].reverse()
+              : orderedImages;
+
+            const orderedMobileImages = usesImageCaptions
+              ? projectImages.map((item) => {
+                  const mobileAsset = item.mobileImage || item.desktopImage;
+                  return {
+                    sys: item.sys,
+                    url: mobileAsset.url,
+                    width: mobileAsset.width,
+                    height: mobileAsset.height,
+                    description: mobileAsset.description || item.name,
+                    caption: item.description?.json ?? null,
+                  };
+                })
+              : section?.mobileImagesCollection?.items.length > 0
+                ? section.mobileImagesCollection.items
+                : section.imagesCollection.items;
+
+            const mobileImages = section.reverseMobileImages
+              ? [...orderedMobileImages].reverse()
+              : orderedMobileImages;
+
+            return (
+              <ProjectSlide
+                key={section.sys.id}
+                title={section.title}
+                description={section.description}
+                images={images}
+                mobileImages={mobileImages}
+                wrapDescription={section.wrapDescription}
+              />
+            );
+          })}
 
           <div className="p-5 flex items-center justify-between">
             <RichText

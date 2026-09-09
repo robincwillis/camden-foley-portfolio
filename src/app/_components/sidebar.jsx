@@ -27,17 +27,37 @@ export default function Sidebar({
 }) {
   const viewTransitionsSupported = useViewTransitionSupport();
   const [expandedSection, setExpandedSection] = useState("brief");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const transitionTimeoutRef = useRef(null);
 
   const imageRef = useRef(null);
 
-  const { isAnimating, setTargetPosition } = useContext(AppContext);
+  // Windows browsers flash a scrollbar on the sidebar while an accordion
+  // section's height animates past the viewport bound; hide overflow for
+  // the duration of the animation to suppress that flash.
+  const handleExpand = (section) => {
+    setExpandedSection(section);
+    setIsTransitioning(true);
+    clearTimeout(transitionTimeoutRef.current);
+    transitionTimeoutRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 400);
+  };
+
+  const { isAnimating, setTargetPosition, currentProject } =
+    useContext(AppContext);
+
+  const viewTransitionName =
+    currentProject && currentProject.startsWith(`image-${id}-`)
+      ? currentProject
+      : `image-${id}`;
 
   useEffect(() => {
-  }, [])
+    return () => clearTimeout(transitionTimeoutRef.current);
+  }, []);
 
   useEffect(() => {
-    if (imageRef && imageRef.current) {
-      console.log('imageRef.current', imageRef.current.getBoundingClientRect())
+    if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect();
       setTargetPosition({
         x: rect.left,
@@ -46,10 +66,15 @@ export default function Sidebar({
         height: rect.height,
       });
     }
-  }, [imageRef.current]);
+  }, []);
 
   return (
-    <div className="lg:sticky lg:overflow-y-auto lg:w-[393px] lg:top-0 lg:border-r-[1px] lg:border-black">
+    <div
+      className={clsx(
+        "lg:sticky lg:w-[393px] lg:top-0 lg:pb-[60px] lg:border-r-[1px] lg:border-black",
+        isTransitioning ? "lg:overflow-y-hidden" : "lg:overflow-y-auto",
+      )}
+    >
       <div className="p-5 flex flex-col space-y-2.5 border-b-[1px] border-black">
         <div
           // style={viewTransitionsSupported ? {
@@ -58,7 +83,7 @@ export default function Sidebar({
           //     visibility: isAnimating ? 'hidden' : 'visible'
           // }}
           style={{
-            viewTransitionName: `image-${id}`,
+            viewTransitionName,
             ...(!viewTransitionsSupported && {
               visibility: isAnimating ? "hidden" : "visible",
             }),
@@ -87,7 +112,7 @@ export default function Sidebar({
         </div>
       </div>
       <div
-        onClick={() => setExpandedSection("brief")}
+        onClick={() => handleExpand("brief")}
         className={`p-5 border-b-[1px] border-black ${expandedSection !== "brief" && "cursor-pointer"}`}
       >
         <motion.div
@@ -148,7 +173,7 @@ export default function Sidebar({
       </div>
 
       <div
-        onClick={() => setExpandedSection("highlights")}
+        onClick={() => handleExpand("highlights")}
         className={`p-5 border-b-[1px] border-black ${expandedSection !== "highlights" && "cursor-pointer"} `}
       >
         <motion.div
@@ -209,7 +234,7 @@ export default function Sidebar({
         </motion.div>
       </div>
       <div
-        onClick={() => setExpandedSection("role")}
+        onClick={() => handleExpand("role")}
         className={`p-5 border-b-[1px] border-black lg:border-0 ${expandedSection !== "team" && "cursor-pointer"}`}
       >
         <motion.div

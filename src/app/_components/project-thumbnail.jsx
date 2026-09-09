@@ -30,10 +30,15 @@ export default function ProjectThumbnail({
   slug,
   tags,
   locked,
-  enableViewTransition = true,
+  placement = "default",
 }) {
   const viewTransitionsSupported = useViewTransitionSupport();
   const imageRef = useRef(null);
+  // Deterministic per-placement name so the same project rendered in more than
+  // one grid (e.g. the collection grid and the "all projects" grid below it)
+  // gets distinct, collision-free names that stay stable across navigation —
+  // which is what lets the reverse transition (project -> grid) pair up again.
+  const viewTransitionName = `image-${id}-${placement}`;
   const {
     setModalOpen,
     setLockedProject,
@@ -57,7 +62,7 @@ export default function ProjectThumbnail({
   );
 
   useEffect(() => {
-    if (currentProject && currentProject === id) {
+    if (currentProject && currentProject === viewTransitionName) {
       const rect = imageRef.current.getBoundingClientRect();
       setOriginPosition({
         x: rect.left,
@@ -66,7 +71,7 @@ export default function ProjectThumbnail({
         height: rect.height,
       });
     }
-  }, [currentProject]);
+  }, [currentProject, viewTransitionName]);
 
   const handleClone = (elementToClone, ref) => {
     const rect = ref.current.getBoundingClientRect();
@@ -78,7 +83,6 @@ export default function ProjectThumbnail({
       height: rect.height,
     });
     cloneElement(elementToClone);
-    setCurrentProject(id);
   };
 
   const handleLocked = (e) => {
@@ -88,7 +92,7 @@ export default function ProjectThumbnail({
 
   useEffect(() => {
     const viewTransitionStyles = `
-            ::view-transition-group(image-${id}) {
+            ::view-transition-group(${viewTransitionName}) {
                 animation-duration: 0.8s;
                 animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
             }
@@ -96,7 +100,7 @@ export default function ProjectThumbnail({
     //if (viewTransitionsSupported) {
     setViewTransitionStyles(viewTransitionStyles);
     //}
-  }, []);
+  }, [viewTransitionName]);
 
   return (
     <div
@@ -111,8 +115,11 @@ export default function ProjectThumbnail({
     >
       <div
         onClick={() => {
-          if (!locked && !viewTransitionsSupported) {
-            handleClone(imageComponent, imageRef);
+          if (!locked) {
+            setCurrentProject(viewTransitionName);
+            if (!viewTransitionsSupported) {
+              handleClone(imageComponent, imageRef);
+            }
           }
         }}
       >
@@ -123,12 +130,12 @@ export default function ProjectThumbnail({
           //     visibility: isAnimating && currentProject && currentProject === id ? 'hidden' : 'visible'
           // }}
           style={{
-            ...(enableViewTransition && {
-              viewTransitionName: `image-${id}`,
-            }),
+            viewTransitionName,
             ...(!viewTransitionsSupported && {
               visibility:
-                isAnimating && currentProject && currentProject === id
+                isAnimating &&
+                currentProject &&
+                currentProject === viewTransitionName
                   ? "hidden"
                   : "visible",
             }),

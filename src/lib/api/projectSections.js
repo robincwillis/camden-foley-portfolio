@@ -11,6 +11,8 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
         json
     } 
     wrapDescription
+    reverseMobileImages
+    reverseDesktopImages
     imagesCollection (limit: 10) {
         items {
             sys {
@@ -32,7 +34,30 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
             width
             height
             description
-            
+
+        }
+    }
+    projectSectionImagesCollection (limit: 10) {
+        items {
+            sys {
+                id
+            }
+            name
+            description {
+                json
+            }
+            desktopImage {
+                url
+                width
+                height
+                description
+            }
+            mobileImage {
+                url
+                width
+                height
+                description
+            }
         }
     }
 `;

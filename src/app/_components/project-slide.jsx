@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useMemo, useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
 import AccordionIcon from "@/app/_components/accordion-icon";
 import ImageSlider from "@/app/_components/image-slider";
+import ExpandableImageGrid from "@/app/_components/expandable-image-grid";
 import RichText from "@/app/_components/rich-text";
 
 export default function ProjectSlide({
@@ -17,38 +18,50 @@ export default function ProjectSlide({
   mobileImages,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [imagesCalculated, setImagesCalculated] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  // -1 / 1 while swiping the mobile grid carousel, 0 for taps/toggles so the
+  // caption only slides horizontally when the image itself is swiping.
+  const [slideDirection, setSlideDirection] = useState(0);
 
-  const imageHeights = useRef([]);
-  const commonHeight = useRef(0);
-  const aspectRatios = useRef([]);
-  const scaledWidths = useRef([]);
-  const totalScaledWidth = useRef(0);
-  const scaleFactors = useRef([]);
+  const hasImageCaptions = images.some((image) => image.caption);
 
-  useEffect(() => {
-    imageHeights.current = images.map(({ height }) => height);
-    aspectRatios.current = images.map((image) => image.width / image.height);
+  const scaleFactors = useMemo(() => {
+    const imageHeights = images.map(({ height }) => height);
+    const aspectRatios = images.map((image) => image.width / image.height);
 
-    commonHeight.current = Math.max(...imageHeights.current);
-    scaledWidths.current = aspectRatios.current.map(
-      (ratio) => commonHeight.current * ratio,
-    );
-    totalScaledWidth.current = scaledWidths.current.reduce(
+    const commonHeight = Math.max(...imageHeights);
+    const scaledWidths = aspectRatios.map((ratio) => commonHeight * ratio);
+    const totalScaledWidth = scaledWidths.reduce(
       (acc, width) => acc + width,
       0,
     );
-    scaleFactors.current = scaledWidths.current.map(
-      (scaledWidth) => scaledWidth / totalScaledWidth.current,
-    );
-    setImagesCalculated(true);
-  }, []);
+    return scaledWidths.map((scaledWidth) => scaledWidth / totalScaledWidth);
+  }, [images]);
 
-  if (!imagesCalculated) {
-    return null;
-  }
+  const toggle = () => {
+    const next = !isExpanded;
+    setSlideDirection(0);
+    setIsExpanded(next);
+    if (next) {
+      setActiveImageIndex(0);
+    }
+  };
 
-  const toggle = () => setIsExpanded(!isExpanded);
+  const handleImageSelect = (index) => {
+    setSlideDirection(0);
+    setActiveImageIndex(index);
+    setIsExpanded(true);
+  };
+
+  const handleGridSlideChange = (index, direction) => {
+    setSlideDirection(direction ?? 0);
+    setActiveImageIndex(index);
+  };
+
+  const handleGridCollapse = () => {
+    setSlideDirection(0);
+    setIsExpanded(false);
+  };
 
   return (
     <div className="py-5 pb-0 lg:p-5 lg:pb-0 border-b-[1px] border-black">
@@ -60,7 +73,7 @@ export default function ProjectSlide({
               <div
                 key={image.sys.id}
                 className={`relative`}
-                style={{ width: `${100 * scaleFactors.current[index]}%` }}
+                style={{ width: `${100 * scaleFactors[index]}%` }}
               >
                 <Image
                   src={image.url}
@@ -76,20 +89,22 @@ export default function ProjectSlide({
       {/* Mobile */}
       <div className="block lg:hidden overflow-x-hidden">
         {mobileImages && mobileImages.length < 3 && (
-          <ImageSlider expanded={isExpanded} images={mobileImages} />
+          <ImageSlider
+            expanded={isExpanded}
+            images={mobileImages}
+            onSlideChange={setIsExpanded}
+            onIndexChange={setActiveImageIndex}
+          />
         )}
         {mobileImages && mobileImages.length > 3 && (
-          <div className="px-5 grid grid-cols-2 gap-2.5 grid-rows-2">
-            {mobileImages.map((image) => (
-              <Image
-                key={image.sys.id}
-                src={image.url}
-                height={image.height}
-                width={image.width * 2}
-                alt={image.description || ""}
-              />
-            ))}
-          </div>
+          <ExpandableImageGrid
+            images={mobileImages}
+            expanded={isExpanded}
+            activeIndex={activeImageIndex}
+            onImageSelect={handleImageSelect}
+            onSlideChange={handleGridSlideChange}
+            onCollapse={handleGridCollapse}
+          />
         )}
       </div>
 
@@ -101,33 +116,12 @@ export default function ProjectSlide({
           <RichText
             document={title.json}
             classNames={{
-              paragraph: "text-left	font-light text-sm sm:text-base",
+              paragraph: "text-left	font-light text-sm",
               bold: "font-medium",
             }}
           />
         </div>
         <div className="p-5 lg:mr-[-20px] flex items-center space-x-1">
-          <div className="hidden lg:block relative w-[50px] h-[24px]">
-            <motion.div
-              initial={true}
-              animate={{ opacity: isExpanded ? 1 : 0, top: isExpanded ? 0 : 5 }}
-              transition={{ duration: 0.5 }}
-              className="absolute top-0 right-0 w-[50px] h-[24px]"
-            >
-              Hide
-            </motion.div>
-            <motion.div
-              initial={true}
-              animate={{
-                opacity: isExpanded ? 0 : 1,
-                top: isExpanded ? -5 : 0,
-              }}
-              transition={{ duration: 0.5 }}
-              className="absolute top-0 right-0 w-[50px] h-[24px]"
-            >
-              Show
-            </motion.div>
-          </div>
           <AccordionIcon isToggled={isExpanded} />
         </div>
       </button>
@@ -140,41 +134,92 @@ export default function ProjectSlide({
         transition={{ duration: 0.5, type: "spring" }}
         className="overflow-y-hidden"
       >
-        <div
-          className={clsx("px-5 pb-5 lg:px-0", {
-            "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-2.5": wrapDescription,
-          })}
-        >
-          {wrapDescription ? (
-            description.json.content.map((node, index) => (
-              <div
-                key={index}
-                className="min-w-full lg:min-w-0"
-                style={{
-                  width: scaleFactors.current[index]
-                    ? `${100 * scaleFactors.current[index]}%`
-                    : undefined,
+        {hasImageCaptions ? (
+          <>
+            {/* Desktop: each image's own caption, aligned under its column */}
+            <div className="hidden lg:flex px-5 pb-5 lg:px-0 lg:space-x-2.5">
+              {images.map((image, index) => (
+                <div
+                  key={image.sys.id}
+                  className="min-w-full lg:min-w-0"
+                  style={{
+                    width: scaleFactors[index]
+                      ? `${100 * scaleFactors[index]}%`
+                      : undefined,
+                  }}
+                >
+                  <RichText
+                    document={image.caption || description.json}
+                    classNames={{
+                      paragraph: "font-light text-sm",
+                      bold: "font-medium",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+            {/* Mobile: only the focused image's caption, sliding in with the image */}
+            <div className="block lg:hidden overflow-x-hidden">
+              <motion.div
+                key={activeImageIndex}
+                initial={{
+                  x: slideDirection * 24,
+                  opacity: slideDirection ? 0 : 1,
                 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="px-5 pb-5"
               >
                 <RichText
-                  document={{ ...description.json, content: [node] }}
+                  document={
+                    mobileImages[activeImageIndex]?.caption || description.json
+                  }
                   classNames={{
-                    paragraph: "font-light text-sm sm:text-base",
+                    paragraph: "font-light text-sm",
                     bold: "font-medium",
                   }}
                 />
-              </div>
-            ))
-          ) : (
-            <RichText
-              document={description.json}
-              classNames={{
-                paragraph: "font-light text-sm sm:text-base",
-                bold: "font-medium",
-              }}
-            />
-          )}
-        </div>
+              </motion.div>
+            </div>
+          </>
+        ) : (
+          <div
+            className={clsx("px-5 pb-5 lg:px-0", {
+              "lg:flex space-y-2.5 lg:space-y-0 lg:space-x-2.5":
+                wrapDescription,
+            })}
+          >
+            {wrapDescription ? (
+              description.json.content.map((node, index) => (
+                <div
+                  key={index}
+                  className="min-w-full lg:min-w-0"
+                  style={{
+                    width: scaleFactors[index]
+                      ? `${100 * scaleFactors[index]}%`
+                      : undefined,
+                  }}
+                >
+                  <RichText
+                    document={{ ...description.json, content: [node] }}
+                    classNames={{
+                      paragraph: "font-light text-sm",
+                      bold: "font-medium",
+                    }}
+                  />
+                </div>
+              ))
+            ) : (
+              <RichText
+                document={description.json}
+                classNames={{
+                  paragraph: "font-light text-sm",
+                  bold: "font-medium",
+                }}
+              />
+            )}
+          </div>
+        )}
       </motion.div>
       <div></div>
     </div>
