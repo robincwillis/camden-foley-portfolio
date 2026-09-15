@@ -10,33 +10,7 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
     description {
         json
     } 
-    wrapDescription
-    reverseMobileImages
     reverseDesktopImages
-    imagesCollection (limit: 10) {
-        items {
-            sys {
-                id
-            }
-            url
-            width
-            height
-            description
-            
-        }
-    }
-    mobileImagesCollection (limit: 10) {
-        items {
-            sys {
-                id
-            }
-            url
-            width
-            height
-            description
-
-        }
-    }
     projectSectionImagesCollection (limit: 10) {
         items {
             sys {

@@ -70,42 +70,31 @@ export default async function Project({ params }) {
           {sortedSections.map((section, index) => {
             const projectImages =
               section.projectSectionImagesCollection?.items ?? [];
-            const usesImageCaptions = projectImages.length > 0;
 
-            const orderedImages = usesImageCaptions
-              ? projectImages.map((item) => ({
-                  sys: item.sys,
-                  url: item.desktopImage.url,
-                  width: item.desktopImage.width,
-                  height: item.desktopImage.height,
-                  description: item.desktopImage.description || item.name,
-                  caption: item.description?.json ?? null,
-                }))
-              : section.imagesCollection.items;
+            const orderedImages = projectImages.map((item) => ({
+              sys: item.sys,
+              url: item.desktopImage.url,
+              width: item.desktopImage.width,
+              height: item.desktopImage.height,
+              description: item.desktopImage.description || item.name,
+              caption: item.description?.json ?? null,
+            }));
 
             const images = section.reverseDesktopImages
               ? [...orderedImages].reverse()
               : orderedImages;
 
-            const orderedMobileImages = usesImageCaptions
-              ? projectImages.map((item) => {
-                  const mobileAsset = item.mobileImage || item.desktopImage;
-                  return {
-                    sys: item.sys,
-                    url: mobileAsset.url,
-                    width: mobileAsset.width,
-                    height: mobileAsset.height,
-                    description: mobileAsset.description || item.name,
-                    caption: item.description?.json ?? null,
-                  };
-                })
-              : section?.mobileImagesCollection?.items.length > 0
-                ? section.mobileImagesCollection.items
-                : section.imagesCollection.items;
-
-            const mobileImages = section.reverseMobileImages
-              ? [...orderedMobileImages].reverse()
-              : orderedMobileImages;
+            const mobileImages = projectImages.map((item) => {
+              const mobileAsset = item.mobileImage || item.desktopImage;
+              return {
+                sys: item.sys,
+                url: mobileAsset.url,
+                width: mobileAsset.width,
+                height: mobileAsset.height,
+                description: mobileAsset.description || item.name,
+                caption: item.description?.json ?? null,
+              };
+            });
 
             return (
               <ProjectSlide
@@ -114,7 +103,6 @@ export default async function Project({ params }) {
                 description={section.description}
                 images={images}
                 mobileImages={mobileImages}
-                wrapDescription={section.wrapDescription}
               />
             );
           })}
