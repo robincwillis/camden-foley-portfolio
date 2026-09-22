@@ -77,6 +77,7 @@ export default async function Project({ params }) {
               width: item.desktopImage.width,
               height: item.desktopImage.height,
               description: item.desktopImage.description || item.name,
+              contentType: item.desktopImage.contentType,
               caption: item.description?.json ?? null,
             }));
 
@@ -92,6 +93,7 @@ export default async function Project({ params }) {
                 width: mobileAsset.width,
                 height: mobileAsset.height,
                 description: mobileAsset.description || item.name,
+                contentType: mobileAsset.contentType,
                 caption: item.description?.json ?? null,
               };
             });

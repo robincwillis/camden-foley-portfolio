@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
-import Image from "next/image";
+import ProjectMedia from "@/app/_components/project-media";
 
 const ImageSlider = ({ expanded, images, onSlideChange, onIndexChange }) => {
   const sliderRef = useRef(null);
@@ -49,8 +49,9 @@ const ImageSlider = ({ expanded, images, onSlideChange, onIndexChange }) => {
                 paddingTop: "100%",
               }}
             >
-              <Image
+              <ProjectMedia
                 src={image.url}
+                contentType={image.contentType}
                 alt={image.description || ""}
                 style={{
                   width: "100%",

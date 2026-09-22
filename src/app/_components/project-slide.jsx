@@ -1,11 +1,11 @@
 "use client";
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 import AccordionIcon from "@/app/_components/accordion-icon";
 import ImageSlider from "@/app/_components/image-slider";
 import ExpandableImageGrid from "@/app/_components/expandable-image-grid";
+import ProjectMedia from "@/app/_components/project-media";
 import RichText from "@/app/_components/rich-text";
 
 export default function ProjectSlide({
@@ -73,8 +73,9 @@ export default function ProjectSlide({
                 className={`relative`}
                 style={{ width: `${100 * scaleFactors[index]}%` }}
               >
-                <Image
+                <ProjectMedia
                   src={image.url}
+                  contentType={image.contentType}
                   height={image.height}
                   width={image.width}
                   alt={image.description || ""}

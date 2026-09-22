@@ -25,12 +25,14 @@ const PROJECT_SECTION_GRAPHQL_FIELDS = `
                 width
                 height
                 description
+                contentType
             }
             mobileImage {
                 url
                 width
                 height
                 description
+                contentType
             }
         }
     }

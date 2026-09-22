@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
-import Image from "next/image";
+import ProjectMedia from "@/app/_components/project-media";
 
 const GRID_GAP = 10; // matches gap-2.5
 
@@ -143,12 +143,14 @@ const ExpandableImageGrid = ({
                     animate={{ opacity: hidden ? 0 : 1 }}
                     transition={isActive ? { duration: 0 } : SIBLING_FADE}
                   >
-                    <Image
+                    <ProjectMedia
                       src={image.url}
+                      contentType={image.contentType}
                       height={image.height}
                       width={image.width * 2}
                       alt={image.description || ""}
                       priority={isActive}
+                      controls={false}
                     />
                   </motion.button>
                 );
@@ -172,8 +174,9 @@ const ExpandableImageGrid = ({
                       paddingTop: "100%",
                     }}
                   >
-                    <Image
+                    <ProjectMedia
                       src={image.url}
+                      contentType={image.contentType}
                       alt={image.description || ""}
                       style={{
                         width: "100%",
@@ -216,8 +219,9 @@ const ExpandableImageGrid = ({
             style={{ position: "fixed", zIndex: 15, overflow: "hidden" }}
           >
             {transition.direction === "expanding" ? (
-              <Image
+              <ProjectMedia
                 src={transition.image.url}
+                contentType={transition.image.contentType}
                 alt={transition.image.description || ""}
                 style={{
                   width: "100%",
@@ -230,15 +234,18 @@ const ExpandableImageGrid = ({
                 width={transition.image.width}
                 height={transition.image.height}
                 priority
+                controls={false}
               />
             ) : (
-              <Image
+              <ProjectMedia
                 src={transition.image.url}
+                contentType={transition.image.contentType}
                 height={transition.image.height}
                 width={transition.image.width * 2}
                 alt={transition.image.description || ""}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 priority
+                controls={false}
               />
             )}
           </motion.div>,
